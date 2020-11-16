@@ -4,8 +4,6 @@
     <h2>Essential Links</h2>
     <h3>{{ here }}</h3>
     <p :style="textStyle">{{ msgShare }}</p>
-    <!-- <span>{{ users[0].name }}</span> -->
-    <!-- <button @click="changemsg">点击修改父组件的值</button> -->
     <ul>
       <li>
         <a href="https://vuejs.org" target="_blank"> Core Docs </a>
