@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.RedditCn.mapper.PostReplyMapper">
+ 
+    <resultMap id="BaseResultMap" type="com.example.RedditCn.entity.PostReply">
+        <result column="prId" jdbcType="INTEGER" property="prId" />
+        <result column="suId" jdbcType="INTEGER" property="suId" />
+        <result column="pfId" jdbcType="INTEGER" property="pfId" />
+        <result column="prIntroduce" jdbcType="VARCHAR" property="prIntroduce" />
+        <result column="prTime" jdbcType="TIMESTAMP" property="prTime" />
+        <result column="prBan" jdbcType="VARCHAR" property="prBan" />
+    </resultMap>
+ 
+    <select id="Sel" resultType="com.example.RedditCn.entity.PostReply">
+        select * from PostReply where prId = #{prId}
+    </select>
+ 
+</mapper>

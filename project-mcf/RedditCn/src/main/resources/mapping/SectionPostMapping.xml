@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.RedditCn.mapper.SectionPostMapper">
+ 
+    <resultMap id="BaseResultMap" type="com.example.RedditCn.entity.SectionPost">
+        <result column="spId" jdbcType="INTEGER" property="spId" />
+        <result column="suId" jdbcType="INTEGER" property="suId" />
+        <result column="spName" jdbcType="INTEGER" property="spName" />
+        <result column="spTime" jdbcType="TIMESTAMP" property="spTime" />
+        <result column="spBan" jdbcType="VARCHAR" property="spBan" />
+        <result column="spTheme" jdbcType="VARCHAR" property="spTheme" />
+        <result column="spSpecial" jdbcType="VARCHAR" property="spSepical" />
+        <result column="spVisit" jdbcType="INTEGER" property="spVisit" />
+    </resultMap>
+ 
+    <select id="Sel" resultType="com.example.RedditCn.entity.SectionPost">
+        select * from SectionPost where spId = #{spId}
+    </select>
+    
+    <update id="dropTable">  
+    	DROP TABLE IF EXISTS ${tableName} 
+  	</update>
+    
+ 	<update id="createTable" parameterType="String">  
+    	CREATE TABLE ${tableName} (
+      		`spId` int NOT NULL AUTO_INCREMENT,
+  			`suId` int NOT NULL,
+  			`spName` varchar(50) NOT NULL,
+  			`spTime` datetime NOT NULL,
+  			`spBan` varchar(5) NOT NULL,
+  			`spTheme` varchar(100) DEFAULT NULL,
+  			`spSpecial` varchar(10) NOT NULL,
+  			`spVisit` int NOT NULL,
+  			PRIMARY KEY (`spid`)
+    		) AUTO_INCREMENT=100001;
+  	</update>
+</mapper>
