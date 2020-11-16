@@ -7,6 +7,7 @@
         <banner></banner>
         <div id="contentbox">
             <div id="level">
+                
                 <blockLv></blockLv>
             </div>
         </div>
@@ -49,9 +50,10 @@ export default {
 
 }
 #contentbox{
-    background-color: #eeeeec;
+    /* background-color: #eeeeec; */
+    background-color: skyblue;
     position: relative;
-    top: -45px;
+    top: -25px;
     width: 1000px;
     height: 1000px;
     border: 2px solid white;

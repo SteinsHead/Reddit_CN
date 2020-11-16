@@ -24,8 +24,11 @@ export default {
                 'color':'grey',
                 'font-weight':'400',
                 'cursor':'pointer',
+                "border":"20px",
                 "border-radius":"5px",
-                "margin":"20px"
+                "margin-right":"8px",
+                "margin-left":"8px",
+                "transition":".5s ease-in-out",
             }
         }
     },
