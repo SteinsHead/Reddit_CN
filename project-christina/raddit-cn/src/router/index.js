@@ -4,6 +4,8 @@ import HelloWorld from '@/components/HelloWorld'
 import logo from '@/components/logo'
 import banner from '@/components/topBanner'
 import block from '@/components/topBlock'
+import page from '@/components/firstpage'
+import area from '@/components/areaBlock'
 
 Vue.use(Router)
 
@@ -27,7 +29,17 @@ export default new Router({
     {
       path: '/block',
       name: 'block',
-      component:block
+      component: block
+    },
+    {
+      path: '/firstpage',
+      name: 'page',
+      component: page,
+    },
+    {
+      path: '/area',
+      name: 'area',
+      component: area,
     },
   ]
 })
