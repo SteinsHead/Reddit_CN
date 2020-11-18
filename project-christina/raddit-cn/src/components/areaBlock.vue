@@ -1,5 +1,5 @@
 <template>
-  <div id="area">
+  <div id="areablock">
       <div class="title">
           <p>{{title}}</p>
       </div>
@@ -14,15 +14,14 @@
 
 <script>
 export default {
-name: "area",
+name: "areablock",
 data() {
-    return {
-        title: "分区A",
-        blockName: "板块A",
-        
+    return {  
     }
 },
-components:{
+props: {
+    title: "",
+    blockName: "",
 
 },
 }
@@ -30,7 +29,7 @@ components:{
 
 <style>
 
-#area {
+#areablock {
     margin: 50px;
     height: 200px;
     width: 150px;
