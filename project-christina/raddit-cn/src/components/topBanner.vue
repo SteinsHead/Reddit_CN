@@ -21,6 +21,7 @@
       ></search>
     </div>
     <div class="right">
+      <welcome v-html="welcomeMsg" :textStyle="welcomeStyle"></welcome>
       <logOut :label="logout" :textStyle="centerStyle"></logOut>
       <messAge :label="message" :textStyle="centerStyle"></messAge>
     </div>
@@ -38,14 +39,16 @@ export default {
       talkblock: "论坛",
       rankscore: "评分",
       download: "app下载",
+      welcomeMsg: "欢迎<br>christina",
       logout: "登出",
       message: "消息",
-      placeholder: "search...",
+      placeholder: "今天想搜索什么 ……",
       content_type: "text",
       style_parameter: {
         backgroundImage:
           "url('https://cdn.jsdelivr.net/gh/SteinsHead/ImageBed/img/2020/1597120574740.jpg')",
       },
+      welcomeStyle: {},
       centerStyle: {},
     };
   },
@@ -54,6 +57,7 @@ export default {
     talkBlock: block,
     rankScore: block,
     downLoad: block,
+    welcome: block,
     logOut: block,
     messAge: block,
     search: search,
