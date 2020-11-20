@@ -11,7 +11,7 @@
 import button from "@/components/button.vue"
 export default {
     components:{
-        myButton:button
+        myButton:button,
     },
     data() {
         return {
