@@ -1,7 +1,6 @@
 <template>
   <div id="toTop">
     <div class="Top" v-show="goTop" @click="Top">
-        {{TestFun}}
       <svg
         t="1606463888215"
         class="icon"
@@ -27,20 +26,38 @@ export default {
   name: "toTop",
   data() {
     return {
-      goTop: true,
+      goTop: false,
     };
   },
   props: {},
-  computed: {
-    TestFun: function () {
-      let scrolltop = document.body.scrollTop;
-      console.log(scrolltop);
-    },
+  mounted() {
+    window.addEventListener("scroll", this.TestFun);
   },
+  destroyed() {
+    window.removeEventListener("scroll", this.TestFun);
+  },
+  computed: {},
   methods: {
+    TestFun: function () {
+      let scrolltop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      if (scrolltop > 200) {
+        this.goTop = true;
+      } else {
+        this.goTop = false;
+      }
+    },
     Top: function () {
-      let scrolltop = document.body.scrollTop;
-      console.log(scrolltop);
+      let timer = setInterval(function () {
+        let top = document.documentElement.scrollTop;
+        let speed = Math.floor(-top / 10);
+        document.documentElement.scrollTop = top + speed;
+        if (top == 0) {
+          clearInterval(timer);
+        }
+      }, 10);
     },
   },
 };
