@@ -4,7 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import logo from '@/components/logo'
 import banner from '@/components/topBanner'
 import block from '@/components/topBlock'
-import page from '@/components/firstpage'
+import page from '@/Pages/firstpage'
 import area from '@/components/areaBlock'
 
 Vue.use(Router)
