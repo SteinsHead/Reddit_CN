@@ -15,6 +15,7 @@ export default {
     },
     data() {
         return {
+            content_control:0,
             whatButton1:"板块等级",
             whatButton2:"我的成就",
             whatButton3:"我的收藏",
@@ -42,20 +43,28 @@ export default {
             document.getElementById(idname).style.zIndex = 1;
         },
         select1:function(){
+            this.content_control = "1";
             this.setZIndex('bannerbutton1');
             document.getElementById("bannerbutton1").style.backgroundColor = "#eeeeec";
+            this.$emit("listenToChildEvent",this.content_control);
         },
         select2:function(){
+            this.content_control = "2";
             this.setZIndex('bannerbutton2');
             document.getElementById("bannerbutton2").style.backgroundColor = "#eeeeec";
+            this.$emit("listenToChildEvent",this.content_control);
         },
         select3:function(){
+            this.content_control = "3";
             this.setZIndex('bannerbutton3');
             document.getElementById("bannerbutton3").style.backgroundColor = "#eeeeec";
+            this.$emit("listenToChildEvent",this.content_control);
         },
         select4:function(){
+            this.content_control = "4";
             this.setZIndex('bannerbutton4');
             document.getElementById("bannerbutton4").style.backgroundColor = "#eeeeec";
+            this.$emit("listenToChildEvent",this.content_control);
         },
 
     }
