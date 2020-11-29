@@ -7,6 +7,7 @@
         <p id="evolve">
             成就：{{achievementName}}&nbsp;&nbsp;&nbsp;&nbsp;完成进度：{{nowEvolve}}/{{allEvolve}}
         </p>
+       
       </div>
       <myButton @click.native="getAchievement" :msg="msg"></myButton>
   </div>
@@ -46,7 +47,7 @@ export default {
     },
     methods: {
         getAchievement:function(){
-            if(this.msg != "已拥有")
+            if(this.msg != "已拥有" && this.canIGet)
                 this.msg = "已拥有";
             //获得此成就,,,,,
         }
@@ -69,14 +70,20 @@ export default {
     border-radius: 5px;
 
 }
+#achievement-content{
+   width: 100%;
+   display: flex;
+   justify-content: left;
+   margin-left: 30px;
+}
 #achievement-p{
     font-size: 12px;
     display: flex;
     flex-direction: column;
-    justify-content: left;
+    
     align-items: center;
 }
 #evolve{
-    margin-left: 500px;
+    margin-left: 400px;
 }
 </style>

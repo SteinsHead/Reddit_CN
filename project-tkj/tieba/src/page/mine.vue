@@ -18,13 +18,26 @@
         </div>
 
         <div v-if="content_control == 2" id="contentbox">
-            <achievement achievementName="魔法师" achievementDescribe="hahaha" nowEvolve="10" allEvolve="10"></achievement>
+            <achievement achievementName="魔法师" achievementDescribe="ads" nowEvolve="7" allEvolve="10"></achievement>
+            <achievement achievementName="大魔法师" achievementDescribe="gdddvsv" nowEvolve="6" allEvolve="10"></achievement>
+            <achievement achievementName="超级魔法师" achievementDescribe="zczcz" nowEvolve="3" allEvolve="10"></achievement>
+            <achievement achievementName="恶魔" achievementDescribe="ghngfnf" nowEvolve="2" allEvolve="10"></achievement>
+            <achievement achievementName="我曾踏足山峰" achievementDescribe="wrwev" nowEvolve="11" allEvolve="100"></achievement>
+            <achievement achievementName="也曾跌落低谷" achievementDescribe="hahaha" nowEvolve="10" allEvolve="1000"></achievement>
+
+        
         </div>
         <div v-if="content_control == 3" id="contentbox">
-            
+            <simpleTie block="游戏" owner="刚刚" theme="啊哈哈哈哈哈啊哈哈哈哈哈"></simpleTie>
+            <simpleTie block="游戏" owner="刚刚" theme="啊哈哈哈哈哈啊哈哈哈哈哈"></simpleTie>
+            <simpleTie block="游戏" owner="刚刚" theme="啊哈哈哈哈哈啊哈哈哈哈哈"></simpleTie>
+            <simpleTie block="游戏" owner="刚刚" theme="啊哈哈哈哈哈啊哈哈哈哈哈"></simpleTie>
         </div>
         <div v-if="content_control == 4" id="contentbox">
-            
+            <simpleTie block="游戏" owner="刚刚" theme="啊哈哈哈哈哈啊哈哈哈哈哈"></simpleTie>
+            <simpleTie block="游戏" owner="刚刚" theme="啊哈哈哈哈哈啊哈哈哈哈哈"></simpleTie>
+            <simpleTie block="游戏" owner="刚刚" theme="啊哈哈哈哈哈啊哈哈哈哈哈"></simpleTie>
+            <simpleTie block="游戏" owner="刚刚" theme="啊哈哈哈哈哈啊哈哈哈哈哈"></simpleTie>
         </div>
     </div>
     <!--返回顶部-->
@@ -35,6 +48,7 @@
 <script>
 import image1 from "@/assets/二乔.jpg"
 
+import simple_tie from "@/components/simple_tie.vue"
 import toTop from "@/components/toTop.vue"
 import achievement from "@/components/achievement.vue"
 import displayCase from "@/components/displayCase.vue"
@@ -43,6 +57,7 @@ import banner from "@/components/banner.vue"
 import blockLv from "@/components/blockLv.vue"
 import BlockLv from '../components/blockLv.vue'
 import Achievement from '../components/achievement.vue'
+import Simple_tie from '../components/simple_tie.vue'
 export default {
     components:{
         displayCase:displayCase,
@@ -50,7 +65,8 @@ export default {
         banner:banner,
         blockLv:blockLv,
         toTop:toTop,
-        achievement:achievement        
+        achievement:achievement,
+        simpleTie:simple_tie      
     },
     data() {
         return {
@@ -80,7 +96,8 @@ export default {
 }
 #contentbox{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     background-color: rgb(235, 243, 247);
     position: relative;
     top: -25px;
