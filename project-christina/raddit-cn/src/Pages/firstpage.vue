@@ -326,23 +326,6 @@ export default {
 </script>
 
 <style>
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-  background-color: #f5f5f5;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #10098f;
-}
-
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  background-color: #f5f5f5;
-}
 
 #page {
   display: flex;
@@ -351,7 +334,6 @@ export default {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  overflow-x: hidden;
 }
 
 .footercopy {

@@ -66,7 +66,7 @@ export default {
 <style>
 .Top {
   position: fixed;
-  bottom: 30px;
+  bottom: 20px;
   right: 30px;
   animation-name: top-to-down;
   animation-duration: 1s;
