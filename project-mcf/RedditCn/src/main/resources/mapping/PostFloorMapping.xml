@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.RedditCn.mapper.PostFloorMapper">
+ 
+    <resultMap id="BaseResultMap" type="com.example.RedditCn.entity.PostFloor">
+        <result column="pfId" jdbcType="INTEGER" property="pfId" />
+        <result column="suId" jdbcType="INTEGER" property="suId" />
+		<result column="pfIntroduce" jdbcType="VARCHAR" property="pfIntroduce" />
+		<result column="pfTime" jdbcType="TIMESTAMP" property="pfTime" />
+		<result column="pfBan" jdbcType="VARCHAR" property="pfBan" />
+		<result column="pfReply" jdbcType="INTEGER" property="pfReply" />
+		<result column="pfPhoto" jdbcType="VARCHAR" property="pfPhoto" />
+    </resultMap>
+ 
+    <select id="findAll" resultType="com.example.RedditCn.entity.PostFloor">
+        select * from ${tableName} 
+    </select>
+    
+    <select id="findByPfId" resultType="com.example.RedditCn.entity.PostFloor">
+        select * from ${tableName} where pfId = #{pfId}
+    </select>
+    
+    <update id="updatePfReply" parameterType="String">
+    	update ${tableName} set pfReply = pfReply + 1 where pfId = #{pfId}
+    </update>
+    
+    <update id="dropTable">  
+    	DROP TABLE IF EXISTS ${tableName} 
+  	</update>
+    
+ 	<update id="createTable" parameterType="String">  
+    	CREATE TABLE if not exists ${tableName} (
+      		`pfId` int not null auto_increment,
+      		`suId` int not null,
+      		`pfIntroduce` varchar(200) not null,
+      		`pfTime` Datetime not null,
+      		`pfBan` varchar(10) default null,
+      		`pfReply` int not null default 0,
+      		`pfPhoto` varchar(100) default null,
+  			PRIMARY KEY (`pfid`)
+    		) AUTO_INCREMENT=100001;
+  	</update>
+  	
+  	<insert id="insertPostFloor" parameterType="String" useGeneratedKeys="true" keyProperty="pfId">
+    	insert into ${tableName} (suId, pfIntroduce, pfTime, pfPhoto) values (#{suId}, #{pfIntroduce}, now(), #{pfPhoto})
+    </insert>
+</mapper>

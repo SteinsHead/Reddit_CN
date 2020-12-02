@@ -11,8 +11,32 @@
         <result column="prBan" jdbcType="VARCHAR" property="prBan" />
     </resultMap>
  
-    <select id="Sel" resultType="com.example.RedditCn.entity.PostReply">
-        select * from PostReply where prId = #{prId}
+    <select id="findBypfId" resultType="com.example.RedditCn.entity.PostReply">
+        select * from ${tableName} where pfId = #{pfId}
     </select>
- 
+    
+    <select id="findByprId" resultType="com.example.RedditCn.entity.PostReply">
+        select * from ${tableName} where prId = #{prId}
+    </select>
+ 	
+ 	<update id="dropTable">  
+    	DROP TABLE IF EXISTS ${tableName} 
+  	</update>
+  	
+  	<update id="createTable" parameterType="String">  
+    	CREATE TABLE if not exists ${tableName} (
+      		`prId` int not null auto_increment,
+      		`suId` int not null,
+      		`pfId` int not null,
+      		`prIntroduce` varchar(100) not null,
+      		`prTime` Datetime not null, 
+      		`prBan` varchar(10) default null,
+  			PRIMARY KEY (`prid`)
+    		) AUTO_INCREMENT=100001;
+  	</update>
+  	
+  	<insert id="insertPostReply" parameterType="String" useGeneratedKeys="true" keyProperty="prId">
+    	insert into ${tableName} (suId, pfId, prIntroduce, prTime) values (#{suId}, #{pfId}, #{prIntroduce}, now())
+    </insert>
+  	
 </mapper>
