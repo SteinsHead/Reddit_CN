@@ -4,7 +4,6 @@
     <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
     <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
     <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
-    <topavg></topavg>
     <div class="block">
       <areablock
         :title="blockLabel"
@@ -298,7 +297,6 @@ import banner from "@/components/topBanner";
 import areablock from "@/components/areaBlock";
 import navigater from "@/components/navigater";
 import footerspace from "@/components/footerSpace";
-import topAvg from '@/components/toTop';
 export default {
   name: "page",
   data() {
@@ -320,13 +318,11 @@ export default {
     areablock: areablock,
     naviGater: navigater,
     footerSpace: footerspace,
-    topavg: topAvg,
   },
 };
 </script>
 
 <style>
-
 #page {
   display: flex;
   flex-wrap: wrap;

@@ -78,4 +78,8 @@ export default {
     transform: translateY(-10px);
   }
 }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 2s ease-in-out;
+}
 </style>

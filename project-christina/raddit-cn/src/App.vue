@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
+    <topavg></topavg>
     <router-view />
   </div>
 </template>
 
 <script>
+import topAvg from "@/components/toTop";
 export default {
   name: "App",
+  components: {
+    topavg: topAvg,
+  },
 };
 </script>
 

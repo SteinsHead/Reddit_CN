@@ -16,14 +16,29 @@
       </div>
     </div>
     <div class="page">
-      <div class="area"></div>
-      <div class="msg"></div>
+      <div class="area">
+        <poster></poster>
+        <poster></poster>
+        <poster></poster>
+        <poster></poster>
+        <poster></poster>
+        <poster></poster>
+        <poster></poster>
+        <poster></poster>
+        <poster></poster>
+        <poster></poster>
+      </div>
+      <div class="msg">
+        <plateInfo></plateInfo>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import regist from "@/components/regist";
+import poster from "@/components/post";
+import plateInfo from "@/components/plateInfo";
 
 export default {
   name: "plate",
@@ -32,6 +47,8 @@ export default {
   },
   components: {
     regist: regist,
+    poster: poster,
+    plateInfo: plateInfo,
   },
 };
 </script>
@@ -86,8 +103,8 @@ export default {
 
 #plate .page .area {
   display: flex;
+  flex-wrap: wrap;
   flex: 5;
-  align-items: center;
   background-color: skyblue;
   margin-right: 5px;
   width: 100%;
@@ -96,11 +113,11 @@ export default {
 
 #plate .page .msg {
   display: flex;
+  flex-wrap: wrap;
   flex: 1;
   align-items: center;
   background-color: skyblue;
   margin-left: 5px;
-  height: 100px;
   width: 100%;
   border-radius: 5px;
 }
@@ -111,6 +128,7 @@ export default {
   margin-left: 10px;
   border-radius: 5px;
   box-shadow: 1px 2px 3px 0.4px;
+  cursor: pointer;
 }
 
 .top .pic img {
