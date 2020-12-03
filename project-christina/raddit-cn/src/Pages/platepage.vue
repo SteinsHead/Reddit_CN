@@ -10,6 +10,15 @@
             srcset=""
           />
         </div>
+        <div class="add">
+          <div class="add-post" @click="visible = true">
+            {{ addPost }}
+          </div>
+          <el-dialog :visible.sync="visible">
+            <addPoster></addPoster>
+          </el-dialog>
+          
+        </div>
       </div>
       <div class="register">
         <regist></regist>
@@ -17,16 +26,14 @@
     </div>
     <div class="page">
       <div class="area">
-        <poster></poster>
-        <poster></poster>
-        <poster></poster>
-        <poster></poster>
-        <poster></poster>
-        <poster></poster>
-        <poster></poster>
-        <poster></poster>
-        <poster></poster>
-        <poster></poster>
+        <poster
+          v-for="section in sections"
+          :key="section.sectionPostId"
+          :postcount="section.sectionPostVisit"
+          :posttitle="section.sectionPostName"
+          :postauthor="section.user.userName"
+          :posttime="section.sectionPostTime"
+        ></poster>
       </div>
       <div class="msg">
         <plateInfo></plateInfo>
@@ -39,16 +46,47 @@
 import regist from "@/components/regist";
 import poster from "@/components/post";
 import plateInfo from "@/components/plateInfo";
+import addPoster from "@/components/addPoster";
 
 export default {
   name: "plate",
   data() {
-    return {};
+    return {
+      addPost: "发帖",
+      sections: [],
+      visible: false,
+    };
   },
   components: {
     regist: regist,
     poster: poster,
     plateInfo: plateInfo,
+    addPoster: addPoster,
+  },
+  mounted() {
+    let that = this;
+    that
+      .axios({
+        method: "get",
+        url: "/sectionPost/findAllSectionPost",
+        params: {
+          sectionId: 100001,
+        },
+        headers: {
+          token:
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjEwMDAwMiwiZXhwIjoxNjA3MDAzNTI3fQ.BRC0bVPO0OHExNV47rwaJOpjRbtvnna6OhE6fB19Z-w",
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+        console.log(response.data[0]);
+        that.sections = response.data;
+        console.log(response.data[0].sectionPostId);
+        console.log(typeof response.data[0].sectionPostId);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   },
 };
 </script>
@@ -89,6 +127,27 @@ export default {
   height: 100px;
   width: 100%;
   border-radius: 5px;
+}
+
+#plate .sub-banner .top .add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 80px;
+}
+
+#plate .sub-banner .top .add .add-post {
+  text-align: center;
+  width: 100px;
+  height: 40px;
+  border-width: 0px;
+  border-radius: 5px;
+  background: #1E90FF;
+  line-height: 40px;
+  color: white;
+  outline: none;
+  cursor: pointer;
 }
 
 #plate .sub-banner .register {

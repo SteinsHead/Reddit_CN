@@ -75,6 +75,6 @@ export default {
 }
 
 #plateinfo .rule p {
-    margin: 10px;
+  margin: 10px;
 }
 </style>

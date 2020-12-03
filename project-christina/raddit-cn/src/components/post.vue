@@ -34,15 +34,22 @@
 export default {
   name: "poster",
   data() {
-    return {
-      postcount: "4321",
-      posttitle:
-        "各位小伙伴来分享壁纸啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊",
-      postauthor: "女王大人",
-      posttime: "2020-12-02",
-    };
+    return {};
   },
-  props: {},
+  props: {
+    postcount: {
+      type: Number,
+    },
+    posttitle: {
+      type: String,
+    },
+    postauthor: {
+      type: String,
+    },
+    posttime: {
+      type: String,
+    },
+  },
 };
 </script>
 
@@ -69,7 +76,7 @@ export default {
 }
 
 #poster .postcount p {
-    margin: 10px 0 0 0;
+  margin: 10px 0 0 0;
 }
 
 #poster .posttitle {
