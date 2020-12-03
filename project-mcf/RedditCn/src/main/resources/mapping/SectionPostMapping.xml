@@ -11,10 +11,15 @@
         <result column="spTheme" jdbcType="VARCHAR" property="spTheme" />
         <result column="spSpecial" jdbcType="VARCHAR" property="spSepical" />
         <result column="spVisit" jdbcType="INTEGER" property="spVisit" />
+        <result column="spPhoto" jdbcType="VARCHAR" property="spPhoto" />
     </resultMap>
  
-    <select id="Sel" resultType="com.example.RedditCn.entity.SectionPost">
-        select * from SectionPost where spId = #{spId}
+    <select id="findAll" resultType="com.example.RedditCn.entity.SectionPost">
+        select * from ${tableName} 
+    </select>
+    
+    <select id="findByspId" resultType="com.example.RedditCn.entity.SectionPost">
+        select * from ${tableName} where spId = #{spId} 
     </select>
     
     <update id="dropTable">  
@@ -22,16 +27,21 @@
   	</update>
     
  	<update id="createTable" parameterType="String">  
-    	CREATE TABLE ${tableName} (
+    	CREATE TABLE if not exists ${tableName} (
       		`spId` int NOT NULL AUTO_INCREMENT,
   			`suId` int NOT NULL,
-  			`spName` varchar(50) NOT NULL,
+  			`spName` varchar(200) NOT NULL,
   			`spTime` datetime NOT NULL,
-  			`spBan` varchar(5) NOT NULL,
+  			`spBan` varchar(10) default NULL,
   			`spTheme` varchar(100) DEFAULT NULL,
-  			`spSpecial` varchar(10) NOT NULL,
-  			`spVisit` int NOT NULL,
+  			`spSpecial` varchar(10) default NULL,
+  			`spVisit` int NOT NULL default 0,
+  			`spPhoto` varchar(100) default null,
   			PRIMARY KEY (`spid`)
     		) AUTO_INCREMENT=100001;
   	</update>
+  	
+  	<insert id="insertSectionPost" parameterType="com.example.RedditCn.entity.SectionPost" useGeneratedKeys="true" keyProperty="spId">
+    	insert into ${tableName} (suId, spName, spTime, spPhoto) values (#{suId}, #{spName}, now(), #{spPhoto})
+    </insert>
 </mapper>

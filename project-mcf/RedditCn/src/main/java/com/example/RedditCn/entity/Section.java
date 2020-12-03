@@ -1,145 +1,160 @@
 package com.example.RedditCn.entity;
 
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedHashMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.alibaba.fastjson.JSONObject;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Section {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "sid")
-	private int sId;
+	private int sid;
 	@Column(name = "sname")
-	private String sName;
+	private String sname;
 	@Column(name = "sintroduce")
-	private String sIntroduce;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
+	private String sintroduce;
+	@CreatedDate
 	@Column(name = "stime")
-	private Date sTime;
+	private Date stime;
 	@Column(name = "uid")
-	private int uId;
+	private int uid;
 	@Column(name = "sfollow")
-	private int sFollow;
+	private int sfollow;
 	@Column(name = "sban")
-	private String sBan;
+	private String sban;
 	@Column(name = "spublish")
-	private int sPublish;
+	private int spublish;
 	@Column(name = "stheme")
-	private String sTheme;
+	private String stheme;
 	@Column(name = "svisit")
-	private int sVisit;
+	private int svisit;
 	@Column(name = "sphoto")
-	private String sPhoto;
+	private String sphoto;
 
 	protected Section() {
 
 	}
 
-	public Section(String sName, String sIntroduce, Date sTime, int uId, int sFollow, String sBan, int sPublish,
-			int sVisit) {
-		this.sName = sName;
-		this.sIntroduce = sIntroduce;
-		this.sTime = sTime;
-		this.uId = uId;
-		this.sFollow = sFollow;
-		this.sBan = sBan;
-		this.sPublish = sPublish;
-		this.sVisit = sVisit;
+	public Section(String sName, String sIntroduce, int uId, String sPhoto) {
+		this.sname = sName;
+		this.sintroduce = sIntroduce;
+		this.uid = uId;
+		this.sphoto = sPhoto;
 	}
 
-	public int getsId() {
-		return sId;
+	public String toString() {
+		JSONObject jsonObject = new JSONObject(new LinkedHashMap<String, Object>());
+		jsonObject.put("sId", sid);
+		jsonObject.put("sName", sname);
+		jsonObject.put("sIntroduce", sintroduce);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		jsonObject.put("sTime", sdf.format(stime));
+		jsonObject.put("sFollow", sfollow);
+		jsonObject.put("sPublish", spublish);
+		jsonObject.put("sVisit", svisit);
+		jsonObject.put("sPhoto", sphoto);
+		return jsonObject.toString();
 	}
 
-	public void setsId(int sId) {
-		this.sId = sId;
+	public int getSid() {
+		return sid;
 	}
 
-	public String getsName() {
-		return sName;
+	public void setSid(int sid) {
+		this.sid = sid;
 	}
 
-	public void setsName(String sName) {
-		this.sName = sName;
+	public String getSname() {
+		return sname;
+	}
+
+	public void setSname(String sname) {
+		this.sname = sname;
 	}
 
 	public String getsIntroduce() {
-		return sIntroduce;
+		return sintroduce;
 	}
 
-	public void setsIntroduce(String sIntroduce) {
-		this.sIntroduce = sIntroduce;
+	public void setsIntroduce(String sintroduce) {
+		this.sintroduce = sintroduce;
 	}
 
-	public Date getsTime() {
-		return sTime;
+	public Date getStime() {
+		return stime;
 	}
 
-	public void setsTime(Date sTime) {
-		this.sTime = sTime;
+	public void setStime(Date stime) {
+		this.stime = stime;
 	}
 
-	public int getuId() {
-		return uId;
+	public int getUid() {
+		return uid;
 	}
 
-	public void setuId(int uId) {
-		this.uId = uId;
+	public void setUid(int uid) {
+		this.uid = uid;
 	}
 
-	public int getsFollow() {
-		return sFollow;
+	public int getSfollow() {
+		return sfollow;
 	}
 
-	public void setsFollow(int sFollow) {
-		this.sFollow = sFollow;
+	public void setSfollow(int sfollow) {
+		this.sfollow = sfollow;
 	}
 
-	public String getsBan() {
-		return sBan;
+	public String getSban() {
+		return sban;
 	}
 
-	public void setsBan(String sBan) {
-		this.sBan = sBan;
+	public void setSban(String sban) {
+		this.sban = sban;
 	}
 
-	public int getsPublish() {
-		return sPublish;
+	public int getSpublish() {
+		return spublish;
 	}
 
-	public void setsPublish(int sPublish) {
-		this.sPublish = sPublish;
+	public void setSpublish(int spublish) {
+		this.spublish = spublish;
 	}
 
-	public String getsTheme() {
-		return sTheme;
+	public String getStheme() {
+		return stheme;
 	}
 
-	public void setsTheme(String sTheme) {
-		this.sTheme = sTheme;
+	public void setStheme(String stheme) {
+		this.stheme = stheme;
 	}
 
-	public int getsVisit() {
-		return sVisit;
+	public String getSphoto() {
+		return sphoto;
 	}
 
-	public void setsVisit(int sVisit) {
-		this.sVisit = sVisit;
+	public void setSphoto(String sphoto) {
+		this.sphoto = sphoto;
 	}
 
-	public String getsPhoto() {
-		return sPhoto;
+	public int getSvisit() {
+		return svisit;
 	}
 
-	public void setsPhoto(String sPhoto) {
-		this.sPhoto = sPhoto;
+	public void setSvisit(int svisit) {
+		this.svisit = svisit;
 	}
-
 }

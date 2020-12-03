@@ -1,17 +1,50 @@
 package com.example.RedditCn.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PostReply {
+	@JsonIgnore
+	private String tableName;
+	@JsonProperty("postReplyId")
 	private int prId;
+	@JsonIgnore
 	private int suId;
+	@JsonProperty("postFloorId")
 	private int pfId;
+	@JsonProperty("postReplyIntroduce")
 	private String prIntroduce;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
+	@JsonProperty("postReplyTime")
 	private Date prTime;
+	@JsonIgnore
 	private String prBan;
+
+	protected PostReply() {
+
+	}
+
+	public PostReply(String tableName, int suId, int pfId, String prIntroduce) {
+		this.tableName = tableName;
+		this.suId = suId;
+		this.pfId = pfId;
+		this.prIntroduce = prIntroduce;
+	}
+
+	public String toString() {
+		JSONObject jsonObject = new JSONObject(new LinkedHashMap<String, Object>());
+		jsonObject.put("prId", prId);
+		jsonObject.put("prIntroduce", prIntroduce);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		jsonObject.put("prTime", sdf.format(prTime));
+		return jsonObject.toJSONString();
+	}
 
 	public int getPrId() {
 		return prId;
@@ -61,9 +94,11 @@ public class PostReply {
 		this.prBan = prBan;
 	}
 
-	@Override
-	public String toString() {
-		return "PostReply{" + "prId=" + prId + ", suId=" + suId + ", pfId=" + pfId + ", prIntroduce='" + prIntroduce
-				+ '\'' + ", prTime='" + prTime + '\'' + ", prBan='" + prBan + '\'' + '}';
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
 	}
 }

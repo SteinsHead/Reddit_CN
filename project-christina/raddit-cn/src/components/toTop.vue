@@ -66,7 +66,7 @@ export default {
 <style>
 .Top {
   position: fixed;
-  bottom: 30px;
+  bottom: 20px;
   right: 30px;
   animation-name: top-to-down;
   animation-duration: 1s;
@@ -77,5 +77,9 @@ export default {
   50% {
     transform: translateY(-10px);
   }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 2s ease-in-out;
 }
 </style>

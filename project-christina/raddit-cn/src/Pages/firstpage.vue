@@ -4,7 +4,6 @@
     <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
     <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
     <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
-    <topavg></topavg>
     <div class="block">
       <areablock
         :title="blockLabel"
@@ -298,7 +297,6 @@ import banner from "@/components/topBanner";
 import areablock from "@/components/areaBlock";
 import navigater from "@/components/navigater";
 import footerspace from "@/components/footerSpace";
-import topAvg from '@/components/toTop';
 export default {
   name: "page",
   data() {
@@ -320,30 +318,11 @@ export default {
     areablock: areablock,
     naviGater: navigater,
     footerSpace: footerspace,
-    topavg: topAvg,
   },
 };
 </script>
 
 <style>
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-  background-color: #f5f5f5;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #10098f;
-}
-
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  background-color: #f5f5f5;
-}
-
 #page {
   display: flex;
   flex-wrap: wrap;

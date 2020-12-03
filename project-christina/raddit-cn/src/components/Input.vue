@@ -22,14 +22,13 @@ export default {
 <style scope>
 #base_input {
   padding: 0px;
-  border: none;
   height: 30px;
   padding-left: 22px;
   background-size: 20px;
+  border-radius: 5px;
   background-repeat: no-repeat;
   background-position-x: left;
   background-position-y: center;
   transition: 0.5s ease-in-out;
-  margin: 10px;
 }
 </style>
