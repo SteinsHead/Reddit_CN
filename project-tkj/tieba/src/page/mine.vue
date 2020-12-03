@@ -4,11 +4,10 @@
     <imageFrame :imageSrc="image"></imageFrame>
     <div id="mainbox">
         <span id="username">{{name}}</span>
+        <span id="myCoin">我的金币:{{coin}}</span>
         <banner @listenToChildEvent="showMsg"></banner>
-        <div v-if="content_control == 0" id="contentbox">
-            
-        </div>
-        <div v-if="content_control == 1" id="contentbox">
+        
+        <div v-if="content_control == 1" id="contentbox1">
             <div id="level">
                 <blockLv></blockLv>
             </div>
@@ -18,7 +17,7 @@
         </div>
 
         <div v-if="content_control == 2" id="contentbox">
-            <achievement achievementName="魔法师" achievementDescribe="ads" nowEvolve="7" allEvolve="10"></achievement>
+            <achievement achievementName="魔法师" achievementDescribe="ads" nowEvolve="10" allEvolve="10"></achievement>
             <achievement achievementName="大魔法师" achievementDescribe="gdddvsv" nowEvolve="6" allEvolve="10"></achievement>
             <achievement achievementName="超级魔法师" achievementDescribe="zczcz" nowEvolve="3" allEvolve="10"></achievement>
             <achievement achievementName="恶魔" achievementDescribe="ghngfnf" nowEvolve="2" allEvolve="10"></achievement>
@@ -70,8 +69,9 @@ export default {
     },
     data() {
         return {
-            content_control:0,
+            content_control:1,
             name:"  人定胜天!",
+            coin:20,
             image:image1,
         }
     },
@@ -89,6 +89,10 @@ export default {
     left: -200px;
 }
 #mainbox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-color: #eeeeec;
     position: relative;
     top: -120px;
@@ -105,7 +109,23 @@ export default {
     height: 1000px;
     border: 2px solid white;
 }
+#contentbox1{
+    display:flex;
+    background-color: rgb(235, 243, 247);
+    position: relative;
+    top: -25px;
+    width: 1000px;
+    height: 1000px;
+    border: 2px solid white;
+}
 #level{
+    position: relative;
     margin: 30px;
+}
+#myCoin{
+    margin-top: 30px;
+    font-size: 12px;
+    position: relative;
+    left: -200px;
 }
 </style>

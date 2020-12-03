@@ -9,7 +9,7 @@
         </p>
        
       </div>
-      <myButton @click.native="getAchievement" :msg="msg"></myButton>
+      <myButton :style_parameter="style"  @click.native="getAchievement" :msg="msg"></myButton>
   </div>
 </template>
 
@@ -27,22 +27,28 @@ export default {
     },
     props:{
         achievementDescribe:String,
-        nowEvolve:Number,
-        allEvolve:Number,
+        nowEvolve:String,
+        allEvolve:String,
         achievementName:String,
     },
     watch: {
         nowEvolve:function(newVal,oldVal){
             if(newVal == this.allEvolve){
+
                 this.msg = "点击领取";
                 this.canIGet = true;
+                this.style.backgroundColor ='#3f89ec';
+                
             }
         }
     },
     data() {
         return {
             msg:"未完成",
-            canIGet:false
+            canIGet:false,
+            style:{
+                'backgroundColor':""
+            }
         }
     },
     methods: {
