@@ -16,11 +16,12 @@
       <div id="floor-bottom">
         <div id="floor-message">
             <span class="span1">{{storey}}楼</span>
-            <span class="span1">{{getTime}}</span>
-            <span class="span1" id="show-reply" @click="showReply">回复({{replyNum}})</span>
+            <span class="span1">{{replyTime}}</span>
+            <span class="span1" id="replyThisFloor" @click="replyThisFloor">回复本层</span>
+            <span class="span1" id="show-reply" @click="showReply">查看评论({{replyNum}})</span>
         </div>
         <div id="floor-reply" v-show="isShowReply" v-for="mReply in reply" :key="mReply.id">
-            <reply :from="mReply.from" :to="mReply.to" :content="mReply.replyContent"></reply>
+            <reply @click.native="floorReply(mReply.from)" :from="mReply.from" :to="mReply.to" :content="mReply.replyContent"></reply>
         </div>
   </div>
   </div>
@@ -42,6 +43,7 @@ export default {
         content:String,
         storey:Number,
         replyNum:Number,
+        replyTime:String,
         reply:{
             type:Array,
             default(){
@@ -53,12 +55,6 @@ export default {
     data() {
         return {
             isShowReply:false,
-            // reply:4,
-            // headImage:"https://ae03.alicdn.com/kf/H3e674eece2004db28ae4387dae2406eap.jpg",
-            // name:"爱唱歌的向日葵",
-            // level:12,
-            // achievement:"后起之秀",
-            // content:"王世钢喜欢马晨峰是怎么回事呢，为什么王世钢喜欢马晨峰呢，王世钢喜欢马晨峰就是这么回事"
         }
     },
     computed:{
@@ -68,8 +64,19 @@ export default {
         }
     },
     methods: {
+        replyThisFloor:function(){
+            this.isShowReply = !this.isShowReply;
+            this.$parent.isShowCommet =!this.$parent.isShowCommet;
+            this.$parent.To = this.name;
+            this.$parent.where = this.storey;
+        },
         showReply:function(){
             this.isShowReply = !this.isShowReply;
+        },
+        floorReply:function(From){
+                this.$parent.isShowCommet =!this.$parent.isShowCommet;
+                this.$parent.To = From;
+                this.$parent.where = this.storey;
         }
     },
 }
@@ -120,6 +127,9 @@ export default {
     justify-content: space-around;
 }
 #show-reply{
+    cursor: pointer;
+}
+#replyThisFloor{
     cursor: pointer;
 }
 </style>
