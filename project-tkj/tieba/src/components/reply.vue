@@ -18,5 +18,6 @@ export default {
     display: flex;
     justify-content: left;
     font-size: 12px;
+    cursor: pointer;
 }
 </style>

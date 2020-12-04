@@ -3,7 +3,7 @@
     <displayCase :image="image"></displayCase>
     <imageFrame :imageSrc="image"></imageFrame>
     <div id="mainbox">
-        <span id="username">{{name}}</span>
+        <span @click="showRouter" id="username">{{name}}</span>
         <span id="myCoin">我的金币:{{coin}}</span>
         <banner @listenToChildEvent="showMsg"></banner>
         
@@ -78,6 +78,9 @@ export default {
     methods: {
         showMsg:function(data){
             this.content_control = data;
+        },
+        showRouter:function(){
+            console.log(this.$route.params.token);
         }
     },
 }

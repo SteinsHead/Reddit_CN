@@ -21,6 +21,7 @@ export default {
     height: 36px;
     cursor: pointer;
     overflow: hidden;
+    z-index: 10;
 
 }
 #commet-img{

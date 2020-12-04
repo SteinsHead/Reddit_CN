@@ -1,7 +1,7 @@
 <template>
     <div>
-        <input :placeholder="placeholder" 
-        :style="style_parameter" id="base_input" 
+        <input @input="input" :placeholder="placeholder" 
+        :style="style_parameter" class="base_input" 
         :type="content_type"> 
     </div>
 </template>
@@ -15,11 +15,21 @@ export default{
 
         }
     },
+    methods: {
+        input:function(e){
+            this.value = e.target.value;
+        }
+    },
+    data() {
+        return {
+            value:"",
+        }
+    },
 };
 </script>
 
 <style scope>
-    #base_input{
+    .base_input{
         padding: 0px;
         border: none;
         height: 30px;
