@@ -13,7 +13,7 @@
     </resultMap>
  
     <select id="findAll" resultType="com.example.RedditCn.entity.PostFloor">
-        select * from ${tableName} 
+        select * from ${tableName} where pfBan is null
     </select>
     
     <select id="findByPfId" resultType="com.example.RedditCn.entity.PostFloor">
@@ -22,6 +22,10 @@
     
     <update id="updatePfReply" parameterType="String">
     	update ${tableName} set pfReply = pfReply + 1 where pfId = #{pfId}
+    </update>
+    
+    <update id="updatePfBan" parameterType="String">
+    	update ${tableName} set pfBan = #{pfBan} where pfId = #{pfId}
     </update>
     
     <update id="dropTable">  
@@ -36,7 +40,7 @@
       		`pfTime` Datetime not null,
       		`pfBan` varchar(10) default null,
       		`pfReply` int not null default 0,
-      		`pfPhoto` varchar(100) default null,
+      		`pfPhoto` varchar(500) default null,
   			PRIMARY KEY (`pfid`)
     		) AUTO_INCREMENT=100001;
   	</update>

@@ -13,6 +13,7 @@ import com.example.RedditCn.BusinessObject.UserBO;
 import com.example.RedditCn.annotation.UserLoginToken;
 import com.example.RedditCn.entity.SectionUser;
 import com.example.RedditCn.entity.User;
+import com.example.RedditCn.service.SectionService;
 import com.example.RedditCn.service.SectionUserService;
 import com.example.RedditCn.service.TokenUtils;
 import com.example.RedditCn.service.UserSectionService;
@@ -27,6 +28,8 @@ public class SectionUserController {
 	UserSectionService userSectionService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	SectionService sectionService;
 
 	@UserLoginToken
 	@PostMapping("/insertSectionUser")
@@ -35,7 +38,10 @@ public class SectionUserController {
 		int uId = TokenUtils.verify(token);
 		int suId = sectionUserService.insertSectionUser(sId, uId, null);
 		userSectionService.insertUserSection(uId, sId, suId);
-		return new SectionUserBO(sectionUserService.findSectionUserByuId(sId, suId));
+		userService.updateUserFollow(uId);
+		sectionService.updateSectionFollow(sId);
+		System.out.println("版块-" + sId + "-注册用户-" + suId);
+		return new SectionUserBO(sectionUserService.findSectionUserByuId(sId, uId));
 	}
 
 	@UserLoginToken
@@ -44,6 +50,7 @@ public class SectionUserController {
 			@RequestParam(value = "sectionId") int sId) {
 		SectionUser sectionUser = sectionUserService.findSectionCreater(sId);
 		User user = userService.findUserById(sectionUser.getuId());
+		System.out.println("版块-" + sId + "-寻找创建者");
 		return new UserBO(user, sectionUser);
 	}
 }

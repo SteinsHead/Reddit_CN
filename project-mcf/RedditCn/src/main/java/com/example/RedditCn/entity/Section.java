@@ -49,11 +49,12 @@ public class Section {
 
 	}
 
-	public Section(String sName, String sIntroduce, int uId, String sPhoto) {
+	public Section(String sName, String sIntroduce, int uId, String sPhoto, int sFollow) {
 		this.sname = sName;
 		this.sintroduce = sIntroduce;
 		this.uid = uId;
 		this.sphoto = sPhoto;
+		this.sfollow = sFollow;
 	}
 
 	public String toString() {

@@ -27,4 +27,19 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	@Modifying(clearAutomatically = true)
 	@Query(value = "update user set uemail = ?1 where uid = ?2", nativeQuery = true)
 	public void updateUserEmail(String uEmail, int uId);
+
+	@Transactional
+	@Modifying(clearAutomatically = true)
+	@Query(value = "update user set uintroduce = ?1 where uid = ?2", nativeQuery = true)
+	public void updateUserIntroduce(String uIntroduce, int uId);
+
+	@Transactional
+	@Modifying(clearAutomatically = true)
+	@Query(value = "update user set ufollow = ufollow + 1 where uid = ?1", nativeQuery = true)
+	public void updateUserFollow(int uId);
+
+	@Transactional
+	@Modifying(clearAutomatically = true)
+	@Query(value = "update user set upublish = upublish + 1 where uid = ?1", nativeQuery = true)
+	public void updateUserPublish(int uId);
 }

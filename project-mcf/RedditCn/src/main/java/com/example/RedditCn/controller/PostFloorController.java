@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.RedditCn.BusinessObject.PostFloorBO;
 import com.example.RedditCn.BusinessObject.UserBO;
+import com.example.RedditCn.annotation.UserIsSectionAdmin;
+import com.example.RedditCn.annotation.UserIsSectionPostAdmin;
 import com.example.RedditCn.annotation.UserLoginToken;
 import com.example.RedditCn.entity.PostFloor;
 import com.example.RedditCn.service.PostFloorService;
+import com.example.RedditCn.service.SectionPostService;
 import com.example.RedditCn.service.TokenUtils;
 import com.example.RedditCn.service.UserSectionService;
 import com.example.RedditCn.service.UserService;
@@ -29,6 +32,8 @@ public class PostFloorController {
 	private UserSectionService userSectionService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private SectionPostService sectionPostService;
 
 	@UserLoginToken
 	@PostMapping("/insertPostFloor")
@@ -38,6 +43,8 @@ public class PostFloorController {
 			@RequestParam(value = "postFloorPhoto") String pfPhoto) {
 		int suId = userSectionService.findUserSectionBuuIdAndsId(TokenUtils.verify(token), sId).getSuid();
 		int pfId = postFloorService.insertPostFloor(sId, spId, suId, pfIntroduce, pfPhoto);
+		sectionPostService.updateSectionPostFloor(sId, spId);
+		System.out.println("版块-" + sId + "-帖子-" + spId + "-新建楼层-" + pfId);
 		return postFloorService.findPostFloorBypfId(sId, spId, pfId);
 	}
 
@@ -50,6 +57,18 @@ public class PostFloorController {
 		for (int i = 0; i < list1.size(); i++) {
 			list2.add(userService.createUserBO(sId, list1.get(i).getSuId()));
 		}
+		System.out.println("版块-" + sId + "-帖子-" + spId + "-寻找所有楼层");
 		return new PostFloorBO().ListPostFloorBO(list1, list2);
+	}
+
+	@UserIsSectionAdmin
+	@UserIsSectionPostAdmin
+	@UserLoginToken
+	@PostMapping("/banPostFloor")
+	public boolean banPostFloor(@RequestHeader(value = "token") String token,
+			@RequestParam(value = "sectionId") int sId, @RequestParam(value = "sectionPostId") int spId,
+			@RequestParam(value = "postFloorId") int pfId) {
+		System.out.println("版块-" + sId + "-帖子-" + spId + "-封禁楼层-" + pfId);
+		return postFloorService.updatePostFloorban(sId, spId, pfId, "ban");
 	}
 }

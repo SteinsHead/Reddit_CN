@@ -72,8 +72,6 @@ public class UserService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findUserInformationFailed());
 		}
-		if (user == null)
-			throw new RuntimeException(ErrorJsonObject.userNotExist());
 		return user;
 	}
 
@@ -103,6 +101,36 @@ public class UserService {
 			}
 		} else {
 			throw new RuntimeException(ErrorJsonObject.emailExist());
+		}
+		return true;
+	}
+
+	public boolean updateUserIntroduce(int uId, String uIntroduce) {
+		try {
+			userRepository.updateUserIntroduce(uIntroduce, uId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.updateIntroduceFailed());
+		}
+		return true;
+	}
+
+	public boolean updateUserFollow(int uId) {
+		try {
+			userRepository.updateUserFollow(uId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.updateUserFollowFailed());
+		}
+		return true;
+	}
+
+	public boolean updateUserPublish(int uId) {
+		try {
+			userRepository.updateUserPublish(uId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.updateSectionPublishFailed());
 		}
 		return true;
 	}

@@ -19,6 +19,7 @@ import com.example.RedditCn.service.SectionUserPostService;
 import com.example.RedditCn.service.SectionUserService;
 import com.example.RedditCn.service.TokenUtils;
 import com.example.RedditCn.service.UserSectionService;
+import com.example.RedditCn.service.UserService;
 
 @RestController
 @RequestMapping("/section")
@@ -33,12 +34,15 @@ public class SectionController {
 	private SectionPostService sectionPostService;
 	@Autowired
 	private SectionUserPostService sectionUserPostService;
+	@Autowired
+	private UserService userService;
 
 	// 查找所有版块
 	@UserLoginToken
 	@GetMapping("/findAllSection")
 	public List<SectionBO> findAllSection() {
 		List<Section> list = sectionService.findAll();
+		System.out.println("寻找所有版块");
 		return new SectionBO().ListSectionBO(list);
 	}
 
@@ -57,6 +61,8 @@ public class SectionController {
 		sectionUserPostService.createSectionUserPostTable(sId);
 		int suId = sectionUserService.insertSectionUser(sId, uId, "creater");
 		userSectionService.insertUserSection(uId, sId, suId);
+		userService.updateUserFollow(uId);
+		System.out.print("新建版块-" + sId);
 		return new SectionBO(section);
 	}
 }

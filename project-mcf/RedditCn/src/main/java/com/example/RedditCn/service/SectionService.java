@@ -31,8 +31,6 @@ public class SectionService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findSectionBysIdFailed());
 		}
-		if (section == null)
-			throw new RuntimeException(ErrorJsonObject.sectionNotExist());
 		return section;
 	}
 
@@ -44,8 +42,6 @@ public class SectionService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findSectionBysNameFailed());
 		}
-		if (section == null)
-			throw new RuntimeException(ErrorJsonObject.sectionNotExist());
 		return section;
 	}
 
@@ -54,7 +50,7 @@ public class SectionService {
 			try {
 				if (sPhoto.equals(""))
 					sPhoto = null;
-				Section section = new Section(sName, sIntroduce, uId, sPhoto);
+				Section section = new Section(sName, sIntroduce, uId, sPhoto, 1);
 				sectionRepository.saveAndFlush(section);
 				return section;
 			} catch (Exception e) {
@@ -63,5 +59,25 @@ public class SectionService {
 		} else {
 			throw new RuntimeException(ErrorJsonObject.sectionNameExist());
 		}
+	}
+
+	public boolean updateSectionFollow(int sId) {
+		try {
+			sectionRepository.updateSectionFollow(sId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.updateSectionFollowFailed());
+		}
+		return true;
+	}
+
+	public boolean updateSectionPublish(int sId) {
+		try {
+			sectionRepository.updateSectionPublish(sId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.updateSectionPublishFailed());
+		}
+		return true;
 	}
 }

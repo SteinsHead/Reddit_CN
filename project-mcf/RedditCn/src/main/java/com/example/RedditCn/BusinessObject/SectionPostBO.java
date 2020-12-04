@@ -7,11 +7,12 @@ import java.util.List;
 import com.example.RedditCn.entity.SectionPost;
 
 public class SectionPostBO {
-	private int sctionPostId;
-	private String sctionPostName;
-	private String sctionPostTime;
-	private int sctionPostVisit;
-	private String sctionPostPhoto;
+	private int sectionPostId;
+	private String sectionPostName;
+	private String sectionPostTime;
+	private int sectionPostFloor;
+	private int sectionPostVisit;
+	private String sectionPostPhoto;
 	private UserBO user;
 
 	public SectionPostBO() {
@@ -19,12 +20,13 @@ public class SectionPostBO {
 	}
 
 	public SectionPostBO(SectionPost sectionPost, UserBO user) {
-		this.setSctionPostId(sectionPost.getSpId());
-		this.setSctionPostName(sectionPost.getSpName());
+		this.setSectionPostId(sectionPost.getSpId());
+		this.setSectionPostName(sectionPost.getSpName());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		this.setSctionPostTime(sdf.format(sectionPost.getSpTime()));
-		this.setSctionPostVisit(sectionPost.getSpVisit());
-		this.setSctionPostPhoto(sectionPost.getSpPhoto());
+		this.setSectionPostTime(sdf.format(sectionPost.getSpTime()));
+		this.setSectionPostFloor(sectionPost.getSpFloor());
+		this.setSectionPostVisit(sectionPost.getSpVisit());
+		this.setSectionPostPhoto(sectionPost.getSpPhoto());
 		this.setUser(user);
 	}
 
@@ -36,44 +38,44 @@ public class SectionPostBO {
 		return l;
 	}
 
-	public int getSctionPostId() {
-		return sctionPostId;
+	public int getSectionPostId() {
+		return sectionPostId;
 	}
 
-	public void setSctionPostId(int sctionPostId) {
-		this.sctionPostId = sctionPostId;
+	public void setSectionPostId(int sectionPostId) {
+		this.sectionPostId = sectionPostId;
 	}
 
-	public String getSctionPostName() {
-		return sctionPostName;
+	public String getSectionPostName() {
+		return sectionPostName;
 	}
 
-	public void setSctionPostName(String sctionPostName) {
-		this.sctionPostName = sctionPostName;
+	public void setSectionPostName(String sectionPostName) {
+		this.sectionPostName = sectionPostName;
 	}
 
-	public String getSctionPostTime() {
-		return sctionPostTime;
+	public String getSectionPostTime() {
+		return sectionPostTime;
 	}
 
-	public void setSctionPostTime(String sctionPostTime) {
-		this.sctionPostTime = sctionPostTime;
+	public void setSectionPostTime(String sectionPostTime) {
+		this.sectionPostTime = sectionPostTime;
 	}
 
-	public int getSctionPostVisit() {
-		return sctionPostVisit;
+	public int getSectionPostVisit() {
+		return sectionPostVisit;
 	}
 
-	public void setSctionPostVisit(int sctionPostVisit) {
-		this.sctionPostVisit = sctionPostVisit;
+	public void setSectionPostVisit(int sectionPostVisit) {
+		this.sectionPostVisit = sectionPostVisit;
 	}
 
-	public String getSctionPostPhoto() {
-		return sctionPostPhoto;
+	public String getSectionPostPhoto() {
+		return sectionPostPhoto;
 	}
 
-	public void setSctionPostPhoto(String sctionPostPhoto) {
-		this.sctionPostPhoto = sctionPostPhoto;
+	public void setSectionPostPhoto(String sectionPostPhoto) {
+		this.sectionPostPhoto = sectionPostPhoto;
 	}
 
 	public UserBO getUser() {
@@ -82,6 +84,14 @@ public class SectionPostBO {
 
 	public void setUser(UserBO user) {
 		this.user = user;
+	}
+
+	public int getSectionPostFloor() {
+		return sectionPostFloor;
+	}
+
+	public void setSectionPostFloor(int sectionPostFloor) {
+		this.sectionPostFloor = sectionPostFloor;
 	}
 
 }

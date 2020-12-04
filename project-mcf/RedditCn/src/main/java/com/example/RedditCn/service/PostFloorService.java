@@ -33,21 +33,17 @@ public class PostFloorService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findAllPostFloorFailed());
 		}
-		if (list == null)
-			throw new RuntimeException(ErrorJsonObject.postFloorNotExist());
 		return list;
 	}
 
 	public PostFloor findPostFloorBypfId(int sId, int spId, int pfId) {
 		PostFloor postFloor;
 		try {
-			postFloor = postFloorMapper.findBypfId(tableName1 + sId + tableName2 + spId, pfId);
+			postFloor = postFloorMapper.findByPfId(tableName1 + sId + tableName2 + spId, pfId);
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findPostFloorBypfIdFailed());
 		}
-		if (postFloor == null)
-			throw new RuntimeException(ErrorJsonObject.postFloorNotExist());
 		return postFloor;
 	}
 
@@ -71,5 +67,15 @@ public class PostFloorService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.updatePostFloorReplyFailed());
 		}
+	}
+
+	public boolean updatePostFloorban(int sId, int spId, int pfId, String spBan) {
+		try {
+			postFloorMapper.updatePfBan(tableName1 + sId + tableName2 + spId, spBan, pfId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.updatePostFloorBanFailed());
+		}
+		return true;
 	}
 }
