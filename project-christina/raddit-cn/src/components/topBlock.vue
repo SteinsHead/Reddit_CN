@@ -1,12 +1,7 @@
 <template>
   <div id="block">
     <div class="label" :style="textStyle">
-      <a
-        href="www.baidu.com"
-        style="text-decoration: none"
-        :style="hrefStyle"
-        >{{ label }}</a
-      >
+      <p>{{ label }}</p>
     </div>
   </div>
 </template>
@@ -20,9 +15,6 @@ export default {
   props: {
     label: "",
     textStyle: {},
-    hrefStyle: {
-      corsur: "pointer",
-    },
   },
 };
 </script>
@@ -36,7 +28,8 @@ export default {
   height: 60px;
 }
 
-#block a {
+#block p {
   color: skyblue;
+  cursor: pointer;
 }
 </style>

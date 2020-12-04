@@ -22,7 +22,7 @@
     </div>
     <div class="right">
       <welcome v-html="welcomeMsg" :textStyle="welcomeStyle"></welcome>
-      <logOut :label="logout" :textStyle="centerStyle"></logOut>
+      <logOut @click.native="reverseUser" :label="logout" :textStyle="centerStyle"></logOut>
       <messAge :label="message" :textStyle="centerStyle"></messAge>
     </div>
   </div>
@@ -61,6 +61,15 @@ export default {
     logOut: block,
     messAge: block,
     search: search,
+  },
+  methods: {
+    reverseUser(){
+      if(this.logout == "登出"){
+        this.logout = "请登录";
+      }else{
+        this.logout = "登出";
+      }
+    }
   },
 };
 </script>

@@ -1,37 +1,17 @@
 <template>
   <div id="add-poster">
     <el-form ref="form" :model="form" label-width="80px" style="margin: 10px">
-      <el-upload action="#" list-type="picture-card" :auto-upload="false">
-        <em slot="default" class="el-icon-plus"></em>
-        <div slot="file" slot-scope="{ file }">
-          <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-          <span class="el-upload-list__item-actions">
-            <span
-              class="el-upload-list__item-preview"
-              @click="handlePictureCardPreview(file)"
-            >
-              <em class="el-icon-zoom-in"></em>
-            </span>
-            <span
-              v-if="!disabled"
-              class="el-upload-list__item-delete"
-              @click="handleDownload(file)"
-            >
-              <em class="el-icon-download"></em>
-            </span>
-            <span
-              v-if="!disabled"
-              class="el-upload-list__item-delete"
-              @click="handleRemove(file)"
-            >
-              <em class="el-icon-delete"></em>
-            </span>
-          </span>
-        </div>
+      <el-upload
+        action=""
+        list-type="picture-card"
+        :http-request="sendRealRequest"
+        :file-list="fileList"
+        :on-preview="handlePictureCardPreview"
+        :on-remove="handleRemove"
+        :on-success="uploadSuccess"
+        :on-error="uploadError"
+      >
       </el-upload>
-      <el-dialog :visible.sync="dialogVisible">
-        <img width="100%" :src="dialogImageUrl" alt="" />
-      </el-dialog>
       <el-form-item label="帖子标题" style="margin: 10px">
         <el-input type="textarea" v-model="form.desc"></el-input>
       </el-form-item>
@@ -49,40 +29,92 @@ export default {
   data() {
     return {
       form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
         desc: "",
-        dialogImageUrl: '',
-        dialogVisible: false,
-        disabled: false
       },
+      fileList: [],
+      photoUrl: "",
     };
   },
-  props: {},
+  props: {
+    token: {
+      type: String,
+    },
+    sectionId: {
+      type: Number,
+    }
+  },
   methods: {
+    sendRealRequest(params) {
+      console.log('param is '+params.file.type);
+      let that = this;
+      let file = params.file;
+      that.uploadFile(file);
+      console.log("hh");
+    },
+    uploadFile(file) {
+      let that = this;
+      let param = new FormData();
+      param.append("file", file);
+      that
+        .axios({
+          method: "post",
+          url: "/uploadPhoto",
+          data: param,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(function (response) {
+          console.log(response);
+          console.log(response.data)
+          that.photoUrl = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     onSubmit() {
       console.log("submit!");
+      let that = this;
+      console.log(that.form.desc);
+      that.axios({
+        method: 'post',
+        url: '/sectionPost/insertSectionPost',
+        params: {
+          sectionId: that.sectionId,
+          sectionPostName: that.form.desc,
+          sectionPostPhoto: that.photoUrl,
+        },
+        headers: {
+          token: that.token,
+        },
+      })
+      console.log(that.photoUrl);
     },
     handleRemove(file) {
-        console.log(file);
-      },
-      handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
-      },
-      handleDownload(file) {
-        console.log(file);
-      }
+      console.log(file);
+    },
+    handlePictureCardPreview(file) {
+      console.log(file);
+    },
+    handleDownload(file) {
+      console.log(file);
+    },
+    uploadSuccess(response, file, fileList) {
+      let that = this;
+      console.log("上传文件成功response" + response);
+      console.log("上传文件成功file" + file);
+      console.log("上传文件成功fileList" + fileList);
+      that.fileList.push(response);
+    },
+    uploadError(err, file, fileList) {
+      console.log("上传文件失败err" + err);
+      console.log("上传文件失败file" + file);
+      console.log("上传文件失败fileList" + fileList);
+    },
   },
 };
 </script>
 
 <style>
-#add-poster {
-}
 </style>
