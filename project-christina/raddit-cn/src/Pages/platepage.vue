@@ -15,7 +15,7 @@
             {{ addPost }}
           </div>
           <el-dialog :visible.sync="visible">
-            <addPoster></addPoster>
+            <addPoster :token="realToken" :sectionId="100001"></addPoster>
           </el-dialog>
           
         </div>
@@ -29,14 +29,14 @@
         <poster
           v-for="section in sections"
           :key="section.sectionPostId"
-          :postcount="section.sectionPostVisit"
+          :postcount="section.sectionPostFloor"
           :posttitle="section.sectionPostName"
           :postauthor="section.user.userName"
           :posttime="section.sectionPostTime"
         ></poster>
       </div>
       <div class="msg">
-        <plateInfo></plateInfo>
+        <plateInfo :masterInfo="masterinfo" :ruleInfo="ruleinfo"></plateInfo>
       </div>
     </div>
   </div>
@@ -55,6 +55,7 @@ export default {
       addPost: "发帖",
       sections: [],
       visible: false,
+      realToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjEwMDAwMiwiZXhwIjoxNjA3MTAwMDQ0fQ.dpPiabXPc3gzeQw1RC3nmyLxZRfeHcbhVXpamLDAHLQ",
     };
   },
   components: {
@@ -74,15 +75,11 @@ export default {
         },
         headers: {
           token:
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjEwMDAwMiwiZXhwIjoxNjA3MDAzNTI3fQ.BRC0bVPO0OHExNV47rwaJOpjRbtvnna6OhE6fB19Z-w",
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjEwMDAwMiwiZXhwIjoxNjA3MTAwMDQ0fQ.dpPiabXPc3gzeQw1RC3nmyLxZRfeHcbhVXpamLDAHLQ",
         },
       })
       .then(function (response) {
-        console.log(response);
-        console.log(response.data[0]);
         that.sections = response.data;
-        console.log(response.data[0].sectionPostId);
-        console.log(typeof response.data[0].sectionPostId);
       })
       .catch(function (error) {
         console.log(error);

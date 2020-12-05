@@ -1,288 +1,18 @@
 <template>
   <div id="page">
     <topbanner></topbanner>
-    <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
-    <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
-    <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
+    <div class="navig">
+      <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
+      <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
+      <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
+    </div>
+
     <div class="block">
       <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
-        :borderStyle="borderstyle"
-      ></areablock>
-      <areablock
-        :title="blockLabel"
-        :blockName="blockname"
+        v-for="plate in plateblock"
+        :key="plate.sectionId"
+        :title="plate.sectionIntroduce"
+        :blockName="plate.sectionName"
         :borderStyle="borderstyle"
       ></areablock>
     </div>
@@ -311,6 +41,7 @@ export default {
       borderstyle: {
         borderRadius: "5px",
       },
+      plateblock: [],
     };
   },
   components: {
@@ -319,22 +50,48 @@ export default {
     naviGater: navigater,
     footerSpace: footerspace,
   },
+  mounted() {
+    let that = this;
+    that
+      .axios({
+        method: "get",
+        url: "/section/findAllSection",
+        headers: {
+          token:
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjEwMDAwMiwiZXhwIjoxNjA3MTAwMDQ0fQ.dpPiabXPc3gzeQw1RC3nmyLxZRfeHcbhVXpamLDAHLQ",
+        },
+      })
+      .then(function (response) {
+        console.log(response.data);
+        that.plateblock = response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
 };
 </script>
 
 <style>
+
+
 #page {
+  background: gray;
   display: flex;
   flex-wrap: wrap;
-  background-image: url(https://cdn.jsdelivr.net/gh/SteinsHead/ImageBed/img/2020/6604ed03918fa0ec261989de2a9759ee3f6ddb5f.png);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.navig {
+  display: flex;
 }
 
 .footercopy {
   width: 100%;
-  display: flex;
+  position: fixed;
+  bottom: 10px;
   justify-content: center;
   align-items: center;
 }

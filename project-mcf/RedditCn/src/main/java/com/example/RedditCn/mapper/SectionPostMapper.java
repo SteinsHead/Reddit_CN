@@ -15,4 +15,8 @@ public interface SectionPostMapper {
 	public void createTable(String tableName);
 
 	public void insertSectionPost(SectionPost sectionPost);
+
+	public void updateSpFloor(String tableName, int spId);
+
+	public void updateSpBan(String tableName, String spBan, int spId);
 }

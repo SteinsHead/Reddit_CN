@@ -24,8 +24,6 @@ public class PostReplyService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findPostReplyBypfIdFailed());
 		}
-		if (list == null)
-			throw new RuntimeException(ErrorJsonObject.postReplyNotExist());
 		return list;
 	}
 
@@ -60,5 +58,15 @@ public class PostReplyService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.insertPostReplyFailed());
 		}
+	}
+
+	public boolean updatePostReplyBan(int sId, int spId, int prId, String prBan) {
+		try {
+			postReplyMapper.updatePrBan(tableName1 + sId + tableName2 + spId, prBan, prId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.updatePostReplyBanFailed());
+		}
+		return true;
 	}
 }

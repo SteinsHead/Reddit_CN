@@ -23,8 +23,6 @@ public class SectionPostService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findAllSectionPostFailed());
 		}
-		if (list == null)
-			throw new RuntimeException(ErrorJsonObject.sectionPostNotExist());
 		return list;
 	}
 
@@ -61,5 +59,25 @@ public class SectionPostService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.insertSectionPostFailed());
 		}
+	}
+
+	public boolean updateSectionPostFloor(int sId, int spId) {
+		try {
+			sectionPostMapper.updateSpFloor(tableName + sId, spId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.updateSectionPostFloorFailed());
+		}
+		return true;
+	}
+
+	public boolean updateSectionPostBan(int sId, String spBan, int spId) {
+		try {
+			sectionPostMapper.updateSpBan(tableName + sId, spBan, spId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.updateSectionPostBanFailed());
+		}
+		return true;
 	}
 }

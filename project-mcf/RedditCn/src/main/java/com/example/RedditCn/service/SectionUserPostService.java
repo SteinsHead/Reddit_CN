@@ -41,8 +41,6 @@ public class SectionUserPostService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findSectionUserPostBysuIdFailed());
 		}
-		if (list == null)
-			throw new RuntimeException(ErrorJsonObject.sectionUserPostNotExist());
 		return list;
 	}
 }

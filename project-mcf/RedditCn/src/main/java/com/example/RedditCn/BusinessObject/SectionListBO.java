@@ -3,8 +3,9 @@ package com.example.RedditCn.BusinessObject;
 import java.text.SimpleDateFormat;
 
 import com.example.RedditCn.entity.Section;
+import com.example.RedditCn.entity.SectionUser;
 
-public class SectionBO {
+public class SectionListBO {
 	private int sectionId;
 	private String sectionName;
 	private String sectionIntroduce;
@@ -13,13 +14,13 @@ public class SectionBO {
 	private int sectionPublish;
 	private int sectionVisit;
 	private String sectionPhoto;
-	private UserBO userCreater;
+	private SectionUserBO sectionUser;
 
-	public SectionBO() {
+	public SectionListBO() {
 
 	}
 
-	public SectionBO(Section section, UserBO user) {
+	public SectionListBO(Section section, SectionUser sectionUser) {
 		this.setSectionId(section.getSid());
 		this.setSectionName(section.getSname());
 		this.setSectionIntroduce(section.getsIntroduce());
@@ -29,7 +30,7 @@ public class SectionBO {
 		this.setSectionPublish(section.getSpublish());
 		this.setSectionVisit(section.getSvisit());
 		this.setSectionPhoto(section.getSphoto());
-		this.setUser(user);
+		this.setSectionUser(new SectionUserBO(sectionUser));
 	}
 
 	public int getSectionId() {
@@ -96,11 +97,11 @@ public class SectionBO {
 		this.sectionPhoto = sectionPhoto;
 	}
 
-	public UserBO getUser() {
-		return userCreater;
+	public SectionUserBO getSectionUser() {
+		return sectionUser;
 	}
 
-	public void setUser(UserBO user) {
-		this.userCreater = user;
+	public void setSectionUser(SectionUserBO sectionUser) {
+		this.sectionUser = sectionUser;
 	}
 }

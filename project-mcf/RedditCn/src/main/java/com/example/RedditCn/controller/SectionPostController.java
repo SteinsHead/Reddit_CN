@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.RedditCn.BusinessObject.SectionPostBO;
 import com.example.RedditCn.BusinessObject.UserBO;
+import com.example.RedditCn.annotation.UserIsSectionAdmin;
 import com.example.RedditCn.annotation.UserLoginToken;
 import com.example.RedditCn.entity.SectionPost;
 import com.example.RedditCn.service.PostFloorService;
 import com.example.RedditCn.service.PostReplyService;
 import com.example.RedditCn.service.SectionPostService;
+import com.example.RedditCn.service.SectionService;
 import com.example.RedditCn.service.SectionUserPostService;
+import com.example.RedditCn.service.SectionUserService;
 import com.example.RedditCn.service.TokenUtils;
 import com.example.RedditCn.service.UserSectionService;
 import com.example.RedditCn.service.UserService;
@@ -38,6 +41,10 @@ public class SectionPostController {
 	private SectionUserPostService sectionUserPostService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private SectionService sectionService;
+	@Autowired
+	private SectionUserService sectionUserService;
 
 	@UserLoginToken
 	@PostMapping("/insertSectionPost")
@@ -52,6 +59,10 @@ public class SectionPostController {
 		sectionUserPostService.createSectionUserPostTable(sId);
 		postFloorService.insertPostFloor(sId, spId, suId, spName, spPhoto);
 		sectionUserPostService.insertSectionUserPost(sId, suId, spId);
+		userService.updateUserPublish(uId);
+		sectionService.updateSectionPublish(sId);
+		sectionUserService.updateSectionUserRank(sId, suId, 5);
+		System.out.println("版块-" + sId + "-新建帖子-" + spId);
 		return sectionPostService.findSectionPostByspId(sId, spId);
 	}
 
@@ -64,6 +75,16 @@ public class SectionPostController {
 		for (int i = 0; i < list1.size(); i++) {
 			list2.add(userService.createUserBO(sId, list1.get(i).getSuId()));
 		}
+		System.out.println("版块-" + sId + "-寻找所有帖子");
 		return new SectionPostBO().listSectionPostBOBO(list1, list2);
+	}
+
+	@UserLoginToken
+	@UserIsSectionAdmin
+	@PostMapping("/banSectionPost")
+	public boolean banSectionPost(@RequestHeader(value = "token") String token,
+			@RequestParam(value = "sectionId") int sId, @RequestParam(value = "sectionPostId") int spId) {
+		System.out.println("版块-" + sId + "-封禁帖子-" + spId);
+		return sectionPostService.updateSectionPostBan(sId, "ban", spId);
 	}
 }

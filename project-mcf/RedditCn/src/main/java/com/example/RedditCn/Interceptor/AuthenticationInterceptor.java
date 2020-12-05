@@ -16,15 +16,30 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.RedditCn.annotation.PassToken;
+import com.example.RedditCn.annotation.UserIsPostFloorAdmin;
+import com.example.RedditCn.annotation.UserIsSectionAdmin;
+import com.example.RedditCn.annotation.UserIsSectionPostAdmin;
 import com.example.RedditCn.annotation.UserLoginToken;
 import com.example.RedditCn.entity.ErrorJsonObject;
+import com.example.RedditCn.entity.PostFloor;
+import com.example.RedditCn.entity.SectionPost;
+import com.example.RedditCn.entity.SectionUser;
 import com.example.RedditCn.entity.User;
+import com.example.RedditCn.service.PostFloorService;
+import com.example.RedditCn.service.SectionPostService;
+import com.example.RedditCn.service.SectionUserService;
 import com.example.RedditCn.service.UserService;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
 	@Autowired
-	UserService userService;
+	private UserService userService;
+	@Autowired
+	private SectionUserService sectionUserService;
 	private static final String TOKEN_SECRET = "MCFTKJWSGREDDITCN";
+	@Autowired
+	private SectionPostService sectionPostService;
+	@Autowired
+	private PostFloorService postFloorService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
@@ -44,6 +59,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 			}
 		}
 		// 检查有没有需要用户权限的注解
+		int uId = 0;
 		if (method.isAnnotationPresent(UserLoginToken.class)) {
 			UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);
 			if (userLoginToken.required()) {
@@ -52,7 +68,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 					throw new RuntimeException(ErrorJsonObject.tokenNull());
 				}
 				// 获取 token 中的 openId
-				int uId;
+
 				DecodedJWT jwt;
 				try {
 					Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
@@ -70,10 +86,62 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 				if (user == null) {
 					throw new RuntimeException(ErrorJsonObject.userNotExist());
 				}
-				return true;
+			}
+		}
+
+		if (method.isAnnotationPresent(UserIsSectionAdmin.class)) {
+
+			int sId = Integer.parseInt(httpServletRequest.getParameter("sectionId"));
+			UserIsSectionAdmin userIsSectionAdmin = method.getAnnotation(UserIsSectionAdmin.class);
+			if (userIsSectionAdmin.required()) {
+				SectionUser sectionUser;
+				sectionUser = sectionUserService.findSectionUserByuId(sId, uId);
+				String suPermission = sectionUser.getSuPermission();
+				if (suPermission != null) {
+					if (!(suPermission.equals("creater") | suPermission.equals("admin"))) {
+						throw new RuntimeException(ErrorJsonObject.notEnoughPermission());
+					}
+				} else {
+					if (method.isAnnotationPresent(UserIsSectionPostAdmin.class)) {
+						UserIsSectionPostAdmin userIsSectionPostAdmin = method
+								.getAnnotation(UserIsSectionPostAdmin.class);
+						if (userIsSectionPostAdmin.required()) {
+							int spId = Integer.parseInt(httpServletRequest.getParameter("sectionPostId"));
+							SectionPost sectionPost = sectionPostService.findSectionPostByspId(sId, spId);
+							if (sectionPost != null) {
+								if (sectionPost.getSpId() != sectionUser.getSuId()) {
+									if (method.isAnnotationPresent(UserIsPostFloorAdmin.class)) {
+										UserIsPostFloorAdmin userIsPostFloorAdmin = method
+												.getAnnotation(UserIsPostFloorAdmin.class);
+										if (userIsPostFloorAdmin.required()) {
+											System.out.print("1");
+											int pfId = Integer.parseInt(httpServletRequest.getParameter("postFloorId"));
+											PostFloor postFloor = postFloorService.findPostFloorBypfId(sId, spId, pfId);
+											if (postFloor != null) {
+												System.out.print(postFloor.getSuId() + " " + sectionUser.getSuId());
+												if (postFloor.getSuId() != sectionUser.getSuId()) {
+													throw new RuntimeException(ErrorJsonObject.notEnoughPermission());
+												}
+											} else {
+												throw new RuntimeException(ErrorJsonObject.postFloorNotExist());
+											}
+										}
+									} else {
+										throw new RuntimeException(ErrorJsonObject.notEnoughPermission());
+									}
+								}
+							} else {
+								throw new RuntimeException(ErrorJsonObject.sectionPostNotExist());
+							}
+						}
+					} else {
+						throw new RuntimeException(ErrorJsonObject.notEnoughPermission());
+					}
+				}
 			}
 		}
 		return true;
+
 	}
 
 	@Override

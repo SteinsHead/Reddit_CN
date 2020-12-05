@@ -35,6 +35,12 @@ public class ErrorJsonObject {
 		return jsonObject.toJSONString();
 	}
 
+	public static String notEnoughPermission() {
+		jsonObject.put("errcode", "40006");
+		jsonObject.put("errmsg", " Not enough permission");
+		return jsonObject.toJSONString();
+	}
+
 	public static String loginUpFailed() {
 		jsonObject.put("errcode", "40010");
 		jsonObject.put("errmsg", "login up failed");
@@ -89,6 +95,24 @@ public class ErrorJsonObject {
 		return jsonObject.toJSONString();
 	}
 
+	public static String updateIntroduceFailed() {
+		jsonObject.put("errcode", "40019");
+		jsonObject.put("errmsg", "update user introduce failed");
+		return jsonObject.toJSONString();
+	}
+
+	public static String updateUserFollowFailed() {
+		jsonObject.put("errcode", "40020");
+		jsonObject.put("errmsg", "update user follow failed");
+		return jsonObject.toJSONString();
+	}
+
+	public static String updateUserPublishFailed() {
+		jsonObject.put("errcode", "400201");
+		jsonObject.put("errmsg", "update user publish failed");
+		return jsonObject.toJSONString();
+	}
+
 	public static String findUserInformationFailed() {
 		jsonObject.put("errcode", "40021");
 		jsonObject.put("errmsg", "find user information failed");
@@ -131,6 +155,18 @@ public class ErrorJsonObject {
 		return jsonObject.toJSONString();
 	}
 
+	public static String updateSectionFollowFailed() {
+		jsonObject.put("errcode", "40037");
+		jsonObject.put("errmsg", "update section follow failed");
+		return jsonObject.toJSONString();
+	}
+
+	public static String updateSectionPublishFailed() {
+		jsonObject.put("errcode", "40038");
+		jsonObject.put("errmsg", "update section publish failed");
+		return jsonObject.toJSONString();
+	}
+
 	public static String createSectionUserTableFailed() {
 		jsonObject.put("errcode", "40041");
 		jsonObject.put("errmsg", "create section user table failed");
@@ -164,6 +200,12 @@ public class ErrorJsonObject {
 	public static String findSectionUserBysuIdFailed() {
 		jsonObject.put("errcode", "40046");
 		jsonObject.put("errmsg", "find section user by suId failed");
+		return jsonObject.toJSONString();
+	}
+
+	public static String updateSectionUserRankFailed() {
+		jsonObject.put("errcode", "40047");
+		jsonObject.put("errmsg", "update section user rank failed");
 		return jsonObject.toJSONString();
 	}
 
@@ -209,15 +251,27 @@ public class ErrorJsonObject {
 		return jsonObject.toJSONString();
 	}
 
-	public static String findSectionPostByspIdFailed() {
+	public static String updateSectionPostFloorFailed() {
 		jsonObject.put("errcode", "40064");
+		jsonObject.put("errmsg", "update section post floor failed");
+		return jsonObject.toJSONString();
+	}
+
+	public static String findSectionPostByspIdFailed() {
+		jsonObject.put("errcode", "40065");
 		jsonObject.put("errmsg", "find section post by spId failed");
 		return jsonObject.toJSONString();
 	}
 
 	public static String sectionPostNotExist() {
-		jsonObject.put("errcode", "40065");
+		jsonObject.put("errcode", "40066");
 		jsonObject.put("errmsg", "section post not exist");
+		return jsonObject.toJSONString();
+	}
+
+	public static String updateSectionPostBanFailed() {
+		jsonObject.put("errcode", "40067");
+		jsonObject.put("errmsg", "update section post ban failed");
 		return jsonObject.toJSONString();
 	}
 
@@ -257,6 +311,12 @@ public class ErrorJsonObject {
 		return jsonObject.toJSONString();
 	}
 
+	public static String updatePostFloorBanFailed() {
+		jsonObject.put("errcode", "40077");
+		jsonObject.put("errmsg", "update post floor ban failed");
+		return jsonObject.toJSONString();
+	}
+
 	public static String findPostReplyBypfIdFailed() {
 		jsonObject.put("errcode", "40081");
 		jsonObject.put("errmsg", "find post reply by pfId failed");
@@ -287,6 +347,12 @@ public class ErrorJsonObject {
 		return jsonObject.toJSONString();
 	}
 
+	public static String updatePostReplyBanFailed() {
+		jsonObject.put("errcode", "40086");
+		jsonObject.put("errmsg", "update post reply ban failed");
+		return jsonObject.toJSONString();
+	}
+
 	public static String createSectionUserPostTableFailed() {
 		jsonObject.put("errcode", "40091");
 		jsonObject.put("errmsg", "create section user post table failed");
@@ -308,6 +374,12 @@ public class ErrorJsonObject {
 	public static String sectionUserPostNotExist() {
 		jsonObject.put("errcode", "40094");
 		jsonObject.put("errmsg", "section user post not exist");
+		return jsonObject.toJSONString();
+	}
+
+	public static String toFileFailed() {
+		jsonObject.put("errcode", "40101");
+		jsonObject.put("errmsg", "multipartFile to file failed");
 		return jsonObject.toJSONString();
 	}
 

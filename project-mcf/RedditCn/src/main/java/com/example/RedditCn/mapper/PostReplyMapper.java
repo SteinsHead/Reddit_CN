@@ -15,4 +15,6 @@ public interface PostReplyMapper {
 	public void insertPostReply(PostReply postReply);
 
 	public PostReply findByprId(String tableName, int prId);
+
+	public void updatePrBan(String tableName, String prBan, int prId);
 }

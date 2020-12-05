@@ -23,7 +23,10 @@ export default {
       ruleInfo: "板块简介",
     };
   },
-  props: {},
+  props: {
+    masterInfo: "",
+    ruleInfo: "",
+  },
 };
 </script>
 

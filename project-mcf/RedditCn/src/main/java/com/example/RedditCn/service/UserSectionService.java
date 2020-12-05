@@ -35,6 +35,6 @@ public class UserSectionService {
 		}
 		if (userSection == null)
 			throw new RuntimeException(ErrorJsonObject.sectionUserNotExist());
-		return userSectionRepository.findByUidAndSid(uId, sId);
+		return userSection;
 	}
 }

@@ -75,4 +75,14 @@ public class SectionUserService {
 			throw new RuntimeException(ErrorJsonObject.sectionUserNotExist());
 		return sectionUser;
 	}
+
+	public boolean updateSectionUserRank(int sId, int suId, int suRank) {
+		try {
+			sectionUserMapper.updateSuRank(tableName + sId, suRank, suId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.updateSectionUserRankFailed());
+		}
+		return true;
+	}
 }

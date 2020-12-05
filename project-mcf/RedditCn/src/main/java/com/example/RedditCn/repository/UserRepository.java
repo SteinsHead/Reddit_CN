@@ -1,5 +1,7 @@
 package com.example.RedditCn.repository;
 
+import java.sql.Date;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -27,4 +29,20 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	@Modifying(clearAutomatically = true)
 	@Query(value = "update user set uemail = ?1 where uid = ?2", nativeQuery = true)
 	public void updateUserEmail(String uEmail, int uId);
+
+	@Transactional
+	@Modifying(clearAutomatically = true)
+	@Query(value = "update user set uname = ?1, usex = ?2, ubirthday = ?3, uintroduce = ?4, uphoto = ?5 where uid = ?6", nativeQuery = true)
+	public void updateUserInformation(String uName, char uSex, Date uBirthday, String uIntroduce, String uPhoto,
+			int uId);
+
+	@Transactional
+	@Modifying(clearAutomatically = true)
+	@Query(value = "update user set ufollow = ufollow + 1 where uid = ?1", nativeQuery = true)
+	public void updateUserFollow(int uId);
+
+	@Transactional
+	@Modifying(clearAutomatically = true)
+	@Query(value = "update user set upublish = upublish + 1 where uid = ?1", nativeQuery = true)
+	public void updateUserPublish(int uId);
 }

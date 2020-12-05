@@ -12,22 +12,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class SectionPost {
 	@JsonIgnore
 	private String tableName;
-	@JsonProperty("sctionPostId")
+	@JsonProperty("sectionPostId")
 	private int spId;
 	@JsonIgnore
 	private int suId;
-	@JsonProperty("sctionPostName")
+	@JsonProperty("sectionPostName")
 	private String spName;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
-	@JsonProperty("sctionPostTime")
+	@JsonProperty("sectionPostTime")
 	private Date spTime;
 	@JsonIgnore
 	private String spBan;
 	@JsonIgnore
 	private String spTheme;
-	@JsonProperty("sctionPostVisit")
+	@JsonProperty("sectionPostFloor")
+	private int spFloor;
+	@JsonProperty("sectionPostVisit")
 	private int spVisit;
-	@JsonProperty("sctionPostPhoto")
+	@JsonProperty("sectionPostPhoto")
 	private String spPhoto;
 
 	protected SectionPost() {
@@ -122,5 +124,13 @@ public class SectionPost {
 
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
+	}
+
+	public int getSpFloor() {
+		return spFloor;
+	}
+
+	public void setSpFloor(int spFloor) {
+		this.spFloor = spFloor;
 	}
 }
