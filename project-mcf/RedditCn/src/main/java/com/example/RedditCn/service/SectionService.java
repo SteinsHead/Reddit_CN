@@ -31,6 +31,8 @@ public class SectionService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findSectionBysIdFailed());
 		}
+		if (section == null)
+			throw new RuntimeException(ErrorJsonObject.sectionNotExist());
 		return section;
 	}
 

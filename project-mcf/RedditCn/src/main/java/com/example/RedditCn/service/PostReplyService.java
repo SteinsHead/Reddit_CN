@@ -35,6 +35,8 @@ public class PostReplyService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findPostReplyByprIdFailed());
 		}
+		if (postReply == null)
+			throw new RuntimeException(ErrorJsonObject.postReplyNotExist());
 		return postReply;
 	}
 

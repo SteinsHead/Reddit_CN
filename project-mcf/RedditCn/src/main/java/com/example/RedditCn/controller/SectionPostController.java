@@ -21,6 +21,7 @@ import com.example.RedditCn.service.PostReplyService;
 import com.example.RedditCn.service.SectionPostService;
 import com.example.RedditCn.service.SectionService;
 import com.example.RedditCn.service.SectionUserPostService;
+import com.example.RedditCn.service.SectionUserService;
 import com.example.RedditCn.service.TokenUtils;
 import com.example.RedditCn.service.UserSectionService;
 import com.example.RedditCn.service.UserService;
@@ -42,6 +43,8 @@ public class SectionPostController {
 	private UserService userService;
 	@Autowired
 	private SectionService sectionService;
+	@Autowired
+	private SectionUserService sectionUserService;
 
 	@UserLoginToken
 	@PostMapping("/insertSectionPost")
@@ -58,6 +61,7 @@ public class SectionPostController {
 		sectionUserPostService.insertSectionUserPost(sId, suId, spId);
 		userService.updateUserPublish(uId);
 		sectionService.updateSectionPublish(sId);
+		sectionUserService.updateSectionUserRank(sId, suId, 5);
 		System.out.println("版块-" + sId + "-新建帖子-" + spId);
 		return sectionPostService.findSectionPostByspId(sId, spId);
 	}

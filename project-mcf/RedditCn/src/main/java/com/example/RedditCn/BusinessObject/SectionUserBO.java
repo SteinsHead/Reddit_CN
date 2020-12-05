@@ -3,13 +3,17 @@ package com.example.RedditCn.BusinessObject;
 import java.text.SimpleDateFormat;
 
 import com.example.RedditCn.entity.SectionUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class SectionUserBO {
 	private String sectionUserTime;
-	private int sectionUserRank;
+	private String sectionUserRank;
 	private int sectionUserPublish;
 	private boolean sectionUserSignin;
 	private String sectionUserPermission;
+
+	@JsonIgnore
+	private int[] rank = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
 
 	protected SectionUserBO() {
 
@@ -18,7 +22,17 @@ public class SectionUserBO {
 	public SectionUserBO(SectionUser sectionUser) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		this.setSectionUserTime(sdf.format(sectionUser.getSuTime()));
-		this.setSectionUserRank(sectionUser.getSuRank());
+		int suRank = sectionUser.getSuRank();
+		int n = 0;
+		for (int i = 0; i < rank.length; i++) {
+			if (suRank < rank[i]) {
+				break;
+			} else {
+				suRank -= rank[i];
+				n++;
+			}
+		}
+		this.setSectionUserRank(n + "级别" + suRank + "经验");
 		this.setSectionUserPublish(sectionUser.getSuPublish());
 		this.setSectionUserSignin(sectionUser.isSuSignin());
 		this.setSectionUserPermission(sectionUser.getSuPermission());
@@ -32,11 +46,11 @@ public class SectionUserBO {
 		this.sectionUserTime = sectionUserTime;
 	}
 
-	public int getSectionUserRank() {
+	public String getSectionUserRank() {
 		return sectionUserRank;
 	}
 
-	public void setSectionUserRank(int sectionUserRank) {
+	public void setSectionUserRank(String sectionUserRank) {
 		this.sectionUserRank = sectionUserRank;
 	}
 

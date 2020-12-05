@@ -1,16 +1,24 @@
 package com.example.RedditCn.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.RedditCn.BusinessObject.SectionListBO;
 import com.example.RedditCn.BusinessObject.UserBO;
+import com.example.RedditCn.BusinessObject.UserSectionBO;
 import com.example.RedditCn.entity.ErrorJsonObject;
 import com.example.RedditCn.entity.SectionUser;
 import com.example.RedditCn.entity.User;
+import com.example.RedditCn.entity.UserSection;
+import com.example.RedditCn.mapper.SectionUserMapper;
+import com.example.RedditCn.repository.SectionRepository;
 import com.example.RedditCn.repository.UserRepository;
+import com.example.RedditCn.repository.UserSectionRepository;
 
 @Service
 public class UserService {
@@ -18,6 +26,12 @@ public class UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private SectionUserService sectionUserService;
+	@Autowired
+	private UserSectionRepository userSectionRepository;
+	@Autowired
+	private SectionRepository sectionRepository;
+	@Autowired
+	private SectionUserMapper sectionUserMapper;
 
 	public boolean loginUpByAccount(String uName, String uAccount, String uPassword, char uSex, Date uBirthday,
 			String uPhoto) {
@@ -75,6 +89,28 @@ public class UserService {
 		return user;
 	}
 
+	public UserSectionBO findUserInformationById(int uId) {
+		User user;
+		List<SectionListBO> list1 = new ArrayList<SectionListBO>();
+		try {
+			user = userRepository.findById(uId);
+			List<UserSection> list2 = userSectionRepository.findByUid(uId);
+			if (list2 != null) {
+				for (int i = 0; i < list2.size(); i++) {
+					list1.add(new SectionListBO(sectionRepository.findBySid(list2.get(i).getSid()),
+							sectionUserMapper.findByuId("sectionuser_" + list2.get(i).getSid(), uId)));
+				}
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw e;
+			// throw new RuntimeException(ErrorJsonObject.findUserInformationFailed());
+		}
+		return new UserSectionBO(user, list1);
+	}
+
 	public boolean updateUserPhone(int uId, String uPhone) {
 		String ph = "^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$";
 		if (userRepository.findByUphone(uPhone) == null && uPhone.matches(ph)) {
@@ -105,9 +141,10 @@ public class UserService {
 		return true;
 	}
 
-	public boolean updateUserIntroduce(int uId, String uIntroduce) {
+	public boolean updateUserInformation(String uName, char uSex, Date uBirthday, String uPhoto, String uIntroduce,
+			int uId) {
 		try {
-			userRepository.updateUserIntroduce(uIntroduce, uId);
+			userRepository.updateUserInformation(uName, uSex, uBirthday, uIntroduce, uPhoto, uId);
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.updateIntroduceFailed());

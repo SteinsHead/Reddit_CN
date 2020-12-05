@@ -44,6 +44,8 @@ public class PostFloorService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findPostFloorBypfIdFailed());
 		}
+		if (postFloor == null)
+			throw new RuntimeException(ErrorJsonObject.postFloorNotExist());
 		return postFloor;
 	}
 

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.RedditCn.BusinessObject.UserSectionBO;
 import com.example.RedditCn.annotation.UserLoginToken;
-import com.example.RedditCn.entity.User;
 import com.example.RedditCn.service.TokenUtils;
 import com.example.RedditCn.service.UserService;
 
@@ -43,17 +43,18 @@ public class UserController {
 	// 查询用户个人信息
 	@UserLoginToken
 	@GetMapping("findUserMine")
-	public User FindUserMine(@RequestHeader(value = "token") String token) {
+	public UserSectionBO FindUserMine(@RequestHeader(value = "token") String token) {
 		System.out.println("查找用户自己");
-		return userService.findUserById(TokenUtils.verify(token));
+		return userService.findUserInformationById(TokenUtils.verify(token));
 	}
 
 	// 查询用户信息
 	@UserLoginToken
 	@GetMapping("findUserByuId")
-	public User findUserByuId(@RequestHeader(value = "token") String token, @RequestParam(value = "userId") int uId) {
+	public UserSectionBO findUserByuId(@RequestHeader(value = "token") String token,
+			@RequestParam(value = "userId") int uId) {
 		System.out.println("查找指定用户-" + uId);
-		return userService.findUserById(uId);
+		return userService.findUserInformationById(uId);
 	}
 
 	// 绑定手机号
@@ -74,10 +75,13 @@ public class UserController {
 	}
 
 	// 更新信息
-	@PostMapping("updateUserIntroduce")
+	@PostMapping("updateUserInformation")
 	public boolean updateUserIntroduce(@RequestHeader(value = "token") String token,
-			@RequestParam(value = "userIntroduce") String userIntroduce) {
-		System.out.println("更新自我介绍");
-		return userService.updateUserIntroduce(TokenUtils.verify(token), userIntroduce);
+			@RequestParam(value = "userName") String uName, @RequestParam(value = "userSex") char uSex,
+			@RequestParam(value = "userBirthday") Date uBirthday, @RequestParam(value = "userPhoto") String uPhoto,
+			@RequestParam(value = "userIntroduce") String uIntroduce) {
+		userService.updateUserInformation(uName, uSex, uBirthday, uPhoto, uIntroduce, TokenUtils.verify(token));
+		System.out.println("更新自我信息");
+		return true;
 	}
 }

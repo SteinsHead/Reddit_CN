@@ -15,33 +15,46 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Section {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonProperty("sectionId")
 	@Column(name = "sid")
 	private int sid;
+	@JsonProperty("sectionName")
 	@Column(name = "sname")
 	private String sname;
+	@JsonProperty("sectionIntroduce")
 	@Column(name = "sintroduce")
 	private String sintroduce;
 	@CreatedDate
+	@JsonProperty("sectionTime")
 	@Column(name = "stime")
 	private Date stime;
+	@JsonIgnore
 	@Column(name = "uid")
 	private int uid;
+	@JsonProperty("sectionFollow")
 	@Column(name = "sfollow")
 	private int sfollow;
+	@JsonIgnore
 	@Column(name = "sban")
 	private String sban;
+	@JsonProperty("sectionPublish")
 	@Column(name = "spublish")
 	private int spublish;
+	@JsonIgnore
 	@Column(name = "stheme")
 	private String stheme;
+	@JsonProperty("sectionVisit")
 	@Column(name = "svisit")
 	private int svisit;
+	@JsonProperty("sectionPhoto")
 	@Column(name = "sphoto")
 	private String sphoto;
 

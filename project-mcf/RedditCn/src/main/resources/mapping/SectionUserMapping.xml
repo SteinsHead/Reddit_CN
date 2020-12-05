@@ -21,6 +21,10 @@
         select * from ${tableName} where suId = #{suId}
     </select>
     
+    <update id="updateSuRank">  
+    	update ${tableName} set suRank = suRank + #{suRank} where suId = #{suId}
+  	</update>
+    
     <update id="dropTable">  
     	DROP TABLE IF EXISTS ${tableName} 
   	</update>

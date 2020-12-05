@@ -58,6 +58,8 @@ public class SectionUserService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findSectionUserBysuIdFailed());
 		}
+		if (sectionUser == null)
+			throw new RuntimeException(ErrorJsonObject.sectionUserNotExist());
 		return sectionUser;
 	}
 
@@ -69,6 +71,18 @@ public class SectionUserService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findSectionUserByuIdFailed());
 		}
+		if (sectionUser == null)
+			throw new RuntimeException(ErrorJsonObject.sectionUserNotExist());
 		return sectionUser;
+	}
+
+	public boolean updateSectionUserRank(int sId, int suId, int suRank) {
+		try {
+			sectionUserMapper.updateSuRank(tableName + sId, suRank, suId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.updateSectionUserRankFailed());
+		}
+		return true;
 	}
 }

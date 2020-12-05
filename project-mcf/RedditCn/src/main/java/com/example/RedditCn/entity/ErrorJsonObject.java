@@ -203,6 +203,12 @@ public class ErrorJsonObject {
 		return jsonObject.toJSONString();
 	}
 
+	public static String updateSectionUserRankFailed() {
+		jsonObject.put("errcode", "40047");
+		jsonObject.put("errmsg", "update section user rank failed");
+		return jsonObject.toJSONString();
+	}
+
 	public static String insertUserSectionFailed() {
 		jsonObject.put("errcode", "40051");
 		jsonObject.put("errmsg", "insert User_Section failed");

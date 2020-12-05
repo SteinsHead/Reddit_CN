@@ -19,6 +19,7 @@ import com.example.RedditCn.annotation.UserLoginToken;
 import com.example.RedditCn.entity.PostFloor;
 import com.example.RedditCn.service.PostFloorService;
 import com.example.RedditCn.service.SectionPostService;
+import com.example.RedditCn.service.SectionUserService;
 import com.example.RedditCn.service.TokenUtils;
 import com.example.RedditCn.service.UserSectionService;
 import com.example.RedditCn.service.UserService;
@@ -34,6 +35,8 @@ public class PostFloorController {
 	private UserService userService;
 	@Autowired
 	private SectionPostService sectionPostService;
+	@Autowired
+	private SectionUserService sectionUserService;
 
 	@UserLoginToken
 	@PostMapping("/insertPostFloor")
@@ -44,6 +47,7 @@ public class PostFloorController {
 		int suId = userSectionService.findUserSectionBuuIdAndsId(TokenUtils.verify(token), sId).getSuid();
 		int pfId = postFloorService.insertPostFloor(sId, spId, suId, pfIntroduce, pfPhoto);
 		sectionPostService.updateSectionPostFloor(sId, spId);
+		sectionUserService.updateSectionUserRank(sId, suId, 3);
 		System.out.println("版块-" + sId + "-帖子-" + spId + "-新建楼层-" + pfId);
 		return postFloorService.findPostFloorBypfId(sId, spId, pfId);
 	}

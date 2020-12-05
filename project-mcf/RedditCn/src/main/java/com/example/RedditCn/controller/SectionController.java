@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.RedditCn.BusinessObject.SectionBO;
+import com.example.RedditCn.BusinessObject.UserBO;
 import com.example.RedditCn.annotation.UserLoginToken;
 import com.example.RedditCn.entity.Section;
 import com.example.RedditCn.service.SectionPostService;
@@ -40,16 +41,15 @@ public class SectionController {
 	// 查找所有版块
 	@UserLoginToken
 	@GetMapping("/findAllSection")
-	public List<SectionBO> findAllSection() {
-		List<Section> list = sectionService.findAll();
+	public List<Section> findAllSection() {
 		System.out.println("寻找所有版块");
-		return new SectionBO().ListSectionBO(list);
+		return sectionService.findAll();
 	}
 
 	// 创建版块
 	@UserLoginToken
 	@PostMapping("/insertSection")
-	public SectionBO insertSection(@RequestHeader(value = "token") String token,
+	public Section insertSection(@RequestHeader(value = "token") String token,
 			@RequestParam(value = "sectionName") String sName,
 			@RequestParam(value = "sectionIntroduce") String sIntroduce,
 			@RequestParam(value = "sectionPhoto") String sPhoto) {
@@ -63,6 +63,16 @@ public class SectionController {
 		userSectionService.insertUserSection(uId, sId, suId);
 		userService.updateUserFollow(uId);
 		System.out.print("新建版块-" + sId);
-		return new SectionBO(section);
+		return section;
+	}
+
+	@UserLoginToken
+	@GetMapping("/findSectionBysId")
+	public SectionBO findSectionBysId(@RequestHeader(value = "token") String token,
+			@RequestParam(value = "sectionId") int sId) {
+		Section section = sectionService.findBysId(sId);
+		System.out.println("查询版块信息-" + sId);
+		return new SectionBO(section,
+				new UserBO(userService.findUserById(section.getUid()), sectionUserService.findSectionCreater(sId)));
 	}
 }

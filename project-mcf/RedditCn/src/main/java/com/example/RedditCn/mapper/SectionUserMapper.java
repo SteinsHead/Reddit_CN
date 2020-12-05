@@ -13,4 +13,6 @@ public interface SectionUserMapper {
 	public SectionUser findBysuId(String tableName, int suId);
 
 	public void insertSectionUser(SectionUser sectionUser);
+
+	public void updateSuRank(String tableName, int suRank, int suId);
 }

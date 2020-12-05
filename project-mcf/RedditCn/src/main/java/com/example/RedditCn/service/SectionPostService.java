@@ -34,6 +34,8 @@ public class SectionPostService {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.findSectionPostByspIdFailed());
 		}
+		if (sectionPost == null)
+			throw new RuntimeException(ErrorJsonObject.sectionPostNotExist());
 		return sectionPost;
 	}
 
