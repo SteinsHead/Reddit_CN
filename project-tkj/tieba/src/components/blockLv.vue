@@ -1,13 +1,16 @@
 <template>
   <div id="div-blocklevel">
-      <span>王世钢吧</span>
-      <span>lv 12</span>
+      <span>{{sectionName}}</span>
+      <span>lv {{sectionLv}}</span>
   </div>
 </template>
 
 <script>
 export default {
-
+  props:{
+    sectionName:String,
+    sectionLv:String,
+  }
 }
 </script>
 

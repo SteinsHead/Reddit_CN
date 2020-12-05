@@ -24,6 +24,9 @@ export default {
         toTop:toTop,
         commet:commet,
     },
+    created:function(){
+        
+    },
     methods: {
         sendCommet:function(){
                 let content = document.getElementById('textarea').value;
@@ -85,6 +88,7 @@ export default {
     },
     data() {
         return {
+            token:"",
             From:"aaaa",
             To:null,
             where:-1,

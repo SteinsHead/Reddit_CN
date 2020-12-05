@@ -147,6 +147,7 @@ export default {
                 console.log(response.data);
                 if(response.data.hasOwnProperty("token")){
                     that.token = response.data.token;
+                    localStorage.setItem('token',that.token);
                     that.$router.push({
                         name:"mine",
                         params:{
