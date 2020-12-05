@@ -14,6 +14,8 @@
         :title="plate.sectionIntroduce"
         :blockName="plate.sectionName"
         :borderStyle="borderstyle"
+        :followSituation="plate.sectionFollow"
+        @click.native="jumpToSubSection(plate)"
       ></areablock>
     </div>
     <div class="footercopy">
@@ -40,8 +42,10 @@ export default {
       },
       borderstyle: {
         borderRadius: "5px",
+        cursor: "pointer",
       },
       plateblock: [],
+      token: localStorage.getItem("token"),
     };
   },
   components: {
@@ -50,15 +54,33 @@ export default {
     naviGater: navigater,
     footerSpace: footerspace,
   },
+  methods: {
+    jumpToSubSection(plate) {
+      let that = this;
+      console.log(typeof(plate.sectionId.toString()));
+      localStorage.setItem("sectionId", plate.sectionId.toString())
+      this.$router.push({
+        name: "plate",
+        params: {
+          sectionId: plate.sectionId,
+          token: that.token,
+        },
+      });
+      window.open("/#/platepage", (name = "_self"));
+    },
+  },
   mounted() {
     let that = this;
+    localStorage.setItem(
+      "token",
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjEwMDAwNCwiZXhwIjoxNjA3MTY5MTI3fQ.CpUXpZZXC6E0KkSbk1zKDA8YIi8RPV0tgrav23aSiA4"
+    );
     that
       .axios({
         method: "get",
         url: "/section/findAllSection",
         headers: {
-          token:
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjEwMDAwMiwiZXhwIjoxNjA3MTAwMDQ0fQ.dpPiabXPc3gzeQw1RC3nmyLxZRfeHcbhVXpamLDAHLQ",
+          token: localStorage.getItem("token"),
         },
       })
       .then(function (response) {
@@ -73,8 +95,6 @@ export default {
 </script>
 
 <style>
-
-
 #page {
   background: gray;
   display: flex;

@@ -17,7 +17,9 @@
           <el-dialog :visible.sync="visible">
             <addPoster :token="realToken" :sectionId="100001"></addPoster>
           </el-dialog>
-          
+        </div>
+        <div class="sectionFollow">
+          <el-button type="primary" plain round :disabled="isUse" @click="doFollow">{{situationFollow}}</el-button>
         </div>
       </div>
       <div class="register">
@@ -36,7 +38,7 @@
         ></poster>
       </div>
       <div class="msg">
-        <plateInfo :masterInfo="masterinfo" :ruleInfo="ruleinfo"></plateInfo>
+        <plateInfo :masterInfo="info.sectionName" :ruleInfo="info.sectionIntroduce"></plateInfo>
       </div>
     </div>
   </div>
@@ -54,8 +56,12 @@ export default {
     return {
       addPost: "发帖",
       sections: [],
+      info: {},
       visible: false,
-      realToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjEwMDAwMiwiZXhwIjoxNjA3MTAwMDQ0fQ.dpPiabXPc3gzeQw1RC3nmyLxZRfeHcbhVXpamLDAHLQ",
+      realToken: localStorage.getItem("token"),
+      situationFollow: "未关注",
+      isUse: false,
+      sectionList: [],
     };
   },
   components: {
@@ -64,26 +70,84 @@ export default {
     plateInfo: plateInfo,
     addPoster: addPoster,
   },
-  mounted() {
-    let that = this;
-    that
-      .axios({
+  methods: {
+    // doFollow(){
+    //   let that = this;
+    //   if(that.sectionList.some(function(item, index, that.sectionList){
+    //     return (item.sectionId == );
+    //   })){
+
+    //   }else{
+
+    //   }
+    // },
+    getToken() {
+      let that = this;
+      if (typeof that.$route.params.token == "undefined") {
+        console.log(localStorage.getItem("token"));
+        return localStorage.getItem("token");
+      } else {
+        return that.$route.params.token;
+      }
+    },
+    getSectionId() {
+      let that = this;
+      if (typeof that.$route.params.sectionId == "undefined") {
+        return Number(localStorage.getItem("sectionId"));
+      } else {
+        return that.$route.params.sectionId;
+      }
+    },
+    getIsFollow(){
+      let that = this;
+      return that.axios({
+        method: "get",
+        url: "/user/findUserMine",
+        headers: {
+          token: that.getToken(),
+        },
+      });
+    },
+    getAllPost() {
+      let that = this;
+      return that.axios({
         method: "get",
         url: "/sectionPost/findAllSectionPost",
         params: {
-          sectionId: 100001,
+          sectionId: that.getSectionId(),
         },
         headers: {
-          token:
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjEwMDAwMiwiZXhwIjoxNjA3MTAwMDQ0fQ.dpPiabXPc3gzeQw1RC3nmyLxZRfeHcbhVXpamLDAHLQ",
+          token: that.getToken(),
         },
-      })
-      .then(function (response) {
-        that.sections = response.data;
-      })
-      .catch(function (error) {
-        console.log(error);
       });
+    },
+    getSectionInfo() {
+      let that = this;
+      return that.axios({
+        method: "get",
+        url: "/section/findSectionBysId",
+        params: {
+          sectionId: that.getSectionId(),
+        },
+        headers: {
+          token: that.getToken(),
+        },
+      });
+    },
+  },
+  mounted() {
+    let that = this;
+    that.axios
+      .all([that.getAllPost(), that.getSectionInfo(), that.getIsFollow()])
+      .then(that.axios.spread(function(allPost, info, isFollow){
+        console.log(allPost);
+        console.log(info);
+        console.log(isFollow);
+        let here = that;
+        here.sections = allPost.data;
+        here.info = info.data;
+        here.sectionList = isFollow.data.sectionList;
+      }));
   },
 };
 </script>
@@ -140,11 +204,15 @@ export default {
   height: 40px;
   border-width: 0px;
   border-radius: 5px;
-  background: #1E90FF;
+  background: #1e90ff;
   line-height: 40px;
   color: white;
   outline: none;
   cursor: pointer;
+}
+
+#plate .sub-banner .top .add .sectionFollow {
+
 }
 
 #plate .sub-banner .register {
