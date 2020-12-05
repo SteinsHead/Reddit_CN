@@ -19,7 +19,14 @@
           </el-dialog>
         </div>
         <div class="sectionFollow">
-          <el-button type="primary" plain round :disabled="isUse" @click="doFollow">{{situationFollow}}</el-button>
+          <el-button
+            type="primary"
+            plain
+            round
+            :disabled="isUse"
+            @click="doFollow"
+            >{{ situationFollow }}</el-button
+          >
         </div>
       </div>
       <div class="register">
@@ -38,7 +45,10 @@
         ></poster>
       </div>
       <div class="msg">
-        <plateInfo :masterInfo="info.sectionName" :ruleInfo="info.sectionIntroduce"></plateInfo>
+        <plateInfo
+          :masterInfo="info.sectionName"
+          :ruleInfo="info.sectionIntroduce"
+        ></plateInfo>
       </div>
     </div>
   </div>
@@ -71,16 +81,24 @@ export default {
     addPoster: addPoster,
   },
   methods: {
-    // doFollow(){
-    //   let that = this;
-    //   if(that.sectionList.some(function(item, index, that.sectionList){
-    //     return (item.sectionId == );
-    //   })){
-
-    //   }else{
-
-    //   }
-    // },
+    doFollow() {
+      let that = this;
+      that.isUse = true;
+      that.axios({
+        method: "post",
+        url: "/sectionUser/insertSectionUser",
+        params: {
+          sectionId: that.getSectionId(),
+        },
+        headers: {
+          token: that.getToken(),
+        },
+      });
+    },
+    checkFollow(list) {
+      let that = this;
+      return list.sectionId == that.getSectionId();
+    },
     getToken() {
       let that = this;
       if (typeof that.$route.params.token == "undefined") {
@@ -98,7 +116,7 @@ export default {
         return that.$route.params.sectionId;
       }
     },
-    getIsFollow(){
+    getIsFollow() {
       let that = this;
       return that.axios({
         method: "get",
@@ -139,15 +157,30 @@ export default {
     let that = this;
     that.axios
       .all([that.getAllPost(), that.getSectionInfo(), that.getIsFollow()])
-      .then(that.axios.spread(function(allPost, info, isFollow){
-        console.log(allPost);
-        console.log(info);
-        console.log(isFollow);
+      .then(
+        that.axios.spread(function (allPost, info, isFollow) {
+          console.log(allPost);
+          console.log(info);
+          console.log(isFollow);
+          let here = that;
+          here.sections = allPost.data;
+          here.info = info.data;
+          here.sectionList = isFollow.data.sectionList;
+        })
+      );
+    setTimeout(function () {
+      if (
+        that.sectionList.some((item) => {
+          console.log("christina");
+          return item.sectionId == that.getSectionId();
+        })
+      ) {
+        console.log("hh");
         let here = that;
-        here.sections = allPost.data;
-        here.info = info.data;
-        here.sectionList = isFollow.data.sectionList;
-      }));
+        here.isUse = true;
+        here.situationFollow = "已关注";
+      }
+    }, 500);
   },
 };
 </script>
@@ -212,7 +245,6 @@ export default {
 }
 
 #plate .sub-banner .top .add .sectionFollow {
-
 }
 
 #plate .sub-banner .register {

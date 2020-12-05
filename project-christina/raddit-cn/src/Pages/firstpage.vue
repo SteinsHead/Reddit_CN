@@ -73,7 +73,7 @@ export default {
     let that = this;
     localStorage.setItem(
       "token",
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjEwMDAwNCwiZXhwIjoxNjA3MTY5MTI3fQ.CpUXpZZXC6E0KkSbk1zKDA8YIi8RPV0tgrav23aSiA4"
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjEwMDAwNCwiZXhwIjoxNjA3MTc4NzU4fQ.Ihrwa6tuPGgrPMiUlgYJgQs1eNA50263lxSy4tElryI"
     );
     that
       .axios({
@@ -95,6 +95,7 @@ export default {
 </script>
 
 <style>
+
 #page {
   background: gray;
   display: flex;
