@@ -19,7 +19,7 @@
           </el-dialog>
         </div>
         <div class="sectionFollow">
-          <el-button type="primary" plain round :disabled="isUse" @click="doFollow">{{situationFollow}}</el-button>
+          <el-button type="primary" @click="doFollow" plain round :disabled="isUse">{{situationFollow}}</el-button>
         </div>
       </div>
       <div class="register">
@@ -35,6 +35,7 @@
           :posttitle="section.sectionPostName"
           :postauthor="section.user.userName"
           :posttime="section.sectionPostTime"
+          @click.native="toTie(section.sectionPostId,section.sectionPostName)"
         ></poster>
       </div>
       <div class="msg">
@@ -71,16 +72,34 @@ export default {
     addPoster: addPoster,
   },
   methods: {
-    // doFollow(){
-    //   let that = this;
-    //   if(that.sectionList.some(function(item, index, that.sectionList){
-    //     return (item.sectionId == );
-    //   })){
-
-    //   }else{
-
-    //   }
-    // },
+    doFollow() {
+      let that = this;
+      that.isUse = true;
+      that.axios({
+        method: "post",
+        url: "/sectionUser/insertSectionUser",
+        params: {
+          sectionId: that.getSectionId(),
+        },
+        headers: {
+          token: that.getToken(),
+        },
+      });
+    },
+    checkFollow(list) {
+      let that = this;
+      return list.sectionId == that.getSectionId();
+    },
+    toTie:function(id,content){
+      this.$router.push({
+        name:"tie",
+        params:{
+          id:id,
+          Sid:this.getSectionId(),
+          content:content,
+        }
+      })
+    },
     getToken() {
       let that = this;
       if (typeof that.$route.params.token == "undefined") {
@@ -148,6 +167,19 @@ export default {
         here.info = info.data;
         here.sectionList = isFollow.data.sectionList;
       }));
+    setTimeout(function () {
+      if (
+        that.sectionList.some((item) => {
+          console.log("christina");
+          return item.sectionId == that.getSectionId();
+        })
+      ) {
+        console.log("hh");
+        let here = that;
+        here.isUse = true;
+        here.situationFollow = "已关注";
+      }
+    }, 500);
   },
 };
 </script>
@@ -210,11 +242,6 @@ export default {
   outline: none;
   cursor: pointer;
 }
-
-#plate .sub-banner .top .add .sectionFollow {
-
-}
-
 #plate .sub-banner .register {
   display: flex;
   flex: 1;

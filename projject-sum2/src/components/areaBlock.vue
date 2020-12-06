@@ -24,8 +24,8 @@ export default {
   name: "areablock",
   data() {
     return {
-      followSituation: "关注",
-    };
+      
+    }
   },
   props: {
     title: "",

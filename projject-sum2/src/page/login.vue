@@ -149,12 +149,12 @@ export default {
                     that.token = response.data.token;
                     localStorage.setItem('token',that.token);
                     that.$router.push({
-                        name:"mine",
+                        name:"page",
                         params:{
                             token:that.token
                         }
                     })
-                    window.open("/#/mine",name='_self');
+                    window.open("/#/firstpage",name='_self');
                 }
                 else{
                     alert(response.data.errmsg);

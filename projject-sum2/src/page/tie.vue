@@ -1,10 +1,15 @@
 <template>
-<div id="tie-page">
+<div v-if="hasData" id="tie-page">
 <div id="theme"><span>{{theme}}</span></div>
 <div id="tie-body" v-for="count in floorN" :key="count"> 
-    <floor :storey="count" :headImage="headImage[count-1]" :name="name[count-1]" 
-    :level="level[count-1]" :achievement="achievement[count-1]" :replyNum="getReplyNum(count-1)"
-    :reply="reply[count-1]" :content="content[count-1]" :replyTime="replyTime[count-1]"></floor>
+    <floor :storey="count" :headImage="tieData[count-1].user.userPhoto" 
+    :name="tieData[count-1].user.userName" 
+    :level="tieData[count-1].user.sectionUser.sectionUserRank" 
+    :achievement="achievement[count-1]" 
+    :replyNum="tieData[count-1].postFloorReply"
+    :reply="reply[count-1]" 
+    :content="tieData[count-1].postFloorIntroduce" 
+    :replyTime="tieData[count-1].postFloorTime"></floor>
     
 </div>
 <commet @click.native="showCommet"></commet>
@@ -25,6 +30,56 @@ export default {
         commet:commet,
     },
     created:function(){
+        let that = this;
+        let id = this.$route.params.id;
+        let Sid = this.$route.params.Sid;
+        let content = this.$route.params.content;
+        this.theme = content;//帖子主题
+        this.$axios.get("/postFloor/findAllPostFloor",{
+            params:{ 
+                sectionId:Sid,
+                sectionPostId:id
+            },
+            headers:{
+                token:localStorage.getItem('token')
+            }
+        }).then(function(response){
+            that.floorN = response.data.length;
+            that.tieData = response.data;
+
+            for(let i=0;i<that.floorN;i++){
+                that.floorIds.push(that.tieData[i].postFloorId);
+            }
+        });
+        setTimeout(function(){
+            let here = that;
+            for(let i=0;i<that.floorN;i++){
+                that.$axios.get('/postReply/findPostReplyBypfId',{
+                    params:{
+                        sectionId:Sid,
+                        sectionPostId:id,
+                        postFloorId:that.floorIds[i],
+                    },
+                    headers:{
+                        token:localStorage.getItem('token')
+                    }
+                }).then(function(response){
+                    if(response.data.length == 0){
+                        let obj = Object.create({postReplyIntroduce:'$null$'});
+                        let temp_arr = [];
+                        temp_arr.push(obj);
+                        here.reply.push(temp_arr);
+                    }
+                    else{
+                        here.reply.push(response.data);
+                    }
+                    if(i == that.floorN-1){
+                        here.hasData = true;
+                    }
+                    
+                })
+            }
+        },100)
         
     },
     methods: {
@@ -88,13 +143,17 @@ export default {
     },
     data() {
         return {
+            hasData:false,
+            reply:[],
+            floorIds:[],
+            tieData:[],
             token:"",
             From:"aaaa",
             To:null,
             where:-1,
             isShowCommet:false,
-            floorN:10,
-            theme:"关于王世钢喜欢马晨峰这件事",
+            floorN:0,
+            theme:"",
             content:["但爱你感动功能区","sdad","但爱你能dfsd区","但爱你x功能区","fe",
             "但爱你感动功能ff区","但爱你感动功aa能区","但爱你ggg感动功能区","但爱你感动df功能区","但爱你sdas动功能区"],
             headImage:["https://ae03.alicdn.com/kf/H3e674eece2004db28ae4387dae2406eap.jpg",
@@ -111,8 +170,6 @@ export default {
             level:[12,10,9,8,7,6,5,4,3,1],
             achievement:["后起之秀","无称号","无称号","无称号","无称号","无称号","无称号","无称号","无称号","萌新"],
             replyNum:[2,2,2,2,2,0,0,0,0,0],
-            reply:[[{id:1,from:"a",to:"b",replyContent:"cnm"},{id:2,from:"b",to:"a",replyContent:"wcnm"}],
-                    [{id:1,from:"b",to:"a",replyContent:"wcnm"}],[],[],[],[],[],[],[],[]],
             replyTime:["1","11","111","1111","1","11","111","1111","1","11"]
         }
     },

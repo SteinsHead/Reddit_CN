@@ -70,10 +70,6 @@ export default {
   },
   mounted() {
     let that = this;
-    localStorage.setItem(
-      "token",
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjEwMDAwNCwiZXhwIjoxNjA3MTY5MTI3fQ.CpUXpZZXC6E0KkSbk1zKDA8YIi8RPV0tgrav23aSiA4"
-    );
     that
       .axios({
         method: "get",
@@ -100,7 +96,7 @@ export default {
   flex-wrap: wrap;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 750px;
 }
 
 .navig {

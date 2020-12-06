@@ -21,7 +21,7 @@
             <span class="span1" id="show-reply" @click="showReply">查看评论({{replyNum}})</span>
         </div>
         <div id="floor-reply" v-show="isShowReply" v-for="mReply in reply" :key="mReply.id">
-            <reply @click.native="floorReply(mReply.from)" :from="mReply.from" :to="mReply.to" :content="mReply.replyContent"></reply>
+            <reply v-if="mReply.hasOwnProperty('postReplyIntroduce')" :from="mReply.user.userName" :content="mReply.postReplyIntroduce"></reply>
         </div>
   </div>
   </div>
@@ -38,7 +38,7 @@ export default {
     props:{
         headImage:String,
         name:String,
-        level:Number,
+        level:String,
         achievement:String,
         content:String,
         storey:Number,
@@ -72,11 +72,6 @@ export default {
         },
         showReply:function(){
             this.isShowReply = !this.isShowReply;
-        },
-        floorReply:function(From){
-                this.$parent.isShowCommet =!this.$parent.isShowCommet;
-                this.$parent.To = From;
-                this.$parent.where = this.storey;
         }
     },
 }

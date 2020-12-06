@@ -1,12 +1,12 @@
 <template>
-  <div><span id="reply-span">{{from}}&nbsp;回复{{to}}说:&nbsp;{{content}}</span></div>
+  <div><span id="reply-span">{{from}}&nbsp;回复说:&nbsp;{{content}}</span></div>
 </template>
 
 <script>
 export default {
     props:{
         from:String,
-        to:String,
+        to:String, //没用
         content:String
     }
 }

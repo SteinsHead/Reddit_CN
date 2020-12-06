@@ -19,8 +19,7 @@ export default {
   name: "plateinfo",
   data() {
     return {
-      masterInfo: "这个版主",
-      ruleInfo: "板块简介",
+
     };
   },
   props: {
