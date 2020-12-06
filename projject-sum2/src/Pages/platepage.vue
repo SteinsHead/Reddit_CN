@@ -11,7 +11,7 @@
           />
         </div>
         <div class="add">
-          <div class="add-post" @click="visible = true">
+          <div class="add-post" @click="visible=true">
             {{ addPost }}
           </div>
           <el-dialog :visible.sync="visible">
