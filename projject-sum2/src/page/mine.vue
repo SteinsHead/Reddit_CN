@@ -115,7 +115,6 @@ export default {
         }
     },
     created:function(){
-        console.log(localStorage.getItem('token'));
         let that = this;
         this.$axios.get("/user/findUserMine",{
             headers:{
@@ -129,7 +128,6 @@ export default {
                         token:that.$route.params.token
                     }
                 }).then(function(response){
-                    console.log(response.data);
                     if(response.data.hasOwnProperty("errmsg")){
                         alert("登陆过期，请重新登录！");
                         window.open("/#/login",name='_self');

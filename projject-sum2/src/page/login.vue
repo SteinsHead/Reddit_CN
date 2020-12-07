@@ -153,7 +153,8 @@ export default {
                         params:{
                             token:that.token
                         }
-                    })
+                    }).catch(err =>{console.log(err)})
+
                     window.open("/#/firstpage",name='_self');
                 }
                 else{

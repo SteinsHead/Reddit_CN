@@ -4,10 +4,7 @@
         <div id="owner-message">
             <img :src="headImage" />
             <span class="span1">{{name}}</span>
-            <div>
-                <span class="span1" id="level">lv:{{level}}</span>
-                <span class="span1" id="achievement">{{achievement}}</span>
-            </div>
+            <span class="span1" id="level">lv:{{level}}</span>
         </div>
         <div id="floor-content">
                 <span class="span1">{{content}}</span>
@@ -19,6 +16,7 @@
             <span class="span1">{{replyTime}}</span>
             <span class="span1" id="replyThisFloor" @click="replyThisFloor">回复本层</span>
             <span class="span1" id="show-reply" @click="showReply">查看评论({{replyNum}})</span>
+            <span class="span1" id="deleteThisFloor" v-if="storey != 1 && this.$parent.showButtonDeleteThisFloor" @click="deleteThisFloor">删除本楼</span>
         </div>
         <div id="floor-reply" v-show="isShowReply" v-for="mReply in reply" :key="mReply.id">
             <reply v-if="mReply.hasOwnProperty('postReplyIntroduce')" :from="mReply.user.userName" :content="mReply.postReplyIntroduce"></reply>
@@ -64,6 +62,9 @@ export default {
         }
     },
     methods: {
+        deleteThisFloor:function(){
+
+        },
         replyThisFloor:function(){
             this.isShowReply = !this.isShowReply;
             this.$parent.isShowCommet =!this.$parent.isShowCommet;

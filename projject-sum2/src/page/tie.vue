@@ -1,13 +1,13 @@
 <template>
-<div v-if="hasData" id="tie-page">
+<div id="tie-page">
 <div id="theme"><span>{{theme}}</span></div>
 <div id="tie-body" v-for="count in floorN" :key="count"> 
-    <floor :storey="count" :headImage="tieData[count-1].user.userPhoto" 
+    <floor :storey="count" 
+    :headImage="tieData[count-1].user.userPhoto" 
     :name="tieData[count-1].user.userName" 
     :level="tieData[count-1].user.sectionUser.sectionUserRank" 
-    :achievement="achievement[count-1]" 
     :replyNum="tieData[count-1].postFloorReply"
-    :reply="reply[count-1]" 
+    :reply="real_reply[count-1]"
     :content="tieData[count-1].postFloorIntroduce" 
     :replyTime="tieData[count-1].postFloorTime"></floor>
     
@@ -31,10 +31,48 @@ export default {
     },
     created:function(){
         let that = this;
-        let id = this.$route.params.id;
-        let Sid = this.$route.params.Sid;
-        let content = this.$route.params.content;
+        let id = localStorage.getItem('id');
+        let Sid = localStorage.getItem('Sid');
+        this.id = id;
+        this.Sid = Sid;
+        let content = localStorage.getItem('content');
         this.theme = content;//帖子主题
+        this.$router.push({
+            name:'tie',
+            params:{
+                id:id,
+                Sid:Sid,
+                content:content
+            }
+        }).catch(err =>{console.log(err)})
+        //检测token
+        this.$axios.get("/user/findUserMine",{
+            headers:{
+                token:localStorage.getItem('token')
+            }
+        }).then(function(response){
+            if(response.data.hasOwnProperty("errmsg")){
+                let here = that;
+                that.$axios.get("/user/findUserMine",{
+                    headers:{
+                        token:that.$route.params.token
+                    }
+                }).then(function(response){
+                    if(response.data.hasOwnProperty("errmsg")){
+                        alert("登陆过期，请重新登录！");
+                        window.open("/#/login",name='_self');
+                    }
+                    else{
+                        here.myAccount = response.data.userAccount;
+                    }
+                })
+            }
+            else{
+                that.myAccount = response.data.userAccount;
+            }
+        })
+
+        //获取所有的楼层
         this.$axios.get("/postFloor/findAllPostFloor",{
             params:{ 
                 sectionId:Sid,
@@ -46,14 +84,38 @@ export default {
         }).then(function(response){
             that.floorN = response.data.length;
             that.tieData = response.data;
-
+            that.TieMaster = response.data[0].user.userAccount;
             for(let i=0;i<that.floorN;i++){
+                console.log("!! "+that.tieData[i].postFloorId);
                 that.floorIds.push(that.tieData[i].postFloorId);
             }
         });
+        //检测权限
+        this.$axios.get('/sectionUser/findSectionCreater',{
+            params:{
+                sectionId:Sid,
+            },
+            headers:{
+                token:localStorage.getItem('token'),
+            }
+        }).then(function(response){
+            if(response.data.hasOwnProperty('userAccount')){
+                that.sectionMaster = response.data.userAccount;
+            }
+            if(that.myAccount == that.sectionMaster || that.myAccount == that.TieMaster){
+                that.showButtonDeleteThisFloor = true;
+            }
+            else{
+                that.showButtonDeleteThisFloor = false;
+            }
+        })
+
+        //获取每个楼层的回复
         setTimeout(function(){
             let here = that;
+            let index = 0;
             for(let i=0;i<that.floorN;i++){
+                let temp_index = index;
                 that.$axios.get('/postReply/findPostReplyBypfId',{
                     params:{
                         sectionId:Sid,
@@ -64,46 +126,52 @@ export default {
                         token:localStorage.getItem('token')
                     }
                 }).then(function(response){
-                    if(response.data.length == 0){
-                        let obj = Object.create({postReplyIntroduce:'$null$'});
-                        let temp_arr = [];
-                        temp_arr.push(obj);
-                        here.reply.push(temp_arr);
-                    }
-                    else{
-                        here.reply.push(response.data);
-                    }
-                    if(i == that.floorN-1){
-                        here.hasData = true;
-                    }
-                    
+                    console.log(response.data);
+                    here.replyIndex.push(temp_index);
+                    here.reply.push(response.data);
                 })
+                index++;
+            };
+        },300);
+        setTimeout(function(){
+            console.log("%% "+that.replyIndex.length);
+            for(let i=0;i<that.replyIndex.length;i++){
+                that.real_reply.push(that.reply[that.replyIndex.indexOf(i)]);
             }
-        },100)
-        
+            console.log(that.real_reply[1]);
+        },500);
+
     },
     methods: {
         sendCommet:function(){
-                let content = document.getElementById('textarea').value;
-                console.log(content);
-                let data = new Date();
+            let content = document.getElementById('textarea').value;
             if(this.where == -1){    
                 if(content.length == 0){
                     alert("请输入内容");
                 }
                 else{
-                    this.floorN +=1;
-                    this.headImage.push("");
-                    this.name.push("cnm");
-                    this.level.push(23);
-                    this.achievement.push("神");
-                    this.content.push(content);
-                    this.reply.push([]);
-                    this.replyTime.push(data.toLocaleString());
+                    
+                    this.$axios.post("/postFloor/insertPostFloor",null,{
+                        params:{
+                            sectionId:this.Sid,
+                            sectionPostId:this.id,
+                            postFloorIntroduce:content,
+                            postFloorPhoto:"null",
+                        },
+                        headers:{
+                            token:localStorage.getItem("token"),
+                        }
+                    }).then(function(response){
+                    })
                     document.getElementById('textarea').value = "";
                     this.isShowCommet = false;
+                    this.$router.replace({
+                        path:'/jump',
+                        name:'jump'
+                    }).catch(err =>{console.log(err)})
+
                     alert("评论成功");
-                    
+
                 }
             }
             else{
@@ -111,21 +179,37 @@ export default {
                     alert("请输入内容");
                 }
                 else{
-                    let obj = Object.create({id:this.reply[this.where-1].length+1,from:this.From,to:this.To,replyContent:content});
-                    this.reply[this.where-1].push(obj);
+
+                    this.$axios.post('/postReply/insertPostReply',null,{
+                        params:{
+                            sectionId:this.Sid,
+                            sectionPostId:this.id,
+                            postFloorId:this.floorIds[this.where-1],
+                            postReplyIntroduce:content,
+                        },
+                        headers:{
+                            token:localStorage.getItem('token'),
+                        }
+                    }).then(function(response){
+                        console.log("%%%"+response.data);
+                    })
                     alert("评论成功");
+                    document.getElementById('textarea').value = "";
                     this.isShowCommet = false;
                     this.where = -1;
+                    this.$router.replace({
+                        path:'/jump',
+                        name:'jump'
+                    }).catch(err =>{console.log(err)})
+
                 }
             }
         },
         showCommet:function(){
             this.isShowCommet = !this.isShowCommet;
-        },
-        floorReply:function(){
-            console.log("test");
-           
-
+            for(let i=0;i<this.replyIndex.length;i++){
+                console.log(this.replyIndex[i]);
+            };
         }
     },
     computed:{
@@ -143,34 +227,22 @@ export default {
     },
     data() {
         return {
-            hasData:false,
+            showButtonDeleteThisFloor:false,
+            sectionMaster:'',
+            TieMaster:'',
+            myAccount:'',
+            real_reply:[],
+            replyIndex:[],
+            Sid:0,
+            id:0,
             reply:[],
             floorIds:[],
             tieData:[],
             token:"",
-            From:"aaaa",
-            To:null,
             where:-1,
             isShowCommet:false,
             floorN:0,
-            theme:"",
-            content:["但爱你感动功能区","sdad","但爱你能dfsd区","但爱你x功能区","fe",
-            "但爱你感动功能ff区","但爱你感动功aa能区","但爱你ggg感动功能区","但爱你感动df功能区","但爱你sdas动功能区"],
-            headImage:["https://ae03.alicdn.com/kf/H3e674eece2004db28ae4387dae2406eap.jpg",
-                       "https://ae03.alicdn.com/kf/H3e674eece2004db28ae4387dae2406eap.jpg",
-                       "https://ae03.alicdn.com/kf/H3e674eece2004db28ae4387dae2406eap.jpg",
-                       "https://ae03.alicdn.com/kf/H3e674eece2004db28ae4387dae2406eap.jpg",
-                       "https://ae03.alicdn.com/kf/H3e674eece2004db28ae4387dae2406eap.jpg",
-                       "https://ae03.alicdn.com/kf/H3e674eece2004db28ae4387dae2406eap.jpg",
-                       "https://ae03.alicdn.com/kf/H3e674eece2004db28ae4387dae2406eap.jpg",
-                       "https://ae03.alicdn.com/kf/H3e674eece2004db28ae4387dae2406eap.jpg",
-                       "https://ae03.alicdn.com/kf/H3e674eece2004db28ae4387dae2406eap.jpg",
-                       "https://ae03.alicdn.com/kf/H3e674eece2004db28ae4387dae2406eap.jpg"], 
-            name:["爱唱歌的向日葵","光明之魂","神龙","大灭","诺手","卡卡西","茶壶","水杯","键盘侠","小萌心"],
-            level:[12,10,9,8,7,6,5,4,3,1],
-            achievement:["后起之秀","无称号","无称号","无称号","无称号","无称号","无称号","无称号","无称号","萌新"],
-            replyNum:[2,2,2,2,2,0,0,0,0,0],
-            replyTime:["1","11","111","1111","1","11","111","1111","1","11"]
+            theme:""
         }
     },
 }
