@@ -117,6 +117,8 @@ export default {
       return list.sectionId == that.getSectionId();
     },
     toTie:function(id,content){
+      console.log(id);
+      console.log(content);
       this.$router.push({
         name:"tie",
         params:{
@@ -125,6 +127,9 @@ export default {
           content:content,
         }
       }).catch(err =>{console.log(err)});
+      localStorage.setItem('id',id);
+      localStorage.setItem('Sid',this.getSectionId());
+      localStorage.setItem('content',content);
     },
     getToken() {
       let that = this;
