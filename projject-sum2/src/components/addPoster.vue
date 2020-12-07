@@ -17,7 +17,6 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即发帖</el-button>
-        <el-button>取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -90,6 +89,7 @@ export default {
         },
       })
       console.log(that.photoUrl);
+      window.open('/#/platepage', '_self');
     },
     handleRemove(file) {
       console.log(file);

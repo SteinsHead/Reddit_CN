@@ -20,7 +20,6 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">创建新板块</el-button>
-        <el-button>取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -97,6 +96,7 @@ export default {
       console.log(that.form.name);
       console.log(that.form.desc);
       console.log(that.photoUrl);
+      window.open("/#/firstpage", "_self");
     },
     handleRemove(file) {
       console.log(file);

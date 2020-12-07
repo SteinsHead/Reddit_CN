@@ -1,6 +1,6 @@
 <template>
   <div id="page">
-    <topbanner></topbanner>
+    <topbanner :token="token"></topbanner>
     <div class="navig">
       <naviGater @click.native="visible = true" :navName="navname"></naviGater>
       <el-dialog :visible.sync="visible">

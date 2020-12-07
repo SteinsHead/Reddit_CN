@@ -22,7 +22,7 @@
     </div>
     <div class="right">
       <welcome v-html="welcomeMsg" :textStyle="welcomeStyle"></welcome>
-      <logOut @click.native="reverseUser" :label="logout" :textStyle="centerStyle"></logOut>
+      <logOut @click.native="jumpToLogin" :label="logout" :textStyle="centerStyle"></logOut>
       <messAge :label="message" :textStyle="centerStyle"></messAge>
     </div>
   </div>
@@ -39,7 +39,7 @@ export default {
       talkblock: "论坛",
       rankscore: "评分",
       download: "app下载",
-      welcomeMsg: "欢迎<br>christina",
+      welcomeMsg: "欢迎登录<br>",
       logout: "登出",
       message: "消息",
       placeholder: "今天想搜索什么 ……",
@@ -52,6 +52,11 @@ export default {
       centerStyle: {},
     };
   },
+  props: {
+    token: {
+      type: String
+    }
+  },
   components: {
     firstPage: block,
     talkBlock: block,
@@ -63,13 +68,24 @@ export default {
     search: search,
   },
   methods: {
-    reverseUser(){
-      if(this.logout == "登出"){
-        this.logout = "请登录";
-      }else{
-        this.logout = "登出";
-      }
+    jumpToLogin(){
+      window.open('/#/login', '_self');
     }
+  },
+  mounted() {
+    let that = this;
+    that.axios({
+      method: 'get',
+      url: '/user/findUserMine',
+      headers: {
+        token: that.token,
+      },
+    }).then(function(response){
+      console.log(response);
+      that.welcomeMsg += response.data.userName;
+    }).catch(function(error){
+      console.log(error);
+    })
   },
 };
 </script>
