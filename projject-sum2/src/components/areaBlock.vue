@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="follow">
-      <el-tag>{{followSituation}}人关注</el-tag>
+      <el-tag>{{ followSituation }}人关注</el-tag>
     </div>
   </div>
 </template>
@@ -23,9 +23,7 @@
 export default {
   name: "areablock",
   data() {
-    return {
-      
-    }
+    return {};
   },
   props: {
     title: "",
@@ -44,6 +42,7 @@ export default {
   height: 100px;
   width: 400px;
   background-color: skyblue;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 
 #areablock .img {

@@ -2,9 +2,10 @@
   <div id="page">
     <topbanner></topbanner>
     <div class="navig">
-      <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
-      <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
-      <naviGater :navName="navname" :textStyle="textcolor"></naviGater>
+      <naviGater @click.native="visible=true" :navName="navname"></naviGater>
+      <el-dialog :visible.sync="visible">
+        <platedialog :token="token"></platedialog>
+      </el-dialog>
     </div>
     <div class="block">
       <areablock
@@ -17,9 +18,6 @@
         @click.native="jumpToSubSection(plate)"
       ></areablock>
     </div>
-    <div class="footercopy">
-      <footerSpace :copyright="rightMsg"></footerSpace>
-    </div>
   </div>
 </template>
 
@@ -27,18 +25,16 @@
 import banner from "@/components/topBanner";
 import areablock from "@/components/areaBlock";
 import navigater from "@/components/navigater";
-import footerspace from "@/components/footerSpace";
+import plateDialog from "@/components/addPlate";
 export default {
   name: "page",
   data() {
     return {
+      visible: false,
       blockLabel: "分区A",
       blockname: "板块A",
-      navname: "Raddit",
+      navname: "创建板块",
       rightMsg: "© 2020 · Theme by christina · All Rights Reserved",
-      textcolor: {
-        color: "white",
-      },
       borderstyle: {
         borderRadius: "5px",
         cursor: "pointer",
@@ -51,13 +47,14 @@ export default {
     topbanner: banner,
     areablock: areablock,
     naviGater: navigater,
-    footerSpace: footerspace,
+    platedialog: plateDialog,
   },
   methods: {
+    insertPlate() {},
     jumpToSubSection(plate) {
       let that = this;
-      console.log(typeof(plate.sectionId.toString()));
-      localStorage.setItem("sectionId", plate.sectionId.toString())
+      console.log(typeof plate.sectionId.toString());
+      localStorage.setItem("sectionId", plate.sectionId.toString());
       this.$router.push({
         name: "plate",
         params: {
@@ -101,14 +98,6 @@ export default {
 
 .navig {
   display: flex;
-}
-
-.footercopy {
-  width: 100%;
-  position: fixed;
-  bottom: 10px;
-  justify-content: center;
-  align-items: center;
 }
 
 .block {

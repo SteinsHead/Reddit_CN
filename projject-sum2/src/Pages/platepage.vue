@@ -15,7 +15,7 @@
             {{ addPost }}
           </div>
           <el-dialog :visible.sync="visible">
-            <addPoster :token="realToken" :sectionId="100001"></addPoster>
+            <addPoster :token="realToken" :sectionId="realSectionId"></addPoster>
           </el-dialog>
         </div>
         <div class="sectionFollow">
@@ -63,6 +63,9 @@ export default {
       situationFollow: "未关注",
       isUse: false,
       sectionList: [],
+      realSectionId: {
+        type: Number,
+      },
     };
   },
   components: {
@@ -166,6 +169,7 @@ export default {
         here.sections = allPost.data;
         here.info = info.data;
         here.sectionList = isFollow.data.sectionList;
+        here.realSectionId = info.data.sectionId;
       }));
     setTimeout(function () {
       if (

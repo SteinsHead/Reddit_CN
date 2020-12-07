@@ -1,5 +1,5 @@
 <template>
-  <div id="add-poster">
+  <div id="add-plate">
     <el-form ref="form" :model="form" label-width="80px" style="margin: 10px">
       <el-upload
         action=""
@@ -12,11 +12,14 @@
         :on-error="uploadError"
       >
       </el-upload>
-      <el-form-item label="帖子内容" style="margin: 10px">
+      <el-form-item label="板块名称" style="margin: 10px">
+        <el-input v-model="form.name"></el-input>
+      </el-form-item>
+      <el-form-item label="板块介绍" style="margin: 10px">
         <el-input type="textarea" v-model="form.desc"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即发帖</el-button>
+        <el-button type="primary" @click="onSubmit">创建新板块</el-button>
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
@@ -25,10 +28,11 @@
 
 <script>
 export default {
-  name: "addPoster",
+  name: "addPlate",
   data() {
     return {
       form: {
+        name: "",
         desc: "",
       },
       fileList: [],
@@ -39,13 +43,10 @@ export default {
     token: {
       type: String,
     },
-    sectionId: {
-      type: Number,
-    }
   },
   methods: {
     sendRealRequest(params) {
-      console.log('param is '+params.file.type);
+      console.log("param is " + params.file.type);
       let that = this;
       let file = params.file;
       that.uploadFile(file);
@@ -78,17 +79,23 @@ export default {
       let that = this;
       console.log(that.form.desc);
       that.axios({
-        method: 'post',
-        url: '/sectionPost/insertSectionPost',
+        method: "post",
+        url: "/section/insertSection",
         params: {
-          sectionId: that.sectionId,
-          sectionPostName: that.form.desc,
-          sectionPostPhoto: that.photoUrl,
+          sectionName: that.form.name,
+          sectionIntroduce: that.form.desc,
+          sectionPhoto: that.photoUrl,
         },
         headers: {
           token: that.token,
         },
-      })
+      }).then(function(response){
+        console.log(response);
+      }).then(function(error){
+        console.log(error);
+      });
+      console.log(that.form.name);
+      console.log(that.form.desc);
       console.log(that.photoUrl);
     },
     handleRemove(file) {

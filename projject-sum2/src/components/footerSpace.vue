@@ -1,7 +1,7 @@
 <template>
   <div class="footspace">
     <div class="copyright">
-      <p>{{copyright}}</p>
+      <p>{{ copyright }}</p>
     </div>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default {
 .footerspace {
   margin: 0 auto;
   display: flex;
-  
+  cursor: pointer;
   position: fixed;
 }
 

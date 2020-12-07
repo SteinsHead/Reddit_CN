@@ -61,9 +61,9 @@
     </div>
 
     <div class="chartAll">
-        <chart></chart>
-        <chart></chart>
-        <chart></chart>
+      <chart></chart>
+      <chart></chart>
+      <chart></chart>
     </div>
   </div>
 </template>
@@ -71,7 +71,9 @@
 <script>
 import Data from "@/components/data";
 import search from "@/components/input";
-import chart from '@/components/charts';
+import chart from "@/components/charts";
+import footerspace from "@/components/footerSpace";
+
 export default {
   name: "admin",
   data() {
@@ -106,7 +108,7 @@ export default {
     banCount: Data,
     areaCount: Data,
     search: search,
-    chart:chart,
+    chart: chart,
   },
 };
 </script>
@@ -149,9 +151,9 @@ svg {
 }
 
 .chartAll {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 </style>

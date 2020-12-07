@@ -2,15 +2,20 @@
   <div id="app">
     <topavg></topavg>
     <router-view />
+    <!-- <div class="footercopy">
+      <footerSpace :copyright="rightMsg"></footerSpace>
+    </div> -->
   </div>
 </template>
 
 <script>
 import topAvg from "@/components/toTop";
+// import footerspace from "@/components/footerSpace";
 export default {
   name: "App",
   components: {
     topavg: topAvg,
+    // footerSpace: footerspace,
   },
 };
 </script>
@@ -34,12 +39,12 @@ export default {
   background-color: #f5f5f5;
 }
 
-html, body{
+html,
+body {
   height: 100%;
 }
 
 #app {
-
   /* height: 100%; */
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -54,4 +59,12 @@ html, body{
   align-items: center;
   justify-content: center;
 }
+
+/* .footercopy {
+  width: 100%;
+  position: fixed;
+  bottom: 10px;
+  justify-content: center;
+  align-items: center;
+} */
 </style>
