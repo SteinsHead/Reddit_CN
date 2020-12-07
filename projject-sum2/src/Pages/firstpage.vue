@@ -2,7 +2,7 @@
   <div id="page">
     <topbanner></topbanner>
     <div class="navig">
-      <naviGater @click.native="visible=true" :navName="navname"></naviGater>
+      <naviGater @click.native="visible = true" :navName="navname"></naviGater>
       <el-dialog :visible.sync="visible">
         <platedialog :token="token"></platedialog>
       </el-dialog>
@@ -49,6 +49,33 @@ export default {
     naviGater: navigater,
     platedialog: plateDialog,
   },
+  created() {
+    //检测token过期
+    let that = this;
+    this.$axios
+      .get("/user/findUserMine", {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      })
+      .then(function (response) {
+        if (response.data.hasOwnProperty("errmsg")) {
+          let here = that;
+          that.$axios
+            .get("/user/findUserMine", {
+              headers: {
+                token: that.$route.params.token,
+              },
+            })
+            .then(function (response) {
+              if (response.data.hasOwnProperty("errmsg")) {
+                alert("登陆过期，请重新登录！");
+                window.open("/#/login", (name = "_self"));
+              }
+            });
+        }
+      });
+  },
   methods: {
     insertPlate() {},
     jumpToSubSection(plate) {
@@ -61,7 +88,7 @@ export default {
           sectionId: plate.sectionId,
           token: that.token,
         },
-      });
+      }).catch(err =>{console.log(err)});
       window.open("/#/platepage", (name = "_self"));
     },
   },

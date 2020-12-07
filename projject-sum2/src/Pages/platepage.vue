@@ -74,6 +74,29 @@ export default {
     plateInfo: plateInfo,
     addPoster: addPoster,
   },
+  created(){
+    //检测token过期
+    let that = this;
+    this.$axios.get("/user/findUserMine",{
+        headers:{
+            token:localStorage.getItem('token')
+        }
+    }).then(function(response){
+        if(response.data.hasOwnProperty("errmsg")){
+            let here = that;
+            that.$axios.get("/user/findUserMine",{
+                headers:{
+                    token:that.$route.params.token
+                }
+            }).then(function(response){
+                if(response.data.hasOwnProperty("errmsg")){
+                    alert("登陆过期，请重新登录！");
+                    window.open("/#/login",name='_self');
+                }
+            })
+        }
+    })
+  },
   methods: {
     doFollow() {
       let that = this;
@@ -101,7 +124,7 @@ export default {
           Sid:this.getSectionId(),
           content:content,
         }
-      })
+      }).catch(err =>{console.log(err)});
     },
     getToken() {
       let that = this;
