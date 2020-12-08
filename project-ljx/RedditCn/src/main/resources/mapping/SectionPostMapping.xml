@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.RedditCn.mapper.SectionPostMapper">
+ 
+    <resultMap id="BaseResultMap" type="com.example.RedditCn.entity.SectionPost">
+        <result column="spId" jdbcType="INTEGER" property="spId" />
+        <result column="suId" jdbcType="INTEGER" property="suId" />
+        <result column="spName" jdbcType="INTEGER" property="spName" />
+        <result column="spTime" jdbcType="TIMESTAMP" property="spTime" />
+        <result column="spBan" jdbcType="VARCHAR" property="spBan" />
+        <result column="spTheme" jdbcType="VARCHAR" property="spTheme" />
+        <result column="spSpecial" jdbcType="VARCHAR" property="spSepical" />
+        <result column="spFloor" jdbcType="INTEGER" property="spFloor"/>
+        <result column="spVisit" jdbcType="INTEGER" property="spVisit" />
+        <result column="spPhoto" jdbcType="VARCHAR" property="spPhoto" />
+    </resultMap>
+ 
+    <select id="findAll" resultType="com.example.RedditCn.entity.SectionPost">
+        select * from ${tableName} where spBan is null
+    </select>
+    
+    <select id="findByspId" resultType="com.example.RedditCn.entity.SectionPost">
+        select * from ${tableName} where spId = #{spId} 
+    </select>
+    
+    <update id="updateSpFloor" parameterType="String">
+    	update ${tableName} set spFloor = spFloor + 1 where spId = #{spId}
+    </update>
+    
+    <update id="updateSpBan" parameterType="String">
+    	update ${tableName} set spBan = #{spBan} where spId = #{spId}
+    </update>
+    
+    <update id="dropTable">  
+    	DROP TABLE IF EXISTS ${tableName} 
+  	</update>
+    
+ 	<update id="createTable" parameterType="String">  
+    	CREATE TABLE if not exists ${tableName} (
+      		`spId` int NOT NULL AUTO_INCREMENT,
+  			`suId` int NOT NULL,
+  			`spName` varchar(200) NOT NULL,
+  			`spTime` datetime NOT NULL,
+  			`spBan` varchar(10) default NULL,
+  			`spTheme` varchar(100) DEFAULT NULL,
+  			`spSpecial` varchar(10) default NULL,
+  			`spFloor` int default 1,
+  			`spVisit` int default 0,
+  			`spPhoto` varchar(500) default null,
+  			PRIMARY KEY (`spid`)
+    		) AUTO_INCREMENT=100001;
+  	</update>
+  	
+  	<insert id="insertSectionPost" parameterType="com.example.RedditCn.entity.SectionPost" useGeneratedKeys="true" keyProperty="spId">
+    	insert into ${tableName} (suId, spName, spTime, spPhoto) values (#{suId}, #{spName}, now(), #{spPhoto})
+    </insert>
+</mapper>

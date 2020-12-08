@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.RedditCn.mapper.SectionUserPostMapper">
+ 
+    <resultMap id="BaseResultMap" type="com.example.RedditCn.entity.SectionUserPost">
+        <result column="suId" jdbcType="INTEGER" property="suId" />
+        <result column="spId" jdbcType="INTEGER" property="spId" />
+    </resultMap>
+ 
+    <select id="findBysuId" resultType="com.example.RedditCn.entity.SectionUserPost">
+        select * from ${tableName} where suId = #{suId}
+    </select>
+    
+    <update id="dropTable">  
+    	DROP TABLE IF EXISTS ${tableName} 
+  	</update>
+    
+ 	<update id="createTable" parameterType="String">  
+    	CREATE TABLE if not exists ${tableName} (
+      		`suId` int NOT NULL,
+  			`spId` int NOT NULL,
+  			primary key(`suId`, `spId`)
+    		)
+  	</update>
+  	
+    <insert id="insertSectionUserPost" parameterType="String">
+    	insert into ${tableName} (suId, spId) values (#{suId}, #{spId})
+    </insert>
+</mapper>
