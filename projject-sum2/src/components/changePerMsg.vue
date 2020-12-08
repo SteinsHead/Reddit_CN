@@ -60,9 +60,7 @@ export default {
     };
   },
   props: {
-      token: {
-          type: String
-      }
+      
   },
   methods: {
     sendRealRequest(params) {
@@ -109,7 +107,7 @@ export default {
             userIntroduce: that.intro,
           },
           headers: {
-            token: that.token,
+            token: localStorage.getItem('token'),
           },
         })
         .then(function (response) {

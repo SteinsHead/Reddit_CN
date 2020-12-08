@@ -23,7 +23,9 @@
             </simpleMsg>
         </div>
         <div id="msg-box" v-show="officalMsg" v-for="(MyOneFloorData,index) in myFloorData" :key="'info2-'+index">
-            <simpleFloor              
+            <simpleFloor
+             :sectionPostId="MyOneFloorData.sectionPostId"
+             :sectionId="MyOneFloorData.sectionId"               
              :sectionName="MyOneFloorData.sectionName"
              :sectionPostName="MyOneFloorData.sectionPostName"
              :postFloorIntroduce="MyOneFloorData.postFloorIntroduce"

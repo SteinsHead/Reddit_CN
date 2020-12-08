@@ -2,7 +2,7 @@
   <div id="floor">
       <div id="floor-body">
         <div id="owner-message">
-            <img :src="headImage" />
+            <img :src="userPhoto" />
             <span class="span1">{{name}}</span>
             <span class="span1" id="level">lv:{{level}}</span>
         </div>
@@ -55,7 +55,7 @@ export default {
        reply:reply
     },
     props:{
-        headImage:String,
+        userPhoto:String,
         name:String,
         level:String,
         achievement:String,
