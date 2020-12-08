@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.RedditCn.mapper.SectionUserMapper">
+ 
+    <resultMap id="BaseResultMap" type="com.example.RedditCn.entity.SectionUser">
+        <result column="suId" jdbcType="INTEGER" property="suId" />
+        <result column="uId" jdbcType="INTEGER" property="uId" />
+        <result column="suTime" jdbcType="TIMESTAMP" property="suTime" />
+        <result column="suRank" jdbcType="INTEGER" property="suRank" />
+        <result column="suPublish" jdbcType="INTEGER" property="suPublish" />
+        <result column="suSignin" jdbcType="BOOLEAN" property="suSignin" />
+        <result column="suBan" jdbcType="VARCHAR" property="suBan" />
+        <result column="suPermission" jdbcType="VARCHAR" property="suPermission" />
+    </resultMap>
+ 
+    <select id="findByuId" resultType="com.example.RedditCn.entity.SectionUser">
+        select * from ${tableName} where uId = #{uId}
+    </select>
+    
+    <select id="findBysuId" resultType="com.example.RedditCn.entity.SectionUser">
+        select * from ${tableName} where suId = #{suId}
+    </select>
+    
+    <update id="updateSuRank">  
+    	update ${tableName} set suRank = suRank + #{suRank} where suId = #{suId}
+  	</update>
+    
+    <update id="dropTable">  
+    	DROP TABLE IF EXISTS ${tableName} 
+  	</update>
+    
+ 	<update id="createTable" parameterType="String">  
+    	CREATE TABLE if not exists ${tableName} (
+      		`suId` int NOT NULL AUTO_INCREMENT,
+  			`uId` int NOT NULL,
+  			`suTime` datetime NOT NULL,
+  			`suRank` int NOT NULL default 0,
+  			`suPublish` int not null DEFAULT 0,
+  			`suSignin` boolean NOT NULL default false,
+  			`suBan` varchar(10) default null,
+  			`suPermission` varchar(10) default null,
+  			PRIMARY KEY (`suid`)
+    		) AUTO_INCREMENT=100001
+  	</update>
+  	
+    <insert id="insertSectionUser" parameterType="com.example.RedditCn.entity.SectionUser"  useGeneratedKeys="true" keyProperty="suId">
+    	insert into ${tableName} (uId, suTime, suPermission) values (#{uId}, now(), #{suPermission})
+    </insert>
+</mapper>
