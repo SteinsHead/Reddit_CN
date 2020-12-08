@@ -62,6 +62,10 @@ export default {
   flex-direction: column;
 }
 
+#areablock .blockInfo .title {
+  /* overflow: hidden; */
+}
+
 #areablock .follow {
   display: flex;
   justify-content: flex-end;

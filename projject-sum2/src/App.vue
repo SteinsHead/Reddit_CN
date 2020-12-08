@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <topavg></topavg>
-    <!-- <transition name="slide-fade">
+    <!-- <transition name="transitionName">
       <router-view></router-view>
     </transition> -->
     <router-view></router-view>
@@ -19,6 +19,18 @@ export default {
   components: {
     topavg: topAvg,
     // footerSpace: footerspace,
+  },
+  watch:{
+    // $route(to, form){
+    //   if(to.path == '/'){  
+    //     this.transitionName = 'slide-right';  
+    //   }else{  
+    //     this.transitionName = 'slide-left';  
+    //   } 
+    // }
+  },
+  created() {
+    document.body.removeChild(document.getElementById('Loading'));
   },
 };
 </script>
@@ -62,6 +74,37 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+/* .slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+  will-change: transform;
+  transition: all 500ms;
+  position: absolute;
+}
+
+.slide-right-enter {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+
+.slide-left-enter {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+
+.slide-left-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+} */
 
 /* 可以设置不同的进入和离开动画 */
 /* 设置持续时间和动画函数 */

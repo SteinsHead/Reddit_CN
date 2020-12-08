@@ -1,6 +1,6 @@
 <template>
   <div id="banner">
-    <div class="image">
+    <div class="image" @click="onJumptoMine">
       <img
         src="https://cdn.jsdelivr.net/gh/SteinsHead/ImageBed/img/2020/1597120574740.jpg"
         alt=""
@@ -70,6 +70,9 @@ export default {
   methods: {
     jumpToLogin(){
       window.open('/#/login', '_self');
+    },
+    onJumptoMine(){
+      window.open('/#/mine', '_self');
     }
   },
   mounted() {
@@ -101,6 +104,7 @@ export default {
 .image {
   width: 75px;
   height: 60px;
+  cursor: pointer;
 }
 
 .image img {
