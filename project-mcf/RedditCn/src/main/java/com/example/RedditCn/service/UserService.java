@@ -105,8 +105,7 @@ public class UserService {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw e;
-			// throw new RuntimeException(ErrorJsonObject.findUserInformationFailed());
+			throw new RuntimeException(ErrorJsonObject.findUserInformationFailed());
 		}
 		return new UserSectionBO(user, list1);
 	}

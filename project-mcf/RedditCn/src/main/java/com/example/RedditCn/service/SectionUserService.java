@@ -1,5 +1,7 @@
 package com.example.RedditCn.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,5 +86,24 @@ public class SectionUserService {
 			throw new RuntimeException(ErrorJsonObject.updateSectionUserRankFailed());
 		}
 		return true;
+	}
+
+	public boolean updateSectionUserBan(int sId, int suId, String suBan) {
+		try {
+			sectionUserMapper.updateSuBan(tableName + sId, suBan, suId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.updateSectionUserBanFailed());
+		}
+		return true;
+	}
+
+	public List<SectionUser> findBanSectionUser(int sId) {
+		try {
+			return sectionUserMapper.findBan(tableName + sId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.findAllSectionPostFailed());
+		}
 	}
 }

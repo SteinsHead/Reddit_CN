@@ -21,8 +21,16 @@
         select * from ${tableName} where suId = #{suId}
     </select>
     
+    <select id="findBan" resultType="com.example.RedditCn.entity.SectionUser">
+        select * from ${tableName} where suBan is not null
+    </select>
+    
     <update id="updateSuRank">  
     	update ${tableName} set suRank = suRank + #{suRank} where suId = #{suId}
+  	</update>
+  	
+  	<update id="updateSuBan">  
+    	update ${tableName} set suBan = #{suBan} where suId = #{suId}
   	</update>
     
     <update id="dropTable">  

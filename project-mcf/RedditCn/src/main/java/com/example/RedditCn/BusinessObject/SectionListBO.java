@@ -17,7 +17,6 @@ public class SectionListBO {
 	private SectionUserBO sectionUser;
 
 	public SectionListBO() {
-
 	}
 
 	public SectionListBO(Section section, SectionUser sectionUser) {

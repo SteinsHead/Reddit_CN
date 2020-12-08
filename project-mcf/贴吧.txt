@@ -1,0 +1,51 @@
+CREATE TABLE `user` (
+  `uid` int NOT NULL AUTO_INCREMENT,
+  `uname` varchar(20) NOT NULL,
+  `uaccount` varchar(30) BINARY NOT NULL,
+  `upassword` varchar(30) BINARY NOT NULL,
+  `uphone` varchar(11) DEFAULT NULL,
+  `uemail` varchar(20) BINARY DEFAULT NULL,
+  `utime` datetime NOT NULL,
+  `usex` char(1) NOT NULL,
+  `ubirthday` date NOT NULL,
+  `uban` varchar(10) DEFAULT NULL,
+  `uintroduce` varchar(50) DEFAULT NULL,
+  `ufollow` int DEFAULT '0',
+  `upublish` int DEFAULT '0',
+  `upermission` varchar(10) DEFAULT NULL,
+  `uphoto` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`uid`)
+) AUTO_INCREMENT=100001;
+
+CREATE TABLE `section` (
+  `sid` int NOT NULL AUTO_INCREMENT,
+  `sname` varchar(20) NOT NULL,
+  `sintroduce` varchar(200) NOT NULL,
+  `stime` datetime NOT NULL,
+  `uid` int NOT NULL,
+  `sban` varchar(10) DEFAULT NULL,
+  `sfollow` int DEFAULT '1',
+  `sPublish` int DEFAULT '0',
+  `svisit` int DEFAULT '0',
+  `sTheme` varchar(100) DEFAULT NULL,
+  `sphoto` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`sid`)
+) AUTO_INCREMENT=100001;
+
+CREATE TABLE `user_section` (
+  `id` int not null auto_increment,
+  `uid` int NOT NULL,
+  `sid` int NOT NULL,
+  `suid` int not null,
+  primary key(`id`)
+) auto_increment = 100001;
+
+CREATE TABLE `postreply` (
+  `prid` int NOT NULL AUTO_INCREMENT,
+  `suid` int NOT NULL,
+  `pfid` int NOT NULL,
+  `printroduce` varchar(100) NOT NULL,
+  `prtime` datetime NOT NULL,
+  `prban` varchar(5) NOT NULL,
+  PRIMARY KEY (`prid`)
+) ENGINE=InnoDB AUTO_INCREMENT=100001；

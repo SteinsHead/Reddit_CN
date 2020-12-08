@@ -10,7 +10,9 @@ import com.example.RedditCn.entity.SectionUserPost;
 public interface SectionUserPostMapper {
 	public void createTable(String tableName);
 
-	public List<SectionUserPost> findBysuId(String tableName, int suId);
+	public List<SectionUserPost> findSectionPostBysuId(String tableName, int suId);
 
-	public void insertSectionUserPost(String tableName, int suId, int spId);
+	public List<SectionUserPost> findPostFloorBysuId(String tableName, int suId);
+
+	public void insertSectionUserPost(String tableName, int suId, int spId, int pfId);
 }

@@ -20,7 +20,7 @@
     </select>
     
     <select id="findByspId" resultType="com.example.RedditCn.entity.SectionPost">
-        select * from ${tableName} where spId = #{spId} 
+        select * from ${tableName} where spId = #{spId} and spBan is null
     </select>
     
     <update id="updateSpFloor" parameterType="String">

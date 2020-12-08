@@ -62,7 +62,7 @@ public class SectionController {
 		int suId = sectionUserService.insertSectionUser(sId, uId, "creater");
 		userSectionService.insertUserSection(uId, sId, suId);
 		userService.updateUserFollow(uId);
-		System.out.print("新建版块-" + sId);
+		System.out.println("新建版块-" + sId);
 		return section;
 	}
 

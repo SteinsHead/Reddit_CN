@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.RedditCn.BusinessObject.PostReplyBO;
 import com.example.RedditCn.BusinessObject.UserBO;
+import com.example.RedditCn.annotation.UserIsBan;
 import com.example.RedditCn.annotation.UserIsPostFloorAdmin;
 import com.example.RedditCn.annotation.UserIsSectionAdmin;
 import com.example.RedditCn.annotation.UserIsSectionPostAdmin;
@@ -51,6 +52,7 @@ public class PostReplyController {
 	}
 
 	@UserLoginToken
+	@UserIsBan
 	@PostMapping("/insertPostReply")
 	public PostReply insertPostReply(@RequestHeader(value = "token") String token,
 			@RequestParam(value = "sectionId") int sId, @RequestParam(value = "sectionPostId") int spId,
@@ -58,7 +60,7 @@ public class PostReplyController {
 			@RequestParam(value = "postReplyIntroduce") String prIntroduce) {
 		int suId = userSectionService.findUserSectionBuuIdAndsId(TokenUtils.verify(token), sId).getSuid();
 		int prId = postReplyService.insertPostReply(sId, spId, suId, pfId, prIntroduce);
-		postFloorService.updatePostFloorReply(sId, spId, pfId);
+		postFloorService.updatePostFloorReply(sId, spId, pfId, 1);
 		System.out.println("版块-" + sId + "-帖子-" + spId + "-楼层-" + pfId + "-新建回复-" + prId);
 		return postReplyService.findPostReplyByprId(sId, spId, prId);
 	}
@@ -72,6 +74,7 @@ public class PostReplyController {
 			@RequestParam(value = "sectionPostId") int spId, @RequestParam(value = "postFloorId") int pfId,
 			@RequestParam(value = "postReplyId") int prId) {
 		System.out.print("版块-" + sId + "-帖子-" + spId + "-楼层-" + pfId + "-封禁回复-" + prId);
+		postFloorService.updatePostFloorReply(sId, spId, pfId, -1);
 		return postReplyService.updatePostReplyBan(sId, spId, prId, "ban");
 	}
 }
