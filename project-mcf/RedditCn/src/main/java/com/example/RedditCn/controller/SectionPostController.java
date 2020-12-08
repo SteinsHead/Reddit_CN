@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.RedditCn.BusinessObject.SectionPostBO;
 import com.example.RedditCn.BusinessObject.UserBO;
+import com.example.RedditCn.annotation.UserIsBan;
 import com.example.RedditCn.annotation.UserIsSectionAdmin;
 import com.example.RedditCn.annotation.UserLoginToken;
 import com.example.RedditCn.entity.SectionPost;
@@ -47,6 +48,7 @@ public class SectionPostController {
 	private SectionUserService sectionUserService;
 
 	@UserLoginToken
+	@UserIsBan
 	@PostMapping("/insertSectionPost")
 	public SectionPost insertSectionPost(@RequestHeader(value = "token") String token,
 			@RequestParam(value = "sectionId") int sId, @RequestParam(value = "sectionPostName") String spName,
@@ -58,7 +60,7 @@ public class SectionPostController {
 		postReplyService.createPostReplyTable(sId, spId);
 		sectionUserPostService.createSectionUserPostTable(sId);
 		postFloorService.insertPostFloor(sId, spId, suId, spName, spPhoto);
-		sectionUserPostService.insertSectionUserPost(sId, suId, spId);
+		sectionUserPostService.insertSectionUserPost(sId, suId, spId, 0);
 		userService.updateUserPublish(uId);
 		sectionService.updateSectionPublish(sId);
 		sectionUserService.updateSectionUserRank(sId, suId, 5);
@@ -87,4 +89,5 @@ public class SectionPostController {
 		System.out.println("版块-" + sId + "-封禁帖子-" + spId);
 		return sectionPostService.updateSectionPostBan(sId, "ban", spId);
 	}
+
 }

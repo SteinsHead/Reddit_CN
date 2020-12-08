@@ -209,6 +209,24 @@ public class ErrorJsonObject {
 		return jsonObject.toJSONString();
 	}
 
+	public static String updateSectionUserBanFailed() {
+		jsonObject.put("errcode", "40048");
+		jsonObject.put("errmsg", "update section user ban failed");
+		return jsonObject.toJSONString();
+	}
+
+	public static String findBanSectionUserFailed() {
+		jsonObject.put("errcode", "40049");
+		jsonObject.put("errmsg", "find ban section user failed");
+		return jsonObject.toJSONString();
+	}
+
+	public static String sectionUserIsBan() {
+		jsonObject.put("errcode", "40050");
+		jsonObject.put("errmsg", "section user is ban");
+		return jsonObject.toJSONString();
+	}
+
 	public static String insertUserSectionFailed() {
 		jsonObject.put("errcode", "40051");
 		jsonObject.put("errmsg", "insert User_Section failed");
@@ -317,6 +335,12 @@ public class ErrorJsonObject {
 		return jsonObject.toJSONString();
 	}
 
+	public static String findMinePostFloorFailed() {
+		jsonObject.put("errcode", "40078");
+		jsonObject.put("errmsg", "find mine post floor failed");
+		return jsonObject.toJSONString();
+	}
+
 	public static String findPostReplyBypfIdFailed() {
 		jsonObject.put("errcode", "40081");
 		jsonObject.put("errmsg", "find post reply by pfId failed");
@@ -374,6 +398,24 @@ public class ErrorJsonObject {
 	public static String sectionUserPostNotExist() {
 		jsonObject.put("errcode", "40094");
 		jsonObject.put("errmsg", "section user post not exist");
+		return jsonObject.toJSONString();
+	}
+
+	public static String findPostFloorBysuIdFailed() {
+		jsonObject.put("errcode", "40095");
+		jsonObject.put("errmsg", "find section user post floor by suId failed");
+		return jsonObject.toJSONString();
+	}
+
+	public static String findSectionUserPostFailed() {
+		jsonObject.put("errcode", "40096");
+		jsonObject.put("errmsg", "find section user post failed");
+		return jsonObject.toJSONString();
+	}
+
+	public static String findSectionUserPostFloorFailed() {
+		jsonObject.put("errcode", "40096");
+		jsonObject.put("errmsg", "find section user post floor failed");
 		return jsonObject.toJSONString();
 	}
 

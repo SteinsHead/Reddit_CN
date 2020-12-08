@@ -5,10 +5,15 @@
     <resultMap id="BaseResultMap" type="com.example.RedditCn.entity.SectionUserPost">
         <result column="suId" jdbcType="INTEGER" property="suId" />
         <result column="spId" jdbcType="INTEGER" property="spId" />
+        <result column="pfId" jdbcType="INTEGER" property="pfId" />
     </resultMap>
  
-    <select id="findBysuId" resultType="com.example.RedditCn.entity.SectionUserPost">
-        select * from ${tableName} where suId = #{suId}
+    <select id="findSectionPostBysuId" resultType="com.example.RedditCn.entity.SectionUserPost">
+        select * from ${tableName} where suId = #{suId} and pfId = 0
+    </select>
+    
+    <select id="findPostFloorBysuId" resultType="com.example.RedditCn.entity.SectionUserPost">
+        select * from ${tableName} where suId = #{suId} and pfId != 0
     </select>
     
     <update id="dropTable">  
@@ -19,11 +24,11 @@
     	CREATE TABLE if not exists ${tableName} (
       		`suId` int NOT NULL,
   			`spId` int NOT NULL,
-  			primary key(`suId`, `spId`)
+  			`pfId` int default 0
     		)
   	</update>
   	
     <insert id="insertSectionUserPost" parameterType="String">
-    	insert into ${tableName} (suId, spId) values (#{suId}, #{spId})
+    	insert into ${tableName} (suId, spId, pfId) values (#{suId}, #{spId}, #{pfId})
     </insert>
 </mapper>

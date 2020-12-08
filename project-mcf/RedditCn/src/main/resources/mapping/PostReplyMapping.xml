@@ -12,11 +12,11 @@
     </resultMap>
  
     <select id="findBypfId" resultType="com.example.RedditCn.entity.PostReply">
-        select * from ${tableName} where pfId = #{pfId}
+        select * from ${tableName} where pfId = #{pfId} and prBan is null
     </select>
     
     <select id="findByprId" resultType="com.example.RedditCn.entity.PostReply">
-        select * from ${tableName} where prId = #{prId}
+        select * from ${tableName} where prId = #{prId} and prBan is null
     </select>
     
     <update id="updatePrBan">  

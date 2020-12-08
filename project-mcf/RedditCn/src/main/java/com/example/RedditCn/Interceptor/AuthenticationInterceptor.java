@@ -16,6 +16,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.RedditCn.annotation.PassToken;
+import com.example.RedditCn.annotation.UserIsBan;
 import com.example.RedditCn.annotation.UserIsPostFloorAdmin;
 import com.example.RedditCn.annotation.UserIsSectionAdmin;
 import com.example.RedditCn.annotation.UserIsSectionPostAdmin;
@@ -89,8 +90,21 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 			}
 		}
 
-		if (method.isAnnotationPresent(UserIsSectionAdmin.class)) {
+		if (method.isAnnotationPresent(UserIsBan.class)) {
+			int sId = Integer.parseInt(httpServletRequest.getParameter("sectionId"));
+			UserIsBan userIsBan = method.getAnnotation(UserIsBan.class);
+			if (userIsBan.required()) {
+				SectionUser sectionUser;
+				sectionUser = sectionUserService.findSectionUserByuId(sId, uId);
+				String suBan = sectionUser.getSuBan();
+				if (suBan != null) {
+					if (suBan.equals("ban"))
+						throw new RuntimeException(ErrorJsonObject.sectionUserIsBan());
+				}
+			}
+		}
 
+		if (method.isAnnotationPresent(UserIsSectionAdmin.class)) {
 			int sId = Integer.parseInt(httpServletRequest.getParameter("sectionId"));
 			UserIsSectionAdmin userIsSectionAdmin = method.getAnnotation(UserIsSectionAdmin.class);
 			if (userIsSectionAdmin.required()) {

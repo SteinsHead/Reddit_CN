@@ -36,6 +36,17 @@ public class PostFloorService {
 		return list;
 	}
 
+	public List<PostFloor> findMinePostFloor(int sId, int spId, int suId) {
+		List<PostFloor> list;
+		try {
+			list = postFloorMapper.findMine(tableName1 + sId + tableName2 + spId, suId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new RuntimeException(ErrorJsonObject.findMinePostFloorFailed());
+		}
+		return list;
+	}
+
 	public PostFloor findPostFloorBypfId(int sId, int spId, int pfId) {
 		PostFloor postFloor;
 		try {
@@ -62,9 +73,9 @@ public class PostFloorService {
 		}
 	}
 
-	public void updatePostFloorReply(int sId, int spId, int pfId) {
+	public void updatePostFloorReply(int sId, int spId, int pfId, int pfReply) {
 		try {
-			postFloorMapper.updatePfReply(tableName1 + sId + tableName2 + spId, pfId);
+			postFloorMapper.updatePfReply(tableName1 + sId + tableName2 + spId, pfReply, pfId);
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new RuntimeException(ErrorJsonObject.updatePostFloorReplyFailed());

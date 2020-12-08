@@ -16,12 +16,16 @@
         select * from ${tableName} where pfBan is null
     </select>
     
+    <select id="findMine" resultType="com.example.RedditCn.entity.PostFloor">
+        select * from ${tableName} where pfBan is null and suId = #{suId} and pfId != 100001
+    </select>
+    
     <select id="findByPfId" resultType="com.example.RedditCn.entity.PostFloor">
-        select * from ${tableName} where pfId = #{pfId}
+        select * from ${tableName} where pfId = #{pfId} and pfBan is null
     </select>
     
     <update id="updatePfReply" parameterType="String">
-    	update ${tableName} set pfReply = pfReply + 1 where pfId = #{pfId}
+    	update ${tableName} set pfReply = pfReply + #{pfReply} where pfId = #{pfId}
     </update>
     
     <update id="updatePfBan" parameterType="String">

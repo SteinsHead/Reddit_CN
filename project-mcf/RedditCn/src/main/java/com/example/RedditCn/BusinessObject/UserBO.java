@@ -1,6 +1,8 @@
 package com.example.RedditCn.BusinessObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.RedditCn.entity.SectionUser;
 import com.example.RedditCn.entity.User;
@@ -19,7 +21,7 @@ public class UserBO {
 	private String userPhoto;
 	private SectionUserBO sectionUser;
 
-	protected UserBO() {
+	public UserBO() {
 
 	}
 
@@ -38,6 +40,14 @@ public class UserBO {
 		this.setUserPermission(user.getUpermission());
 		this.setUserPhoto(user.getUphoto());
 		this.setSectionUser(new SectionUserBO(sectionUser));
+	}
+
+	public List<UserBO> ListUserBO(List<User> list1, List<SectionUser> list2) {
+		List<UserBO> list = new ArrayList<UserBO>();
+		for (int i = 0; i < list1.size(); i++) {
+			list.add(new UserBO(list1.get(i), list2.get(i)));
+		}
+		return list;
 	}
 
 	public int getUserId() {
