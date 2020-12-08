@@ -86,12 +86,12 @@ export default {
             that.tieData = response.data;
             that.TieMaster = response.data[0].user.userAccount;
             for(let i=0;i<that.floorN;i++){
-                console.log("!! "+that.tieData[i].postFloorId);
                 that.floorIds.push(that.tieData[i].postFloorId);
             }
         });
         //检测权限
-        this.$axios.get('/sectionUser/findSectionCreater',{
+        setTimeout(function(){
+            that.$axios.get('/sectionUser/findSectionCreater',{
             params:{
                 sectionId:Sid,
             },
@@ -103,12 +103,14 @@ export default {
                 that.sectionMaster = response.data.userAccount;
             }
             if(that.myAccount == that.sectionMaster || that.myAccount == that.TieMaster){
-                that.showButtonDeleteThisFloor = true;
+                that.showButtonDeletatFloor = true;
             }
             else{
                 that.showButtonDeleteThisFloor = false;
             }
         })
+        },200);
+        
 
         //获取每个楼层的回复
         setTimeout(function(){
@@ -126,7 +128,6 @@ export default {
                         token:localStorage.getItem('token')
                     }
                 }).then(function(response){
-                    console.log(response.data);
                     here.replyIndex.push(temp_index);
                     here.reply.push(response.data);
                 })
@@ -134,11 +135,9 @@ export default {
             };
         },300);
         setTimeout(function(){
-            console.log("%% "+that.replyIndex.length);
             for(let i=0;i<that.replyIndex.length;i++){
                 that.real_reply.push(that.reply[that.replyIndex.indexOf(i)]);
             }
-            console.log(that.real_reply[1]);
         },500);
 
     },
@@ -191,7 +190,6 @@ export default {
                             token:localStorage.getItem('token'),
                         }
                     }).then(function(response){
-                        console.log("%%%"+response.data);
                     })
                     alert("评论成功");
                     document.getElementById('textarea').value = "";
@@ -207,9 +205,6 @@ export default {
         },
         showCommet:function(){
             this.isShowCommet = !this.isShowCommet;
-            for(let i=0;i<this.replyIndex.length;i++){
-                console.log(this.replyIndex[i]);
-            };
         }
     },
     computed:{

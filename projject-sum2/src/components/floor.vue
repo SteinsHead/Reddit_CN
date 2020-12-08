@@ -12,14 +12,18 @@
       </div>
       <div id="floor-bottom">
         <div id="floor-message">
-            <span class="span1">{{storey}}楼</span>
+            <span class="span1">{{this.$parent.floorIds[storey-1]-100000}}楼</span>
             <span class="span1">{{replyTime}}</span>
             <span class="span1" id="replyThisFloor" @click="replyThisFloor">回复本层</span>
             <span class="span1" id="show-reply" @click="showReply">查看评论({{replyNum}})</span>
             <span class="span1" id="deleteThisFloor" v-if="storey != 1 && this.$parent.showButtonDeleteThisFloor" @click="deleteThisFloor">删除本楼</span>
         </div>
         <div id="floor-reply" v-show="isShowReply" v-for="mReply in reply" :key="mReply.id">
-            <reply v-if="mReply.hasOwnProperty('postReplyIntroduce')" :from="mReply.user.userName" :content="mReply.postReplyIntroduce"></reply>
+            <reply v-if="mReply.hasOwnProperty('postReplyIntroduce')" 
+            :reply="mReply"
+            :showButtonDeleteThisReply="showButtonDeleteThisReply"
+            :from="mReply.user.userName" 
+            :content="mReply.postReplyIntroduce"></reply>
         </div>
   </div>
   </div>
@@ -30,6 +34,23 @@
 import reply from '@/components/reply.vue';
 
 export default {
+    created() {
+        
+        let that = this;
+        setTimeout(function(){
+            let isFloorMaster = false;
+            let FloorMaster = that.$parent.tieData[that.storey-1].user.userAccount;
+            let myAccount = that.$parent.myAccount;
+            if(FloorMaster == myAccount || that.$parent.showButtonDeleteThisFloor){
+                that.showButtonDeleteThisReply = true;
+            }
+            else{
+                that.showButtonDeleteThisReply = false;
+            }
+        },300)
+        
+
+    },
     components: {
        reply:reply
     },
@@ -52,6 +73,7 @@ export default {
     },
     data() {
         return {
+            showButtonDeleteThisReply:false,
             isShowReply:false,
         }
     },
@@ -63,7 +85,25 @@ export default {
     },
     methods: {
         deleteThisFloor:function(){
-
+            let that = this;
+            this.$axios.post('/postFloor/banPostFloor',null,{
+                params:{
+                    sectionId:this.$parent.Sid,
+                    sectionPostId:this.$parent.id,
+                    postFloorId:this.$parent.floorIds[this.storey-1],
+                },
+                headers:{
+                    token:localStorage.getItem('token'),
+                }
+            }).then(function(respose){
+                if(respose.data){
+                    that.$router.replace({
+                        path:'/jump',
+                        name:'jump'
+                    }).catch(err =>{console.log(err)})
+                }
+                    alert('删除成功');
+            })
         },
         replyThisFloor:function(){
             this.isShowReply = !this.isShowReply;
@@ -72,6 +112,7 @@ export default {
             this.$parent.where = this.storey;
         },
         showReply:function(){
+
             this.isShowReply = !this.isShowReply;
         }
     },
