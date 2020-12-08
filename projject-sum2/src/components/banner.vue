@@ -1,7 +1,6 @@
 <template>
   <div id="banner">
       <myButton id="bannerbutton1" @click.native="select1" :style_parameter="buttonStyle" :msg="whatButton1"></myButton>
-      <myButton id="bannerbutton2" @click.native="select2" :style_parameter="buttonStyle" :msg="whatButton2"></myButton>
       <myButton id="bannerbutton3" @click.native="select3" :style_parameter="buttonStyle" :msg="whatButton3"></myButton>
       <myButton id="bannerbutton4" @click.native="select4" :style_parameter="buttonStyle" :msg="whatButton4"></myButton>
   </div>
@@ -18,8 +17,8 @@ export default {
             content_control:0,
             whatButton1:"板块等级",
             whatButton2:"我的成就",
-            whatButton3:"我的收藏",
-            whatButton4:"浏览历史",
+            whatButton3:"我的帖子",
+            whatButton4:"我的楼层",
             buttonStyle:{
                 "border-style":'none',
                 'color':'grey',
@@ -48,23 +47,11 @@ export default {
             document.getElementById("bannerbutton1").style.backgroundColor = "#eeeeec";
             this.$emit("listenToChildEvent",this.content_control);
         },
-        select2:function(){
-            this.content_control = "2";
-            this.setZIndex('bannerbutton2');
-            document.getElementById("bannerbutton2").style.backgroundColor = "#eeeeec";
-            this.$emit("listenToChildEvent",this.content_control);
-        },
         select3:function(){
-            this.content_control = "3";
-            this.setZIndex('bannerbutton3');
-            document.getElementById("bannerbutton3").style.backgroundColor = "#eeeeec";
-            this.$emit("listenToChildEvent",this.content_control);
+            window.open('/#/message');
         },
         select4:function(){
-            this.content_control = "4";
-            this.setZIndex('bannerbutton4');
-            document.getElementById("bannerbutton4").style.backgroundColor = "#eeeeec";
-            this.$emit("listenToChildEvent",this.content_control);
+            window.open('/#/message');
         },
 
     }

@@ -2,8 +2,8 @@
 <div id="tie-page">
 <div id="theme"><span>{{theme}}</span></div>
 <div id="tie-body" v-for="count in floorN" :key="count"> 
-    <floor :storey="count" 
-    :headImage="tieData[count-1].user.userPhoto" 
+    <floor :storey="count"
+    :userPhoto="'https://redditcn-1301983393.cos.ap-beijing.myqcloud.com/'+tieData[count-1].user.userPhoto" 
     :name="tieData[count-1].user.userName" 
     :level="tieData[count-1].user.sectionUser.sectionUserRank" 
     :replyNum="tieData[count-1].postFloorReply"
