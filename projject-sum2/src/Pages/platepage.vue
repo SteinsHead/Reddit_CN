@@ -11,15 +11,34 @@
           />
         </div>
         <div class="add">
-          <div class="add-post" @click="visible=true">
+          <div class="add-post" @click="visible = true">
             {{ addPost }}
           </div>
           <el-dialog :visible.sync="visible">
-            <addPoster :token="realToken" :sectionId="realSectionId"></addPoster>
+            <addPoster
+              :token="realToken"
+              :sectionId="realSectionId"
+            ></addPoster>
           </el-dialog>
         </div>
         <div class="sectionFollow">
-          <el-button type="primary" @click="doFollow" plain round :disabled="isUse">{{situationFollow}}</el-button>
+          <el-popover
+            placement="right"
+            title="你关注了吗"
+            width="300"
+            trigger="hover"
+            content="当你想要在当前板块发帖时，请注意你是否已经关注该板块，没有关注的话是不能发帖的哦"
+          >
+            <el-button
+              slot="reference"
+              type="primary"
+              @click="doFollow"
+              plain
+              round
+              :disabled="isUse"
+              >{{ situationFollow }}</el-button
+            >
+          </el-popover>
         </div>
       </div>
       <div class="register">
@@ -35,11 +54,14 @@
           :posttitle="section.sectionPostName"
           :postauthor="section.user.userName"
           :posttime="section.sectionPostTime"
-          @click.native="toTie(section.sectionPostId,section.sectionPostName)"
+          @click.native="toTie(section.sectionPostId, section.sectionPostName)"
         ></poster>
       </div>
       <div class="msg">
-        <plateInfo :masterInfo="info.sectionName" :ruleInfo="info.sectionIntroduce"></plateInfo>
+        <plateInfo
+          :masterInfo="info.sectionName"
+          :ruleInfo="info.sectionIntroduce"
+        ></plateInfo>
       </div>
     </div>
   </div>
@@ -74,28 +96,32 @@ export default {
     plateInfo: plateInfo,
     addPoster: addPoster,
   },
-  created(){
+  created() {
     //检测token过期
     let that = this;
-    that.$axios.get("/user/findUserMine",{
-        headers:{
-            token:localStorage.getItem('token')
-        }
-    }).then(function(response){
-        if(response.data.hasOwnProperty("errmsg")){
-            let here = that;
-            here.$axios.get("/user/findUserMine",{
-                headers:{
-                    token:that.$route.params.token
-                }
-            }).then(function(response2){
-                if(response2.data.hasOwnProperty("errmsg")){
-                    alert("登陆过期，请重新登录！");
-                    window.open("/#/login",name='_self');
-                }
+    that.$axios
+      .get("/user/findUserMine", {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      })
+      .then(function (response) {
+        if (response.data.hasOwnProperty("errmsg")) {
+          let here = that;
+          here.$axios
+            .get("/user/findUserMine", {
+              headers: {
+                token: that.$route.params.token,
+              },
             })
+            .then(function (response2) {
+              if (response2.data.hasOwnProperty("errmsg")) {
+                alert("登陆过期，请重新登录！");
+                window.open("/#/login", (name = "_self"));
+              }
+            });
         }
-    })
+      });
   },
   methods: {
     doFollow() {
@@ -111,7 +137,7 @@ export default {
           token: that.getToken(),
         },
       });
-      setTimeout(function(){
+      setTimeout(function () {
         location.reload();
       }, 500);
     },
@@ -119,20 +145,24 @@ export default {
       let that = this;
       return list.sectionId == that.getSectionId();
     },
-    toTie:function(id,content){
+    toTie: function (id, content) {
       console.log(id);
       console.log(content);
-      this.$router.push({
-        name:"tie",
-        params:{
-          id:id,
-          Sid:this.getSectionId(),
-          content:content,
-        }
-      }).catch(err =>{console.log(err)});
-      localStorage.setItem('id',id);
-      localStorage.setItem('Sid',this.getSectionId());
-      localStorage.setItem('content',content);
+      this.$router
+        .push({
+          name: "tie",
+          params: {
+            id: id,
+            Sid: this.getSectionId(),
+            content: content,
+          },
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      localStorage.setItem("id", id);
+      localStorage.setItem("Sid", this.getSectionId());
+      localStorage.setItem("content", content);
     },
     getToken() {
       let that = this;
@@ -151,7 +181,7 @@ export default {
         return that.$route.params.sectionId;
       }
     },
-    getIsFollow(){
+    getIsFollow() {
       let that = this;
       return that.axios({
         method: "get",
@@ -192,16 +222,18 @@ export default {
     let that = this;
     that.axios
       .all([that.getAllPost(), that.getSectionInfo(), that.getIsFollow()])
-      .then(that.axios.spread(function(allPost, info, isFollow){
-        console.log(allPost);
-        console.log(info);
-        console.log(isFollow);
-        let here = that;
-        here.sections = allPost.data;
-        here.info = info.data;
-        here.sectionList = isFollow.data.sectionList;
-        here.realSectionId = info.data.sectionId;
-      }));
+      .then(
+        that.axios.spread(function (allPost, info, isFollow) {
+          console.log(allPost);
+          console.log(info);
+          console.log(isFollow);
+          let here = that;
+          here.sections = allPost.data;
+          here.info = info.data;
+          here.sectionList = isFollow.data.sectionList;
+          here.realSectionId = info.data.sectionId;
+        })
+      );
     setTimeout(function () {
       if (
         that.sectionList.some((item) => {
