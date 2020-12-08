@@ -1,7 +1,7 @@
 <template>
   <div id="change-message">
-    <el-form ref="form" :model="form" label-width="100px" style="margin: 10px">
-      <el-from-item label="上传头像">
+    <el-form ref="form" :model="form" label-width="100px">
+      <el-from-item label="上传头像" style="margin: 10px">
         <el-upload
           action=""
           list-type="picture-card"
@@ -14,7 +14,7 @@
         >
         </el-upload>
       </el-from-item>
-      <el-form-item label="你的昵称" style="margin: 10px">
+      <el-form-item label="你的昵称">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="你的性别">
@@ -24,7 +24,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="你的生日">
-        <el-col :span="11">
+        <el-col>
           <el-date-picker
             type="date"
             placeholder="请选择你的生日"
@@ -34,7 +34,7 @@
           ></el-date-picker>
         </el-col>
       </el-form-item>
-      <el-form-item label="自我介绍" style="margin: 10px">
+      <el-form-item label="自我介绍">
         <el-input type="textarea" v-model="form.intro"></el-input>
       </el-form-item>
       <el-form-item>
