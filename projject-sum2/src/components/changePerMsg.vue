@@ -1,6 +1,6 @@
 <template>
-  <div id="add-poster">
-    <el-form ref="form" :model="form" label-width="80px" style="margin: 10px">
+  <div id="change-message">
+    <el-form ref="form" :model="form" label-width="100px" style="margin: 10px">
       <el-from-item label="上传头像">
         <el-upload
           action=""
@@ -14,11 +14,31 @@
         >
         </el-upload>
       </el-from-item>
-      <el-form-item label="帖子内容" style="margin: 10px">
-        <el-input type="textarea" v-model="form.desc"></el-input>
+      <el-form-item label="你的昵称" style="margin: 10px">
+        <el-input v-model="form.name"></el-input>
+      </el-form-item>
+      <el-form-item label="你的性别">
+        <el-select v-model="form.sex" placeholder="请选择你的性别">
+          <el-option label="男" value="1"></el-option>
+          <el-option label="女" value="0"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="你的生日">
+        <el-col :span="11">
+          <el-date-picker
+            type="date"
+            placeholder="请选择你的生日"
+            v-model="form.date"
+            value-format="yyyy-M-d"
+            style="width: 100%"
+          ></el-date-picker>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="自我介绍" style="margin: 10px">
+        <el-input type="textarea" v-model="form.intro"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即发帖</el-button>
+        <el-button type="primary" @click="onSubmit">更新信息</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -26,23 +46,23 @@
 
 <script>
 export default {
-  name: "addPoster",
+  name: "changeMsg",
   data() {
     return {
       form: {
-        desc: "",
+        name: "",
+        sex: "",
+        date: "",
+        intro: "",
       },
       fileList: [],
       photoUrl: "",
     };
   },
   props: {
-    token: {
-      type: String,
-    },
-    sectionId: {
-      type: Number,
-    },
+      token: {
+          type: String
+      }
   },
   methods: {
     sendRealRequest(params) {
@@ -77,23 +97,30 @@ export default {
     onSubmit() {
       console.log("submit!");
       let that = this;
-      console.log(that.form.desc);
-      that.axios({
-        method: 'post',
-        url: "/sectionPost/insertSectionPost",
-        params: {
-          sectionId: that.sectionId,
-          sectionPostName: that.form.desc,
-          sectionPostPhoto: that.photoUrl,
-        },
-        headers: {
-          token: that.token,
-        },
-      });
-      console.log(that.photoUrl);
+      that
+        .axios({
+          method: "post",
+          url: "/user/updateUserInformation",
+          params: {
+            userName: that.form.name,
+            userSex: Number(that.form.sex),
+            userBirthday: that.form.data,
+            userPhoto: that.photoUrl,
+            userIntroduce: that.intro,
+          },
+          headers: {
+            token: that.token,
+          },
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       setTimeout(function () {
         location.reload();
-      });
+      }, 500);
     },
     handleRemove(file) {
       console.log(file);

@@ -1,24 +1,25 @@
 <template>
   <div id="add-plate">
-    <el-form ref="form" :model="form" label-width="80px" style="margin: 10px">
-      <el-upload
-        action=""
-        list-type="picture-card"
-        :http-request="sendRealRequest"
-        :file-list="fileList"
-        :on-preview="handlePictureCardPreview"
-        :on-remove="handleRemove"
-        :on-success="uploadSuccess"
-        :on-error="uploadError"
-      >
-      </el-upload>
+    <el-form ref="form" :model="form" label-width="100px" style="margin: 10px">
+      <el-from-item label="上传头像">
+        <el-upload
+          action=""
+          list-type="picture-card"
+          :http-request="sendRealRequest"
+          :file-list="fileList"
+          :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove"
+          :on-success="uploadSuccess"
+          :on-error="uploadError"
+        ></el-upload>
+      </el-from-item>
       <el-form-item label="板块名称" style="margin: 10px">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="板块介绍" style="margin: 10px">
         <el-input type="textarea" v-model="form.desc"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item label="选项">
         <el-button type="primary" @click="onSubmit">创建新板块</el-button>
       </el-form-item>
     </el-form>
@@ -77,26 +78,29 @@ export default {
       console.log("submit!");
       let that = this;
       console.log(that.form.desc);
-      that.axios({
-        method: "post",
-        url: "/section/insertSection",
-        params: {
-          sectionName: that.form.name,
-          sectionIntroduce: that.form.desc,
-          sectionPhoto: that.photoUrl,
-        },
-        headers: {
-          token: that.token,
-        },
-      }).then(function(response){
-        console.log(response);
-      }).then(function(error){
-        console.log(error);
-      });
+      that
+        .axios({
+          method: "post",
+          url: "/section/insertSection",
+          params: {
+            sectionName: that.form.name,
+            sectionIntroduce: that.form.desc,
+            sectionPhoto: that.photoUrl,
+          },
+          headers: {
+            token: that.token,
+          },
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .then(function (error) {
+          console.log(error);
+        });
       console.log(that.form.name);
       console.log(that.form.desc);
       console.log(that.photoUrl);
-      setTimeout(function(){
+      setTimeout(function () {
         location.reload();
       }, 500);
     },
