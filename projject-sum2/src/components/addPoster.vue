@@ -89,7 +89,9 @@ export default {
         },
       })
       console.log(that.photoUrl);
-      window.open('/#/platepage', '_self');
+      setTimeout(function(){
+        location.reload();
+      });
     },
     handleRemove(file) {
       console.log(file);

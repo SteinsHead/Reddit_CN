@@ -111,6 +111,9 @@ export default {
           token: that.getToken(),
         },
       });
+      setTimeout(function(){
+        location.reload();
+      }, 500);
     },
     checkFollow(list) {
       let that = this;

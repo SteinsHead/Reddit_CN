@@ -96,7 +96,9 @@ export default {
       console.log(that.form.name);
       console.log(that.form.desc);
       console.log(that.photoUrl);
-      window.open("/#/firstpage", "_self");
+      setTimeout(function(){
+        location.reload();
+      }, 500);
     },
     handleRemove(file) {
       console.log(file);

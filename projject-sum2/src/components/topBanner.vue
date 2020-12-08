@@ -2,9 +2,10 @@
   <div id="banner">
     <div class="image" @click="onJumptoMine">
       <img
-        src="https://cdn.jsdelivr.net/gh/SteinsHead/ImageBed/img/2020/1597120574740.jpg"
+        :src="imgUrl"
         alt=""
         srcset=""
+        onerror="this.src='https://cdn.jsdelivr.net/gh/SteinsHead/ImageBed/img/2020/1597120574740.jpg'"
       />
     </div>
     <div class="left">
@@ -22,7 +23,11 @@
     </div>
     <div class="right">
       <welcome v-html="welcomeMsg" :textStyle="welcomeStyle"></welcome>
-      <logOut @click.native="jumpToLogin" :label="logout" :textStyle="centerStyle"></logOut>
+      <logOut
+        @click.native="jumpToLogin"
+        :label="logout"
+        :textStyle="centerStyle"
+      ></logOut>
       <messAge :label="message" :textStyle="centerStyle"></messAge>
     </div>
   </div>
@@ -50,12 +55,13 @@ export default {
       },
       welcomeStyle: {},
       centerStyle: {},
+      imgUrl: "",
     };
   },
   props: {
     token: {
-      type: String
-    }
+      type: String,
+    },
   },
   components: {
     firstPage: block,
@@ -68,27 +74,33 @@ export default {
     search: search,
   },
   methods: {
-    jumpToLogin(){
-      window.open('/#/login', '_self');
+    jumpToLogin() {
+      window.open("/#/login", "_self");
     },
-    onJumptoMine(){
-      window.open('/#/mine', '_self');
-    }
+    onJumptoMine() {
+      window.open("/#/mine", "_self");
+    },
   },
   mounted() {
     let that = this;
-    that.axios({
-      method: 'get',
-      url: '/user/findUserMine',
-      headers: {
-        token: that.token,
-      },
-    }).then(function(response){
-      console.log(response);
-      that.welcomeMsg += response.data.userName;
-    }).catch(function(error){
-      console.log(error);
-    })
+    that
+      .axios({
+        method: "get",
+        url: "/user/findUserMine",
+        headers: {
+          token: that.token,
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+        that.welcomeMsg += response.data.userName;
+        that.imgUrl =
+          "https://redditcn-1301983393.cos.ap-beijing.myqcloud.com/" +
+          response.data.userPhoto;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   },
 };
 </script>
