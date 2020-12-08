@@ -18,7 +18,7 @@
             <span class="span1" id="show-reply" @click="showReply">查看评论({{replyNum}})</span>
             <span class="span1" id="deleteThisFloor" v-if="storey != 1 && this.$parent.showButtonDeleteThisFloor" @click="deleteThisFloor">删除本楼</span>
         </div>
-        <div id="floor-reply" v-show="isShowReply" v-for="mReply in reply" :key="mReply.id">
+        <div id="floor-reply" v-show="isShowReply" v-for="mReply in reply_test" :key="mReply.id">
             <reply v-if="mReply.hasOwnProperty('postReplyIntroduce')" 
             :reply="mReply"
             :showButtonDeleteThisReply="showButtonDeleteThisReply"
@@ -62,19 +62,13 @@ export default {
         content:String,
         storey:Number,
         replyNum:Number,
-        replyTime:String,
-        reply:{
-            type:Array,
-            default(){
-                return [] 
-            }
-        }
-         
+        replyTime:String,     
     },
     data() {
         return {
             showButtonDeleteThisReply:false,
             isShowReply:false,
+            reply_test:[],
         }
     },
     computed:{
@@ -112,8 +106,25 @@ export default {
             this.$parent.where = this.storey;
         },
         showReply:function(){
-
-            this.isShowReply = !this.isShowReply;
+            let that = this;
+            if(!this.isShowReply){
+                this.$axios.get('/postReply/findPostReplyBypfId',{
+                    params:{
+                        sectionId:localStorage.getItem('Sid'),
+                        sectionPostId:localStorage.getItem('id'),
+                        postFloorId:that.$parent.floorIds[this.storey-1],
+                    },
+                    headers:{
+                        token:localStorage.getItem('token')
+                    }
+                }).then(function(response){
+                    that.reply_test = response.data;
+                })
+            }
+            setTimeout(function(){
+                that.isShowReply = !that.isShowReply;
+            },100)
+            
         }
     },
 }

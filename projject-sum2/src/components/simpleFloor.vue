@@ -1,0 +1,49 @@
+<template>
+  <div id="box">
+      <div id="head-Floor-div"><p>{{sectionName}}</p>  <p>{{sectionPostName}}</p></div>
+
+      <div><span>{{postFloorIntroduce}}</span></div>
+
+      <div class="row-flex"><p>楼层创建时间: {{postFloorTime}}</p> <p>楼层回复数: {{postFloorReply}}</p></div>
+  </div>
+</template>
+
+<script>
+export default {
+    props:{
+        postFloorIntroduce:String,
+        sectionName:String,
+        sectionPostName:String,
+        postFloorTime:String,
+        postFloorReply:Number
+    }
+}
+</script>
+
+<style>
+.row-flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+#box{    
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: white;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+}
+#head-Floor-div{
+    margin-left: 20px;
+    margin-right:20px;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+p{
+    font-size: 12px;
+}
+</style>

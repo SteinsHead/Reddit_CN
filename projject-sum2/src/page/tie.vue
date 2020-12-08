@@ -7,7 +7,6 @@
     :name="tieData[count-1].user.userName" 
     :level="tieData[count-1].user.sectionUser.sectionUserRank" 
     :replyNum="tieData[count-1].postFloorReply"
-    :reply="real_reply[count-1]"
     :content="tieData[count-1].postFloorIntroduce" 
     :replyTime="tieData[count-1].postFloorTime"></floor>
     
@@ -109,40 +108,12 @@ export default {
                 that.showButtonDeleteThisFloor = false;
             }
         })
-        },200);
-        
-
-        //获取每个楼层的回复
-        setTimeout(function(){
-            let here = that;
-            let index = 0;
-            for(let i=0;i<that.floorN;i++){
-                let temp_index = index;
-                that.$axios.get('/postReply/findPostReplyBypfId',{
-                    params:{
-                        sectionId:Sid,
-                        sectionPostId:id,
-                        postFloorId:that.floorIds[i],
-                    },
-                    headers:{
-                        token:localStorage.getItem('token')
-                    }
-                }).then(function(response){
-                    here.replyIndex.push(temp_index);
-                    here.reply.push(response.data);
-                })
-                index++;
-            };
-        },300);
-        setTimeout(function(){
-            for(let i=0;i<that.replyIndex.length;i++){
-                that.real_reply.push(that.reply[that.replyIndex.indexOf(i)]);
-            }
-        },500);
-
+        },200);           
     },
     methods: {
+        //   回复帖子／楼层
         sendCommet:function(){
+            let that = this;
             let content = document.getElementById('textarea').value;
             if(this.where == -1){    
                 if(content.length == 0){
@@ -161,15 +132,14 @@ export default {
                             token:localStorage.getItem("token"),
                         }
                     }).then(function(response){
+                        document.getElementById('textarea').value = "";
+                        that.isShowCommet = false;
+                        that.$router.replace({
+                            path:'/jump',
+                            name:'jump'
+                        }).catch(err =>{console.log(err)})
+                        alert("评论成功");
                     })
-                    document.getElementById('textarea').value = "";
-                    this.isShowCommet = false;
-                    this.$router.replace({
-                        path:'/jump',
-                        name:'jump'
-                    }).catch(err =>{console.log(err)})
-
-                    alert("评论成功");
 
                 }
             }
@@ -226,11 +196,8 @@ export default {
             sectionMaster:'',
             TieMaster:'',
             myAccount:'',
-            real_reply:[],
-            replyIndex:[],
             Sid:0,
             id:0,
-            reply:[],
             floorIds:[],
             tieData:[],
             token:"",
