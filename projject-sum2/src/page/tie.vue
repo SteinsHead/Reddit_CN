@@ -72,22 +72,43 @@ export default {
         })
 
         //获取所有的楼层
-        this.$axios.get("/postFloor/findAllPostFloor",{
-            params:{ 
-                sectionId:Sid,
-                sectionPostId:id
-            },
-            headers:{
-                token:localStorage.getItem('token')
+        if(localStorage.getItem('isShowMineFloor')){
+            this.$axios.get("/postFloor/findMinePostFloor",{
+                params:{ 
+                    sectionId:Sid,
+                    sectionPostId:id
+                },
+                headers:{
+                    token:localStorage.getItem('token')
             }
-        }).then(function(response){
-            that.floorN = response.data.length;
-            that.tieData = response.data;
-            that.TieMaster = response.data[0].user.userAccount;
-            for(let i=0;i<that.floorN;i++){
-                that.floorIds.push(that.tieData[i].postFloorId);
-            }
-        });
+            }).then(function(response){
+                that.floorN = response.data.length;
+                that.tieData = response.data;
+                that.TieMaster = response.data[0].user.userAccount;
+                for(let i=0;i<that.floorN;i++){
+                    that.floorIds.push(that.tieData[i].postFloorId);
+                }
+            });
+            localStorage.setItem('isShowMineFloor',false);
+        }
+        else{
+            this.$axios.get("/postFloor/findAllPostFloor",{
+                params:{ 
+                    sectionId:Sid,
+                    sectionPostId:id
+                },
+                headers:{
+                    token:localStorage.getItem('token')
+                }
+            }).then(function(response){
+                that.floorN = response.data.length;
+                that.tieData = response.data;
+                that.TieMaster = response.data[0].user.userAccount;
+                for(let i=0;i<that.floorN;i++){
+                    that.floorIds.push(that.tieData[i].postFloorId);
+                }
+            });
+        }
         //检测权限
         setTimeout(function(){
             that.$axios.get('/sectionUser/findSectionCreater',{

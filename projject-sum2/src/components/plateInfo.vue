@@ -19,7 +19,7 @@ export default {
   name: "plateinfo",
   data() {
     return {
-
+      
     };
   },
   props: {
