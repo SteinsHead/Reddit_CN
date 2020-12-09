@@ -85,12 +85,12 @@ public class User {
 	@Column(name = "uintroduce")
 	private String uintroduce;
 
-	//
+	//关注
 	@JsonProperty("userFollow")
 	@Column(name = "ufollow")
 	private int ufollow;
 
-	//
+	//发出
 	@JsonProperty("userPublish")
 	@Column(name = "upublish")
 	private int upublish;
