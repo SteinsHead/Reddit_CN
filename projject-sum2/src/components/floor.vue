@@ -14,9 +14,9 @@
         <div id="floor-message">
             <span class="span1">{{this.$parent.floorIds[storey-1]-100000}}楼</span>
             <span class="span1">{{replyTime}}</span>
-            <span class="span1" id="replyThisFloor" @click="replyThisFloor">回复本层</span>
-            <span class="span1" id="show-reply" @click="showReply">查看评论({{replyNum}})</span>
-            <span class="span1" id="deleteThisFloor" v-if="storey != 1 && this.$parent.showButtonDeleteThisFloor" @click="deleteThisFloor">删除本楼</span>
+            <span class="span1" v-if="storey != 1" id="replyThisFloor" @click="replyThisFloor">回复本层</span>
+            <span class="span1" v-if="storey != 1" id="show-reply" @click="showReply">查看评论({{replyNum}})</span>
+            <span class="span1" id="deleteThisFloor" v-if="storey != 1 && this.showButtonDeleteThisFloor" @click="deleteThisFloor">删除本楼</span>
         </div>
         <div id="floor-reply" v-show="isShowReply" v-for="mReply in reply_test" :key="mReply.id">
             <reply v-if="mReply.hasOwnProperty('postReplyIntroduce')" 
@@ -55,6 +55,7 @@ export default {
        reply:reply
     },
     props:{
+        showButtonDeleteThisFloor:Boolean,
         userPhoto:String,
         name:String,
         level:String,

@@ -8,7 +8,6 @@ import login from '@/page/login'
 import mine from '@/page/mine'
 import message from '@/page/message'
 import tie from '@/page/tie'
-import jump from '@/page/jump'
 
 Vue.use(Router)
 
@@ -53,11 +52,6 @@ export default new Router({
       path: '/tie',
       name: 'tie',
       component:tie
-    },
-    {
-      path:'/jump',
-      name:'jump',
-      component:jump
     }
   ]
 })
