@@ -1,6 +1,6 @@
 package com.example.RedditCn.repository;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

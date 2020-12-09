@@ -16,11 +16,11 @@
     </select>
     
     <select id="findByprId" resultType="com.example.RedditCn.entity.PostReply">
-        select * from ${tableName} where prId = #{prId} and prBan is null
+        select * from ${tableName} where prId = #{prId} and prBan is null 
     </select>
     
     <update id="updatePrBan">  
-    	update ${tableName} set prBan = #{prBan} where prId = #{prId}
+    	update ${tableName} set prBan = #{prBan} where prId = #{prId} and prBan is null
   	</update>
  	
  	<update id="dropTable">  

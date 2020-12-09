@@ -1,5 +1,6 @@
 package com.example.RedditCn.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class PostFloorController {
 	private SectionUserService sectionUserService;
 	@Autowired
 	private SectionUserPostService sectionUserPostService;
+	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 
 	@UserLoginToken
 	@UserIsBan
@@ -54,7 +56,8 @@ public class PostFloorController {
 		sectionUserPostService.insertSectionUserPost(sId, suId, spId, pfId);
 		sectionPostService.updateSectionPostFloor(sId, spId);
 		sectionUserService.updateSectionUserRank(sId, suId, 3);
-		System.out.println("版块-" + sId + "-帖子-" + spId + "-新建楼层-" + pfId);
+		System.out.println(df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-版块-" + sId + "-帖子-"
+				+ spId + "-新建楼层-" + pfId);
 		return postFloorService.findPostFloorBypfId(sId, spId, pfId);
 	}
 
@@ -67,7 +70,8 @@ public class PostFloorController {
 		for (int i = 0; i < list1.size(); i++) {
 			list2.add(userService.createUserBO(sId, list1.get(i).getSuId()));
 		}
-		System.out.println("版块-" + sId + "-帖子-" + spId + "-寻找所有楼层");
+		System.out.println(df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-版块-" + sId + "-帖子-"
+				+ spId + "-寻找所有楼层");
 		return new PostFloorBO().ListPostFloorBO(list1, list2);
 	}
 
@@ -84,7 +88,8 @@ public class PostFloorController {
 		for (int i = 1; i < list1.size(); i++) {
 			list2.add(userService.createUserBO(sId, list1.get(i).getSuId()));
 		}
-		System.out.println("版块-" + sId + "-帖子-" + spId + "-查询帖子自己楼层");
+		System.out.println(df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-版块-" + sId + "-帖子-"
+				+ spId + "-查询帖子自己楼层");
 		return new PostFloorBO().ListPostFloorBO(list1, list2);
 	}
 
@@ -95,7 +100,8 @@ public class PostFloorController {
 	public boolean banPostFloor(@RequestHeader(value = "token") String token,
 			@RequestParam(value = "sectionId") int sId, @RequestParam(value = "sectionPostId") int spId,
 			@RequestParam(value = "postFloorId") int pfId) {
-		System.out.println("版块-" + sId + "-帖子-" + spId + "-封禁楼层-" + pfId);
+		System.out.println(df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-版块-" + sId + "-帖子-"
+				+ spId + "-封禁楼层-" + pfId);
 		return postFloorService.updatePostFloorban(sId, spId, pfId, "ban");
 	}
 }

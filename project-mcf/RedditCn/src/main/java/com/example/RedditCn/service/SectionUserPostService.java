@@ -120,8 +120,7 @@ public class SectionUserPostService {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw e;
-			// throw new RuntimeException(ErrorJsonObject.findSectionUserPostFloorFailed());
+			throw new RuntimeException(ErrorJsonObject.findSectionUserPostFloorFailed());
 		}
 		Collections.sort(list);
 		return list;

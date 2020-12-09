@@ -1,5 +1,6 @@
 package com.example.RedditCn.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,13 @@ public class SectionController {
 	private SectionUserPostService sectionUserPostService;
 	@Autowired
 	private UserService userService;
+	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 
 	// 查找所有版块
 	@UserLoginToken
 	@GetMapping("/findAllSection")
-	public List<Section> findAllSection() {
-		System.out.println("寻找所有版块");
+	public List<Section> findAllSection(@RequestHeader(value = "token") String token) {
+		System.out.println(df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-寻找所有版块");
 		return sectionService.findAll();
 	}
 
@@ -62,7 +64,7 @@ public class SectionController {
 		int suId = sectionUserService.insertSectionUser(sId, uId, "creater");
 		userSectionService.insertUserSection(uId, sId, suId);
 		userService.updateUserFollow(uId);
-		System.out.println("新建版块-" + sId);
+		System.out.println(df.format(new java.util.Date()) + " 用户-" + uId + "-新建版块-" + sId);
 		return section;
 	}
 
@@ -71,7 +73,7 @@ public class SectionController {
 	public SectionBO findSectionBysId(@RequestHeader(value = "token") String token,
 			@RequestParam(value = "sectionId") int sId) {
 		Section section = sectionService.findBysId(sId);
-		System.out.println("查询版块信息-" + sId);
+		System.out.println(df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-查询版块信息-" + sId);
 		return new SectionBO(section,
 				new UserBO(userService.findUserById(section.getUid()), sectionUserService.findSectionCreater(sId)));
 	}

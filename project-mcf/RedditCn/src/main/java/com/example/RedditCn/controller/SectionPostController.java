@@ -1,5 +1,6 @@
 package com.example.RedditCn.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class SectionPostController {
 	private SectionService sectionService;
 	@Autowired
 	private SectionUserService sectionUserService;
+	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 
 	@UserLoginToken
 	@UserIsBan
@@ -64,7 +66,7 @@ public class SectionPostController {
 		userService.updateUserPublish(uId);
 		sectionService.updateSectionPublish(sId);
 		sectionUserService.updateSectionUserRank(sId, suId, 5);
-		System.out.println("版块-" + sId + "-新建帖子-" + spId);
+		System.out.println(df.format(new java.util.Date()) + " 用户-" + uId + "-版块-" + sId + "-新建帖子-" + spId);
 		return sectionPostService.findSectionPostByspId(sId, spId);
 	}
 
@@ -77,7 +79,8 @@ public class SectionPostController {
 		for (int i = 0; i < list1.size(); i++) {
 			list2.add(userService.createUserBO(sId, list1.get(i).getSuId()));
 		}
-		System.out.println("版块-" + sId + "-寻找所有帖子");
+		System.out.println(
+				df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-版块-" + sId + "-寻找所有帖子");
 		return new SectionPostBO().listSectionPostBOBO(list1, list2);
 	}
 
@@ -86,8 +89,8 @@ public class SectionPostController {
 	@PostMapping("/banSectionPost")
 	public boolean banSectionPost(@RequestHeader(value = "token") String token,
 			@RequestParam(value = "sectionId") int sId, @RequestParam(value = "sectionPostId") int spId) {
-		System.out.println("版块-" + sId + "-封禁帖子-" + spId);
+		System.out.println(
+				df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-版块-" + sId + "-封禁帖子-" + spId);
 		return sectionPostService.updateSectionPostBan(sId, "ban", spId);
 	}
-
 }
