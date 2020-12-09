@@ -102,9 +102,9 @@ export default {
           params: {
             userName: that.form.name,
             userSex: Number(that.form.sex),
-            userBirthday: that.form.data,
+            userBirthday: that.form.date,
             userPhoto: that.photoUrl,
-            userIntroduce: that.intro,
+            userIntroduce: that.form.intro,
           },
           headers: {
             token: localStorage.getItem('token'),
@@ -118,7 +118,7 @@ export default {
         });
       setTimeout(function () {
         location.reload();
-      }, 500);
+      }, 10000);
     },
     handleRemove(file) {
       console.log(file);
