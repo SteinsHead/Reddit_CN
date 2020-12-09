@@ -1,5 +1,6 @@
 package com.example.RedditCn.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class SectionUserController {
 	UserService userService;
 	@Autowired
 	SectionService sectionService;
+	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 
 	@UserLoginToken
 	@PostMapping("/insertSectionUser")
@@ -44,7 +46,7 @@ public class SectionUserController {
 		userSectionService.insertUserSection(uId, sId, suId);
 		userService.updateUserFollow(uId);
 		sectionService.updateSectionFollow(sId);
-		System.out.println("版块-" + sId + "-注册用户-" + suId);
+		System.out.println(df.format(new java.util.Date()) + " 用户-" + uId + "-版块-" + sId + "-注册用户-" + suId);
 		return new SectionUserBO(sectionUserService.findSectionUserByuId(sId, uId));
 	}
 
@@ -54,7 +56,8 @@ public class SectionUserController {
 			@RequestParam(value = "sectionId") int sId) {
 		SectionUser sectionUser = sectionUserService.findSectionCreater(sId);
 		User user = userService.findUserById(sectionUser.getuId());
-		System.out.println("版块-" + sId + "-寻找创建者");
+		System.out
+				.println(df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-版块-" + sId + "-寻找创建者");
 		return new UserBO(user, sectionUser);
 	}
 
@@ -64,7 +67,8 @@ public class SectionUserController {
 	public boolean banSectionUser(@RequestHeader(value = "token") String token,
 			@RequestParam(value = "sectionId") int sId, @RequestParam(value = "userId") int uId) {
 		int suId = userSectionService.findUserSectionBuuIdAndsId(uId, sId).getSuid();
-		System.out.println("版块-" + sId + "-封禁用户-" + uId);
+		System.out.println(
+				df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-版块-" + sId + "-封禁用户-" + uId);
 		return sectionUserService.updateSectionUserBan(sId, suId, "ban");
 	}
 
@@ -74,7 +78,8 @@ public class SectionUserController {
 	public boolean permitSectionUser(@RequestHeader(value = "token") String token,
 			@RequestParam(value = "sectionId") int sId, @RequestParam(value = "userId") int uId) {
 		int suId = userSectionService.findUserSectionBuuIdAndsId(uId, sId).getSuid();
-		System.out.println("版块-" + sId + "-解封用户-" + uId);
+		System.out.println(
+				df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-版块-" + sId + "-解封用户-" + uId);
 		return sectionUserService.updateSectionUserBan(sId, suId, null);
 	}
 
@@ -88,6 +93,8 @@ public class SectionUserController {
 		for (int i = 0; i < list1.size(); i++) {
 			list2.add(userService.findUserById(list1.get(i).getuId()));
 		}
+		System.out.println(
+				df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-版块-" + sId + "-查询封禁用户");
 		return new UserBO().ListUserBO(list2, list1);
 	}
 

@@ -1,5 +1,6 @@
 package com.example.RedditCn.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class PostReplyController {
 	private UserService userService;
 	@Autowired
 	private PostFloorService postFloorService;
+	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 
 	@UserLoginToken
 	@GetMapping("/findPostReplyBypfId")
@@ -47,7 +49,8 @@ public class PostReplyController {
 		for (int i = 0; i < list1.size(); i++) {
 			list2.add(userService.createUserBO(sId, list1.get(i).getSuId()));
 		}
-		System.out.println("版块-" + sId + "-帖子-" + spId + "-楼层-" + pfId + "-寻找所有回复");
+		System.out.println(df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-版块-" + sId + "-帖子-"
+				+ spId + "-楼层-" + pfId + "-寻找所有回复");
 		return new PostReplyBO().ListPostReplyBO(list1, list2);
 	}
 
@@ -61,7 +64,8 @@ public class PostReplyController {
 		int suId = userSectionService.findUserSectionBuuIdAndsId(TokenUtils.verify(token), sId).getSuid();
 		int prId = postReplyService.insertPostReply(sId, spId, suId, pfId, prIntroduce);
 		postFloorService.updatePostFloorReply(sId, spId, pfId, 1);
-		System.out.println("版块-" + sId + "-帖子-" + spId + "-楼层-" + pfId + "-新建回复-" + prId);
+		System.out.println(df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-版块-" + sId + "-帖子-"
+				+ spId + "-楼层-" + pfId + "-新建回复-" + prId);
 		return postReplyService.findPostReplyByprId(sId, spId, prId);
 	}
 
@@ -70,11 +74,15 @@ public class PostReplyController {
 	@UserIsPostFloorAdmin
 	@UserLoginToken
 	@PostMapping("/banPostReply")
-	public boolean banPostReply(@RequestParam(value = "sectionId") int sId,
-			@RequestParam(value = "sectionPostId") int spId, @RequestParam(value = "postFloorId") int pfId,
-			@RequestParam(value = "postReplyId") int prId) {
-		System.out.print("版块-" + sId + "-帖子-" + spId + "-楼层-" + pfId + "-封禁回复-" + prId);
-		postFloorService.updatePostFloorReply(sId, spId, pfId, -1);
-		return postReplyService.updatePostReplyBan(sId, spId, prId, "ban");
+	public boolean banPostReply(@RequestHeader(value = "token") String token,
+			@RequestParam(value = "sectionId") int sId, @RequestParam(value = "sectionPostId") int spId,
+			@RequestParam(value = "postFloorId") int pfId, @RequestParam(value = "postReplyId") int prId) {
+		if (postReplyService.findPostReplyByprId(sId, spId, prId) != null) {
+			postReplyService.updatePostReplyBan(sId, spId, prId, "ban");
+			postFloorService.updatePostFloorReply(sId, spId, pfId, -1);
+		}
+		System.out.println(df.format(new java.util.Date()) + " 用户-" + TokenUtils.verify(token) + "-版块-" + sId + "-帖子-"
+				+ spId + "-楼层-" + pfId + "-封禁回复-" + prId);
+		return true;
 	}
 }
