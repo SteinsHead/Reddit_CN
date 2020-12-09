@@ -113,6 +113,8 @@ export default {
             });
         }
         //检测权限
+        setTimeout(function(){
+            let here = that;
             that.$axios.get('/sectionUser/findSectionCreater',{
             params:{
                 sectionId:Sid,
@@ -130,9 +132,11 @@ export default {
             else{
                 that.showButtonDeleteThisFloor = false;
             }
-            console.log('## '+that.sectionMaster+" "+ that.TieMaster+" "+that.myAccount);
+            console.log('## '+that.sectionMaster+" $$ "+ that.TieMaster+" ** "+that.myAccount);
             that.showTiePage = true;
+            
         })           
+        },300)
     },
     methods: {
         //   回复帖子／楼层
