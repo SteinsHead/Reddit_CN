@@ -225,7 +225,7 @@ export default {
               .catch((err) => {
                 console.log(err);
               });
-
+            localStorage.setItem('myAccount',account);
             window.open("/#/firstpage", (name = "_self"));
           } else {
             alert(response.data.errmsg);

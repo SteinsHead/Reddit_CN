@@ -40,6 +40,7 @@
             >
           </el-popover>
         </div>
+        <button v-if="showAdminButton" @click="toAdmin">管理</button>
       </div>
       <div class="register">
         <regist></regist>
@@ -77,6 +78,7 @@ export default {
   name: "plate",
   data() {
     return {
+      showAdminButton:false,
       addPost: "发帖",
       sections: [],
       info: {},
@@ -94,7 +96,7 @@ export default {
     regist: regist,
     poster: poster,
     plateInfo: plateInfo,
-    addPoster: addPoster,
+    addPoster: addPoster
   },
   created() {
     //检测token过期
@@ -122,8 +124,27 @@ export default {
             });
         }
       });
+    
+    this.$axios.get('/section/findSectionBysId',{
+      params:{
+        sectionId:this.getSectionId(),
+      },
+      headers:{
+        token:this.getToken(),
+      }
+    }).then(function(response){
+      if(response.data.hasOwnProperty('sectionId')){
+        console.log('## '+response.data.user.userAccount+ " "+localStorage.getItem('myAccount'));
+        if(response.data.user.userAccount == localStorage.getItem('myAccount')){
+          that.showAdminButton = true;
+        }
+      }
+    })
   },
   methods: {
+    toAdmin(){
+      window.open("/#/adminpage");
+    },
     doFollow() {
       let that = this;
       that.isUse = true;
