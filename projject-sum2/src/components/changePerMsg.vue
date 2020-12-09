@@ -81,6 +81,7 @@ export default {
           data: param,
           headers: {
             "Content-Type": "multipart/form-data",
+            token: localStorage.getItem('token'),
           },
         })
         .then(function (response) {
