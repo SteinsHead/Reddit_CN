@@ -1,8 +1,9 @@
 <template>
-<div id="tie-page">
+<div id="tie-page" v-if="showTiePage">
 <div id="theme"><span>{{theme}}</span></div>
 <div id="tie-body" v-for="count in floorN" :key="count"> 
     <floor :storey="count"
+    :showButtonDeleteThisFloor="showButtonDeleteThisFloor"
     :userPhoto="'https://redditcn-1301983393.cos.ap-beijing.myqcloud.com/'+tieData[count-1].user.userPhoto" 
     :name="tieData[count-1].user.userName" 
     :level="tieData[count-1].user.sectionUser.sectionUserRank" 
@@ -29,6 +30,7 @@ export default {
         commet:commet,
     },
     created:function(){
+        
         let that = this;
         let id = localStorage.getItem('id');
         let Sid = localStorage.getItem('Sid');
@@ -36,6 +38,7 @@ export default {
         this.Sid = Sid;
         let content = localStorage.getItem('content');
         this.theme = content;//帖子主题
+        
         this.$router.push({
             name:'tie',
             params:{
@@ -122,12 +125,13 @@ export default {
                 that.sectionMaster = response.data.userAccount;
             }
             if(that.myAccount == that.sectionMaster || that.myAccount == that.TieMaster){
-                that.showButtonDeletatFloor = true;
+                that.showButtonDeleteThisFloor = true;
             }
             else{
                 that.showButtonDeleteThisFloor = false;
             }
             console.log('## '+that.sectionMaster+" "+ that.TieMaster+" "+that.myAccount);
+            that.showTiePage = true;
         })           
     },
     methods: {
@@ -154,10 +158,7 @@ export default {
                     }).then(function(response){
                         document.getElementById('textarea').value = "";
                         that.isShowCommet = false;
-                        that.$router.replace({
-                            path:'/jump',
-                            name:'jump'
-                        }).catch(err =>{console.log(err)})
+                        location.reload();
                         alert("评论成功");
                     })
 
@@ -185,10 +186,7 @@ export default {
                     document.getElementById('textarea').value = "";
                     this.isShowCommet = false;
                     this.where = -1;
-                    this.$router.replace({
-                        path:'/jump',
-                        name:'jump'
-                    }).catch(err =>{console.log(err)})
+                    location.reload();
 
                 }
             }
@@ -212,6 +210,7 @@ export default {
     },
     data() {
         return {
+            showTiePage:false,
             showButtonDeleteThisFloor:false,
             sectionMaster:'',
             TieMaster:'',

@@ -40,7 +40,7 @@
             >
           </el-popover>
         </div>
-        <button v-if="showAdminButton" @click="toAdmin">管理</button>
+        <el-button type="primary" v-if="showAdminButton" @click="toAdmin" style="margin-left: 20px;">管理</el-button>
       </div>
       <div class="register">
         <regist></regist>
