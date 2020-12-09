@@ -2,9 +2,10 @@
   <div id="areablock" :style="borderStyle">
     <div class="img">
       <img
-        src="https://cdn.jsdelivr.net/gh/SteinsHead/ImageBed/img/2020/1597120574740.jpg"
+        :src="sectionUrl"
         alt=""
         srcset=""
+        onerror="this.src='https://cdn.jsdelivr.net/gh/SteinsHead/ImageBed/img/2020/1597120574740.jpg'"
       />
     </div>
     <div class="blockInfo" :style="borderStyle">
@@ -26,10 +27,19 @@ export default {
     return {};
   },
   props: {
+    sectionUrl: {
+      type: String,
+    },
     title: "",
     blockName: "",
     borderStyle: {},
     followSituation: "",
+  },
+  mounted() {
+    let that = this;
+    that.sectionUrl =
+      "https://redditcn-1301983393.cos.ap-beijing.myqcloud.com/" +
+      that.sectionUrl;
   },
 };
 </script>
@@ -60,10 +70,6 @@ export default {
 #areablock .blockInfo {
   display: flex;
   flex-direction: column;
-}
-
-#areablock .blockInfo .title {
-  /* overflow: hidden; */
 }
 
 #areablock .follow {
