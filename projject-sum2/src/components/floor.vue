@@ -92,12 +92,9 @@ export default {
                 }
             }).then(function(respose){
                 if(respose.data){
-                    that.$router.replace({
-                        path:'/jump',
-                        name:'jump'
-                    }).catch(err =>{console.log(err)})
+                    location.reload();
                 }
-                    alert('删除成功');
+                alert('删除成功');
             })
         },
         replyThisFloor:function(){

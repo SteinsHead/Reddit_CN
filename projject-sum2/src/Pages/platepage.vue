@@ -167,23 +167,10 @@ export default {
       return list.sectionId == that.getSectionId();
     },
     toTie: function (id, content) {
-      console.log(id);
-      console.log(content);
-      this.$router
-        .push({
-          name: "tie",
-          params: {
-            id: id,
-            Sid: this.getSectionId(),
-            content: content,
-          },
-        })
-        .catch((err) => {
-          console.log(err);
-        });
       localStorage.setItem("id", id);
       localStorage.setItem("Sid", this.getSectionId());
       localStorage.setItem("content", content);
+      window.open('/#/tie',name='_self');
     },
     getToken() {
       let that = this;
