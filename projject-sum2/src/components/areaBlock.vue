@@ -35,6 +35,13 @@ export default {
     borderStyle: {},
     followSituation: "",
   },
+  methods: {
+    // sectionUrl(){
+    //   let that = this;
+    //   console.log("https://redditcn-1301983393.cos.ap-beijing.myqcloud.com/" + that.imgUrl)
+    //   return "https://redditcn-1301983393.cos.ap-beijing.myqcloud.com/" + that.imgUrl;
+    // }
+  },
   mounted() {
     let that = this;
     that.sectionUrl =
