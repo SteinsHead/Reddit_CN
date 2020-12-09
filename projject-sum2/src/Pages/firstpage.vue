@@ -17,7 +17,7 @@
     <div class="block">
       <areablock
         v-for="plate in plateblock"
-        :sectionUrl="sectionPhoto"
+        :sectionUrl="plate.sectionPhoto"
         :key="plate.sectionId"
         :title="plate.sectionIntroduce"
         :blockName="plate.sectionName"

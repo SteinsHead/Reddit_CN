@@ -21,6 +21,7 @@
         :placeholder="placeholder"
       ></search> -->
       <el-autocomplete
+        clearable
         v-model="state"
         prefix-icon="el-icon-search"
         :fetch-suggestions="querySearchAsync"
@@ -63,6 +64,9 @@ export default {
       welcomeStyle: {},
       centerStyle: {},
       imgUrl: "",
+      restaurants: [],
+      state: '',
+      timeout:  null,
     };
   },
   props: {
@@ -81,11 +85,22 @@ export default {
     search: search,
   },
   methods: {
-    querySearchAsync(){
-
+    querySearchAsync(queryString, cb) {
+      let restaurants = this.restaurants;
+      console.log(restaurants);
+      let results = queryString ? restaurants.filter((currentValue, index, restaurants)=>{
+        console.log(currentValue);
+        console.log(restaurants);
+        return (currentValue.sectionName.toLowerCase().indexOf(queryString.toLowerCase()))
+      }) : restaurants;
+      console.log(results);
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        cb(results);
+      }, 3000 * Math.random());
     },
-    handleSelect(){
-
+    handleSelect(item) {
+      console.log(item);
     },
     jumpToLogin() {
       window.open("/#/login", "_self");
@@ -115,6 +130,18 @@ export default {
       .catch(function (error) {
         console.log(error);
       });
+    that.axios({
+      method: 'get',
+      url: '/section/findAllSection',
+      headers: {
+        token: that.token,
+      },
+    }).then(function(response){
+      console.log(response);
+      that.restaurants = response.data;
+    }).catch(function(error){
+      console.log(error);
+    })
   },
 };
 </script>
