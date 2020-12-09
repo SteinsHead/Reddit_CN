@@ -1,166 +1,33 @@
 <template>
-  <div id="container">
-    <!-- <div v-if="change" id="change_div">
-      <span>修改个人信息</span>
-      <myInput
-        ref="newName"
-        content_type="search"
-        placeholder="新的昵称"
-      ></myInput>
-      <myInput
-        ref="newIntro"
-        content_type="search"
-        placeholder="个人简介"
-      ></myInput>
-      <myInput
-        ref="newSex"
-        content_type="search"
-        placeholder="性别(男或女)"
-      ></myInput>
-      <myInput
-        ref="newBirthday"
-        content_type="search"
-        placeholder="出生日期"
-      ></myInput>
-      <myInput
-        ref="newImage"
-        content_type="search"
-        placeholder="头像url"
-      ></myInput>
-      <myInput
-        ref="newPhone"
-        content_type="search"
-        placeholder="绑定手机号"
-      ></myInput>
-      <myInput
-        ref="newEmail"
-        content_type="search"
-        placeholder="绑定邮箱"
-      ></myInput>
-      <div id="twoButton">
-        <myButton
-          msg="确定"
-          @click.native="changeMessage"
-          :style_parameter="buttonStyle2"
-        ></myButton>
-        <myButton
-          msg="取消"
-          @click.native="cancel"
-          :style_parameter="buttonStyle2"
-        ></myButton>
-      </div>
-    </div> -->
+  <div v-if="showPage" id="container">
     <el-dialog :visible.sync="visible">
-        <changePerMsg :token="token"></changePerMsg>
+        <changePerMsg></changePerMsg>
     </el-dialog>
-    <displayCase :image="image1"></displayCase>
-    <imageFrame :imageSrc="image1"></imageFrame>
+    <displayCase :image="'https://redditcn-1301983393.cos.ap-beijing.myqcloud.com/'+userData.userPhoto"></displayCase>
+    <imageFrame :imageSrc="'https://redditcn-1301983393.cos.ap-beijing.myqcloud.com/'+userData.userPhoto"></imageFrame>
     <div id="mainbox">
       <div id="div_name">
-        <span @click="showRouter" id="username">{{ name }}</span>
+        <span id="username">{{userData.userName}}</span>
         <myButton
           @click.native="visible = true"
-          id="buttonMine"
           :style_parameter="buttonStyle1"
           msg="修改个人资料"
         ></myButton>
       </div>
-      <span id="myCoin">{{ intro }}</span>
+      <span id="myCoin">{{userData.userIntroduce}}</span>
       <banner @listenToChildEvent="showMsg"></banner>
 
       <div v-if="content_control == 1" id="contentbox1">
-        <div v-for="(section, index) in sectionName" :key="index">
+        <div v-for="(section, index) in sectionList" :key="index">
           <div id="level">
             <blockLv
-              :sectionName="sectionName[index]"
-              :sectionLv="sectionLv[index]"
+              :sectionId='section.sectionId'
+              :sectionName="section.sectionName"
+              :sectionLv="section.sectionUser.sectionUserRank"
             ></blockLv>
           </div>
         </div>
-      </div>
-
-      <div v-if="content_control == 2" id="contentbox">
-        <achievement
-          achievementName="魔法师"
-          achievementDescribe="ads"
-          nowEvolve="10"
-          allEvolve="10"
-        ></achievement>
-        <achievement
-          achievementName="大魔法师"
-          achievementDescribe="gdddvsv"
-          nowEvolve="6"
-          allEvolve="10"
-        ></achievement>
-        <achievement
-          achievementName="超级魔法师"
-          achievementDescribe="zczcz"
-          nowEvolve="3"
-          allEvolve="10"
-        ></achievement>
-        <achievement
-          achievementName="恶魔"
-          achievementDescribe="ghngfnf"
-          nowEvolve="2"
-          allEvolve="10"
-        ></achievement>
-        <achievement
-          achievementName="我曾踏足山峰"
-          achievementDescribe="wrwev"
-          nowEvolve="11"
-          allEvolve="100"
-        ></achievement>
-        <achievement
-          achievementName="也曾跌落低谷"
-          achievementDescribe="hahaha"
-          nowEvolve="10"
-          allEvolve="1000"
-        ></achievement>
-      </div>
-      <div v-if="content_control == 3" id="contentbox">
-        <simpleTie
-          block="游戏"
-          owner="刚刚"
-          theme="啊哈哈哈哈哈啊哈哈哈哈哈"
-        ></simpleTie>
-        <simpleTie
-          block="游戏"
-          owner="刚刚"
-          theme="啊哈哈哈哈哈啊哈哈哈哈哈"
-        ></simpleTie>
-        <simpleTie
-          block="游戏"
-          owner="刚刚"
-          theme="啊哈哈哈哈哈啊哈哈哈哈哈"
-        ></simpleTie>
-        <simpleTie
-          block="游戏"
-          owner="刚刚"
-          theme="啊哈哈哈哈哈啊哈哈哈哈哈"
-        ></simpleTie>
-      </div>
-      <div v-if="content_control == 4" id="contentbox">
-        <simpleTie
-          block="游戏"
-          owner="刚刚"
-          theme="啊哈哈哈哈哈啊哈哈哈哈哈"
-        ></simpleTie>
-        <simpleTie
-          block="游戏"
-          owner="刚刚"
-          theme="啊哈哈哈哈哈啊哈哈哈哈哈"
-        ></simpleTie>
-        <simpleTie
-          block="游戏"
-          owner="刚刚"
-          theme="啊哈哈哈哈哈啊哈哈哈哈哈"
-        ></simpleTie>
-        <simpleTie
-          block="游戏"
-          owner="刚刚"
-          theme="啊哈哈哈哈哈啊哈哈哈哈哈"
-        ></simpleTie>
-      </div>
+      </div>      
     </div>
     <!--返回顶部-->
     <toTop></toTop>
@@ -199,6 +66,10 @@ export default {
   },
   data() {
     return {
+      showPage:false,
+      userData:null,
+      sectionList:[],
+
       visible: false,
       change: false,
       buttonStyle1: {
@@ -210,18 +81,7 @@ export default {
         borderRadius: "5px",
       },
       content_control: 1,
-      name: "",
-      sex: "",
-      intro: "",
-      birthday: "",
-      phone: "",
-      email: "",
-      image: "",
-      sectionName: [],
-      sectionLv: [],
-      coin: 20,
       image1: image1,
-      token: "",
     };
   },
   created: function () {
@@ -241,137 +101,31 @@ export default {
                 token: that.$route.params.token,
               },
             })
-            .then(function (response) {
+            .then(function (response2) {
               if (response.data.hasOwnProperty("errmsg")) {
                 alert("登陆过期，请重新登录！");
                 window.open("/#/login", (name = "_self"));
               }
-              here.token = here.$route.params.token;
-
-              here.name = response.data.userName;
-              here.sex = response.data.userSex;
-              here.birthday = response.data.userBirthday;
-              here.image = response.data.userPhoto;
-              here.phone = response.data.userPhone;
-              here.email = response.data.userEmail;
-              here.intro = response.data.userInfroduce;
-              for (let i = 0; i < response.data.sectionList.length; i++) {
-                here.sectionName.push(response.data.sectionList[i].sectionName);
-                here.sectionLv.push(
-                  response.data.sectionList[i].sectionUser.sectionUserRank
-                );
-              }
+              
+              here.userData = response2.data;
+              here.sectionList = response2.data.sectionList;
+              here.showPage = true;
             });
         } else {
-          console.log(response.data.sectionList[0].sectionName);
-          that.token = localStorage.getItem("token");
-          that.name = response.data.userName;
-          that.sex = response.data.userSex;
-          that.birthday = response.data.userBirthday;
-          that.image = response.data.userPhoto;
-          that.phone = response.data.userPhone;
-          that.email = response.data.userEmail;
-          that.intro = response.data.userIntroduce;
-          for (let i = 0; i < response.data.sectionList.length; i++) {
-            that.sectionName.push(response.data.sectionList[i].sectionName);
-            that.sectionLv.push(
-              response.data.sectionList[i].sectionUser.sectionUserRank
-            );
-          }
+          that.userData = response.data;
+          that.sectionList = response.data.sectionList;
         }
+
+        that.showPage = true;
       });
   },
   methods: {
-    // changeMessage: function () {
-    //   let name =
-    //     this.$refs.newName.value == "" ? this.name : this.$refs.newName.value;
-    //   let intro =
-    //     this.$refs.newIntro.value == ""
-    //       ? this.intro
-    //       : this.$refs.newIntro.value;
-    //   let sex =
-    //     this.$refs.newSex.value == "" ? this.sex : this.$refs.newSex.value;
-    //   let birthday =
-    //     this.$refs.newBirthday.value == ""
-    //       ? this.birthday
-    //       : this.$refs.newBirthday.value;
-    //   let image =
-    //     this.$refs.newImage.value == ""
-    //       ? this.image
-    //       : this.$refs.newImage.value;
-    //   let phone =
-    //     this.$refs.newPhone.value == ""
-    //       ? this.phone
-    //       : this.$refs.newPhone.value;
-    //   let email =
-    //     this.$refs.newEmail.value == ""
-    //       ? this.email
-    //       : this.$refs.newEmail.value;
-
-    //   let that = this;
-    //   console.log(name + intro + sex + birthday + image + phone + email);
-    //   let tips = "";
-    //   this.$axios
-    //     .post("/user/updateUserEmail", null, {
-    //       params: {
-    //         userEmail: email,
-    //       },
-    //       headers: {
-    //         token: this.token,
-    //       },
-    //     })
-    //     .then(function (response) {
-    //       console.log(response.data);
-    //       if (response.data) {
-    //       }
-    //     });
-    //   this.$axios
-    //     .post("/user/updateUserPhone", null, {
-    //       params: {
-    //         userPhone: phone,
-    //       },
-    //       headers: {
-    //         token: this.token,
-    //       },
-    //     })
-    //     .then(function (response) {
-    //       if (response.data) {
-    //       }
-    //     });
-    //   this.$axios
-    //     .post("/user/updateUserInformation", null, {
-    //       params: {
-    //         userName: name,
-    //         userSex: sex,
-    //         userBirthday: birthday,
-    //         userPhoto: image,
-    //         userIntroduce: intro,
-    //       },
-    //       headers: {
-    //         token: this.token,
-    //       },
-    //     })
-    //     .then(function (response) {
-    //       if (response.data) {
-    //         tips += "修改个人资料成功";
-    //       }
-    //     });
-
-    //   setTimeout(function () {
-    //     alert(tips);
-    //     that.change = false;
-    //   }, 500);
-    // },
-    // cancel: function () {
-    //   this.change = false;
-    // },
     toChange: function () {
       this.change = true;
     },
     showMsg: function (data) {
       this.content_control = data;
     },
-    showRouter: function () {},
   },
 };
 </script>

@@ -1,6 +1,13 @@
 <template>
   <div id="page">
     <topbanner :token="token"></topbanner>
+    <div class="carousel">
+      <el-carousel indicator-position="outside" height="150px">
+        <el-carousel-item v-for="item in imgBox" :key="item">
+          <img :src="item" alt="" srcset="" />
+        </el-carousel-item>
+      </el-carousel>
+    </div>
     <div class="navig">
       <naviGater @click.native="visible = true" :navName="navname"></naviGater>
       <el-dialog :visible.sync="visible">
@@ -10,6 +17,7 @@
     <div class="block">
       <areablock
         v-for="plate in plateblock"
+        :sectionUrl="sectionPhoto"
         :key="plate.sectionId"
         :title="plate.sectionIntroduce"
         :blockName="plate.sectionName"
@@ -41,6 +49,14 @@ export default {
       },
       plateblock: [],
       token: localStorage.getItem("token"),
+      imgBox: [
+        'https://cdn.jsdelivr.net/gh/SteinsHead/ImageBed/img/2020/20160831_10.jpg',
+        'https://cdn.jsdelivr.net/gh/SteinsHead/ImageBed/img/2020/20160831_6.jpg',
+        'https://cdn.jsdelivr.net/gh/SteinsHead/ImageBed/img/2020/20160831_7.jpg',
+        'https://cdn.jsdelivr.net/gh/SteinsHead/ImageBed/img/2020/20190322_6.jpg',
+        'https://cdn.jsdelivr.net/gh/SteinsHead/ImageBed/img/2020/20160831_13.jpg',
+        'https://cdn.jsdelivr.net/gh/SteinsHead/ImageBed/img/2020/20160831_5.jpg',
+      ],
     };
   },
   components: {
@@ -82,13 +98,17 @@ export default {
       let that = this;
       console.log(typeof plate.sectionId.toString());
       localStorage.setItem("sectionId", plate.sectionId.toString());
-      this.$router.push({
-        name: "plate",
-        params: {
-          sectionId: plate.sectionId,
-          token: that.token,
-        },
-      }).catch(err =>{console.log(err)});
+      this.$router
+        .push({
+          name: "plate",
+          params: {
+            sectionId: plate.sectionId,
+            token: that.token,
+          },
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       window.open("/#/platepage", (name = "_self"));
     },
   },

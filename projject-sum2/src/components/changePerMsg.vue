@@ -60,9 +60,7 @@ export default {
     };
   },
   props: {
-      token: {
-          type: String
-      }
+      
   },
   methods: {
     sendRealRequest(params) {
@@ -83,6 +81,7 @@ export default {
           data: param,
           headers: {
             "Content-Type": "multipart/form-data",
+            token: localStorage.getItem('token'),
           },
         })
         .then(function (response) {
@@ -104,12 +103,12 @@ export default {
           params: {
             userName: that.form.name,
             userSex: Number(that.form.sex),
-            userBirthday: that.form.data,
+            userBirthday: that.form.date,
             userPhoto: that.photoUrl,
-            userIntroduce: that.intro,
+            userIntroduce: that.form.intro,
           },
           headers: {
-            token: that.token,
+            token: localStorage.getItem('token'),
           },
         })
         .then(function (response) {
@@ -120,7 +119,7 @@ export default {
         });
       setTimeout(function () {
         location.reload();
-      }, 500);
+      }, 10000);
     },
     handleRemove(file) {
       console.log(file);

@@ -15,11 +15,18 @@
       <downLoad :label="download" :textStyle="centerStyle"></downLoad>
     </div>
     <div class="between">
-      <search
+      <!-- <search
         :style_parameter="style_parameter"
         :content_type="content_type"
         :placeholder="placeholder"
-      ></search>
+      ></search> -->
+      <el-autocomplete
+        v-model="state"
+        prefix-icon="el-icon-search"
+        :fetch-suggestions="querySearchAsync"
+        placeholder="想搜索什么吧？"
+        @select="handleSelect"
+      ></el-autocomplete>
     </div>
     <div class="right">
       <welcome v-html="welcomeMsg" :textStyle="welcomeStyle"></welcome>
@@ -74,6 +81,12 @@ export default {
     search: search,
   },
   methods: {
+    querySearchAsync(){
+
+    },
+    handleSelect(){
+
+    },
     jumpToLogin() {
       window.open("/#/login", "_self");
     },
@@ -94,6 +107,7 @@ export default {
       .then(function (response) {
         console.log(response);
         that.welcomeMsg += response.data.userName;
+        console.log(response.data.userPhoto);
         that.imgUrl =
           "https://redditcn-1301983393.cos.ap-beijing.myqcloud.com/" +
           response.data.userPhoto;
@@ -116,11 +130,13 @@ export default {
 .image {
   width: 75px;
   height: 60px;
+  border-radius: 50%;
   cursor: pointer;
 }
 
 .image img {
   height: 100%;
+  border-radius: 50%;
 }
 
 #banner .left {

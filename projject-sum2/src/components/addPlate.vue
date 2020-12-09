@@ -63,6 +63,7 @@ export default {
           data: param,
           headers: {
             "Content-Type": "multipart/form-data",
+            token: that.token,
           },
         })
         .then(function (response) {

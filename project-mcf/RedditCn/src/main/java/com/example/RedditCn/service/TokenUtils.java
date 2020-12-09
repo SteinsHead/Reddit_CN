@@ -12,7 +12,7 @@ import com.example.RedditCn.entity.ErrorJsonObject;
 
 public class TokenUtils {
 	// 设置过期时间
-	private static final long EXPIRE_DATE = 60 * 60 * 1000;
+	private static final long EXPIRE_DATE = 6 * 60 * 60 * 1000;
 	// token秘钥
 	private static final String TOKEN_SECRET = "MCFTKJWSGREDDITCN";
 
