@@ -4,7 +4,7 @@
         <div id="owner-message">
             <img :src="userPhoto" />
             <span class="span1">{{name}}</span>
-            <span class="span1" id="level">lv:{{level}}</span>
+            <span class="span1" id="level">lv:{{level.split('级别')[0]}}</span>
         </div>
         <div id="floor-content">
                 <span class="span1">{{content}}</span>
@@ -153,6 +153,7 @@ export default {
     align-items: center;
 }
 #owner-message > img{
+    object-fit: cover;
     width: 48px;
     height: 48px;
 }

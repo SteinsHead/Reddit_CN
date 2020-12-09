@@ -79,6 +79,7 @@ export default {
           method: "post",
           url: "/uploadPhoto",
           data: param,
+          timeout:2000,
           headers: {
             "Content-Type": "multipart/form-data",
             token: localStorage.getItem('token'),

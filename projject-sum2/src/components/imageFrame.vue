@@ -14,6 +14,7 @@ export default {
 
 <style scope>
     #frame{
+        object-fit: cover;
         position: relative;
         top: -40px;
         left: -400px;
