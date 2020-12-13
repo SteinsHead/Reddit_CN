@@ -135,7 +135,7 @@ export default {
     }).then(function(response){
       if(response.data.hasOwnProperty('sectionId')){
         console.log('## '+response.data.user.userAccount+ " "+localStorage.getItem('myAccount'));
-        if(response.data.userCreater.userAccount == localStorage.getItem('myAccount')){
+        if(response.data.user.userAccount == localStorage.getItem('myAccount')){
           that.showAdminButton = true;
         }
       }
